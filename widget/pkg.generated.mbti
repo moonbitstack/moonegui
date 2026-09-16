@@ -1,0 +1,39 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbitstack/moonegui/widget"
+
+import {
+  "moonbitstack/moonegui/ctx",
+  "moonbitstack/moonegui/hit",
+  "moonbitstack/moonegui/paint",
+}
+
+// Values
+pub fn accent_button(@ctx.Ui, String) -> @hit.Response
+
+pub fn button(@ctx.Ui, String) -> @hit.Response
+
+pub fn checkbox(@ctx.Ui, String, Bool) -> (Bool, @hit.Response)
+
+pub fn edit(@ctx.Ui, String, hint? : String, width? : Double, salt? : String) -> (String, @hit.Response)
+
+pub fn heading(@ctx.Ui, String) -> @hit.Response
+
+pub fn label(@ctx.Ui, String, color? : @paint.Color?, wrap? : Bool, sense? : @hit.Sense) -> @hit.Response
+
+pub fn radio(@ctx.Ui, String, Bool) -> (Bool, @hit.Response)
+
+pub fn separator(@ctx.Ui) -> @hit.Response
+
+pub fn slider(@ctx.Ui, Double, low? : Double, high? : Double, width? : Double, salt? : String) -> (Double, @hit.Response)
+
+pub fn slider_with_label(@ctx.Ui, String, Double, low? : Double, high? : Double, width? : Double) -> (Double, @hit.Response)
+
+pub fn weak(@ctx.Ui, String) -> @hit.Response
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits

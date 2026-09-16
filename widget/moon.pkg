@@ -1,0 +1,17 @@
+// The widgets.
+//
+// Each is a function: it takes the region it is building into, allocates space,
+// works out what happened there, draws itself accordingly, and returns what
+// happened. A widget that holds a value takes the old one and returns the new
+// one, so nothing here needs a mutable reference or a callback.
+import {
+  "moonbitstack/moonegui/back",
+  "moonbitstack/moonegui/ctx",
+  "moonbitstack/moonegui/emath",
+  "moonbitstack/moonegui/hit",
+  "moonbitstack/moonegui/input",
+  "moonbitstack/moonegui/layout",
+  "moonbitstack/moonegui/mem",
+  "moonbitstack/moonegui/paint",
+  "moonbitstack/moonegui/text",
+}
