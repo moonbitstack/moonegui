@@ -49,7 +49,7 @@ fn activated(ui : @ctx.Ui, response : @hit.Response) -> Bool {
     return false
   }
   let input = ui.ctx().input()
-  input.key_pressed(Enter) || input.key_pressed(Space)
+  input.key_pressed(@input.Key::Enter) || input.key_pressed(@input.Key::Space)
 }
 
 ///|

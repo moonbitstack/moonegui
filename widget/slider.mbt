@@ -41,16 +41,16 @@ pub fn slider(
   if response.enabled && response.focused {
     let step = (high - low) / STEPS
     let input = ui.ctx().input()
-    if input.key_pressed(Left) {
+    if input.key_pressed(@input.Key::Left) {
       out = out - step
     }
-    if input.key_pressed(Right) {
+    if input.key_pressed(@input.Key::Right) {
       out = out + step
     }
-    if input.key_pressed(Home) {
+    if input.key_pressed(@input.Key::Home) {
       out = low
     }
-    if input.key_pressed(End) {
+    if input.key_pressed(@input.Key::End) {
       out = high
     }
   }

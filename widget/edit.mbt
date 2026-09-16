@@ -67,7 +67,7 @@ pub fn edit(
       at = cut.1
       other = at
     }
-    if input.key_pressed(Backspace) {
+    if input.key_pressed(@input.Key::Backspace) {
       if at != other {
         let cut = replace(out, at, other, "")
         out = cut.0
@@ -79,7 +79,7 @@ pub fn edit(
       }
       other = at
     }
-    if input.key_pressed(Delete) {
+    if input.key_pressed(@input.Key::Delete) {
       if at != other {
         let cut = replace(out, at, other, "")
         out = cut.0
@@ -89,7 +89,7 @@ pub fn edit(
       }
       other = at
     }
-    match input.key_down(Left) {
+    match input.key_down(@input.Key::Left) {
       Some(mods) => {
         at = if at != other && !mods.shift {
           smaller(at, other)
@@ -102,7 +102,7 @@ pub fn edit(
       }
       None => ()
     }
-    match input.key_down(Right) {
+    match input.key_down(@input.Key::Right) {
       Some(mods) => {
         at = if at != other && !mods.shift {
           larger(at, other)
@@ -115,7 +115,7 @@ pub fn edit(
       }
       None => ()
     }
-    match input.key_down(Home) {
+    match input.key_down(@input.Key::Home) {
       Some(mods) => {
         at = 0
         if !mods.shift {
@@ -124,7 +124,7 @@ pub fn edit(
       }
       None => ()
     }
-    match input.key_down(End) {
+    match input.key_down(@input.Key::End) {
       Some(mods) => {
         at = out.length()
         if !mods.shift {
@@ -137,7 +137,7 @@ pub fn edit(
   }
   at = clamp_to(at, out.length())
   other = clamp_to(other, out.length())
-  memory.set(id, Cursor(at~, other~))
+  memory.set(id, @mem.State::Cursor(at~, other~))
   if out != value {
     response.mark_changed()
   }
