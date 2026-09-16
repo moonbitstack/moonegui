@@ -1,0 +1,10 @@
+// Which widget the pointer is over, and what it did to it.
+//
+// Hit testing uses the rectangles from the frame before, because this frame's
+// widgets are being built as the answer is needed. That one-frame delay is
+// inherent to immediate mode and is what this package makes explicit.
+import {
+  "moonbitstack/moonegui/emath",
+  "moonbitstack/moonegui/id",
+  "moonbitstack/moonegui/input",
+}

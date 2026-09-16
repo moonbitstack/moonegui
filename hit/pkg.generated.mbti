@@ -1,0 +1,76 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbitstack/moonegui/hit"
+
+import {
+  "moonbitlang/core/debug",
+  "moonbitstack/moonegui/emath",
+  "moonbitstack/moonegui/id",
+  "moonbitstack/moonegui/input",
+}
+
+// Values
+pub let click : Sense
+
+pub let click_and_drag : Sense
+
+pub let drag : Sense
+
+pub let hover : Sense
+
+pub let inert : Sense
+
+pub fn interact(WidgetRect, @id.Id, @id.Id, @id.Id, @id.Id, @input.State) -> Response
+
+// Errors
+
+// Types and methods
+pub struct Rects {
+  items : Array[WidgetRect]
+  by_id : Map[@id.Id, WidgetRect]
+}
+pub fn Rects::add(Self, WidgetRect) -> Unit
+pub fn Rects::at(Self, @emath.Vec2) -> WidgetRect?
+pub fn Rects::clear(Self) -> Unit
+pub fn Rects::count(Self) -> Int
+pub fn Rects::find(Self, @id.Id) -> WidgetRect?
+pub fn Rects::items(Self) -> Array[WidgetRect]
+pub fn Rects::new() -> Self
+
+pub(all) struct Response {
+  id : @id.Id
+  rect : @emath.Rect
+  sense : Sense
+  enabled : Bool
+  hovered : Bool
+  pressed : Bool
+  released : Bool
+  clicked : Bool
+  double_clicked : Bool
+  dragged : Bool
+  drag_delta : @emath.Vec2
+  focused : Bool
+  mut changed : Bool
+} derive(Eq, @debug.Debug)
+pub fn Response::mark_changed(Self) -> Unit
+pub fn Response::none(@id.Id, @emath.Rect) -> Self
+pub fn Response::union(Self, Self) -> Self
+
+pub(all) struct Sense {
+  hover : Bool
+  click : Bool
+  drag : Bool
+  focus : Bool
+} derive(Eq, @debug.Debug)
+pub fn Sense::is_inert(Self) -> Bool
+
+pub(all) struct WidgetRect {
+  id : @id.Id
+  rect : @emath.Rect
+  sense : Sense
+  enabled : Bool
+  layer : Int
+} derive(Eq, @debug.Debug)
+
+// Type aliases
+
+// Traits

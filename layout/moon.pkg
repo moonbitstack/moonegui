@@ -1,0 +1,9 @@
+// Where the next widget goes.
+//
+// A frame does not describe a tree of boxes to be solved; it allocates space as
+// it goes, one widget at a time, from a cursor that walks in a direction. That
+// is the whole of immediate-mode layout, and it is why a widget can decide what
+// to draw based on what happened to the widget before it.
+import {
+  "moonbitstack/moonegui/emath",
+}

@@ -1,0 +1,10 @@
+// Turning a string into lines that fit.
+//
+// Measuring belongs to the backend — only it knows how wide a character is —
+// and everything else is arithmetic that can be done anywhere, which is why
+// breaking, aligning and cursor positions live here and not in a backend.
+import {
+  "moonbitstack/moonegui/back",
+  "moonbitstack/moonegui/emath",
+  "moonbitstack/moonegui/paint",
+}

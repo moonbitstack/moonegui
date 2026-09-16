@@ -1,0 +1,59 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbitstack/moonegui/layout"
+
+import {
+  "moonbitlang/core/debug",
+  "moonbitstack/moonegui/emath",
+}
+
+// Values
+pub let centred_row : Layout
+
+pub let left_to_right : Layout
+
+pub let top_down : Layout
+
+pub let top_down_justified : Layout
+
+// Errors
+
+// Types and methods
+pub(all) enum Dir {
+  LeftToRight
+  RightToLeft
+  TopDown
+  BottomUp
+} derive(Eq, @debug.Debug)
+pub fn Dir::is_horizontal(Self) -> Bool
+
+pub(all) struct Layout {
+  dir : Dir
+  cross : @emath.Align
+  cross_justify : Bool
+} derive(Eq, @debug.Debug)
+
+pub struct Placer {
+  layout : Layout
+  region : Region
+  spacing : @emath.Vec2
+}
+pub fn Placer::advance(Self, @emath.Rect) -> Unit
+pub fn Placer::allocate(Self, @emath.Vec2) -> @emath.Rect
+pub fn Placer::available(Self) -> @emath.Vec2
+pub fn Placer::child(Self, Layout, size? : @emath.Vec2?) -> Self
+pub fn Placer::cursor(Self) -> @emath.Vec2
+pub fn Placer::layout(Self) -> Layout
+pub fn Placer::max(Self) -> @emath.Rect
+pub fn Placer::new(@emath.Rect, layout? : Layout, spacing? : @emath.Vec2) -> Self
+pub fn Placer::spacing(Self) -> @emath.Vec2
+pub fn Placer::used(Self) -> @emath.Rect
+
+pub struct Region {
+  mut used : @emath.Rect
+  max : @emath.Rect
+  mut cursor : @emath.Vec2
+}
+
+// Type aliases
+
+// Traits

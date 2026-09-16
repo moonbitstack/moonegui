@@ -1,0 +1,37 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbitstack/moonegui/text"
+
+import {
+  "moonbitstack/moonegui/back",
+  "moonbitstack/moonegui/emath",
+  "moonbitstack/moonegui/paint",
+}
+
+// Values
+pub fn elide(&@back.Backend, String, @paint.FontId, Double, tail? : String) -> String
+
+pub fn index_at(&@back.Backend, String, @paint.FontId, Double) -> Int
+
+pub fn insert(String, Int, String) -> String
+
+pub fn layout(&@back.Backend, String, @paint.FontId, wrap? : Double, align? : @emath.Align) -> @paint.Galley
+
+pub fn line(&@back.Backend, String, @paint.FontId) -> @paint.Galley
+
+pub fn next_index(String, Int) -> Int
+
+pub let no_wrap : Double
+
+pub fn prev_index(String, Int) -> Int
+
+pub fn remove(String, Int, Int) -> String
+
+pub fn x_at(&@back.Backend, String, @paint.FontId, Int) -> Double
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits
