@@ -1,0 +1,16 @@
+// The frame: what runs between the host handing over input and taking back a
+// list of shapes.
+//
+// `Ctx` holds the little that outlives a frame — memory, the rectangles the
+// last frame produced, the input state — and `Ui` is the thing a caller
+// actually uses: allocate space, ask what happened there, draw into it.
+import {
+  "moonbitstack/moonegui/back",
+  "moonbitstack/moonegui/emath",
+  "moonbitstack/moonegui/hit",
+  "moonbitstack/moonegui/id",
+  "moonbitstack/moonegui/input",
+  "moonbitstack/moonegui/layout",
+  "moonbitstack/moonegui/mem",
+  "moonbitstack/moonegui/paint",
+}
