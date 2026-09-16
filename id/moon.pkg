@@ -1,0 +1,5 @@
+// Identity across frames.
+//
+// An immediate-mode frame builds every widget again from scratch, so the only
+// thing that connects this frame's button to the one before it is an id derived
+// from where it sits in the tree. Everything a widget remembers hangs off that.

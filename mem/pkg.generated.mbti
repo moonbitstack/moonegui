@@ -1,0 +1,50 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbitstack/moonegui/mem"
+
+import {
+  "moonbitlang/core/debug",
+  "moonbitstack/moonegui/emath",
+  "moonbitstack/moonegui/id",
+}
+
+// Values
+
+// Errors
+
+// Types and methods
+pub struct Memory {
+  data : Map[@id.Id, State]
+  used : Map[@id.Id, Bool]
+  mut focus : @id.Id
+  mut dragged : @id.Id
+  mut pressed_on : @id.Id
+}
+pub fn Memory::blur(Self) -> Unit
+pub fn Memory::count(Self) -> Int
+pub fn Memory::cursor(Self, @id.Id, Int) -> (Int, Int)
+pub fn Memory::drag(Self, @id.Id) -> Unit
+pub fn Memory::dragged(Self) -> @id.Id
+pub fn Memory::end_frame(Self) -> Unit
+pub fn Memory::flag(Self, @id.Id, Bool) -> Bool
+pub fn Memory::focus_on(Self, @id.Id) -> Unit
+pub fn Memory::focused(Self) -> @id.Id
+pub fn Memory::get(Self, @id.Id) -> State?
+pub fn Memory::keep(Self, @id.Id) -> Unit
+pub fn Memory::new() -> Self
+pub fn Memory::num(Self, @id.Id, Double) -> Double
+pub fn Memory::point(Self, @id.Id, @emath.Vec2) -> @emath.Vec2
+pub fn Memory::press_on(Self, @id.Id) -> Unit
+pub fn Memory::pressed_on(Self) -> @id.Id
+pub fn Memory::reset(Self) -> Unit
+pub fn Memory::set(Self, @id.Id, State) -> Unit
+
+pub(all) enum State {
+  Num(Double)
+  Flag(Bool)
+  Point(@emath.Vec2)
+  Cursor(at~ : Int, other~ : Int)
+} derive(Eq, @debug.Debug)
+
+// Type aliases
+
+// Traits

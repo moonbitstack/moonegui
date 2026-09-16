@@ -1,0 +1,7 @@
+// What the host tells the library about a frame: the events since the last one,
+// how big the surface is, and how much time passed. `State` turns that into the
+// questions widgets actually ask — where is the pointer, is a button down, was
+// it clicked.
+import {
+  "moonbitstack/moonegui/emath",
+}

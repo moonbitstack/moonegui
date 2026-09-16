@@ -1,0 +1,7 @@
+// The little that survives between frames: which widget has focus, what is
+// being dragged, and the per-widget state that cannot be recomputed — the
+// cursor in a text field, the position of a scroll area.
+import {
+  "moonbitstack/moonegui/emath",
+  "moonbitstack/moonegui/id",
+}

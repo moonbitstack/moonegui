@@ -1,0 +1,115 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbitstack/moonegui/input"
+
+import {
+  "moonbitlang/core/debug",
+  "moonbitstack/moonegui/emath",
+}
+
+// Values
+pub const DOUBLE_CLICK_SECONDS : Double = 0.35
+
+pub const DRAG_THRESHOLD : Double = 6
+
+pub let none : Mods
+
+// Errors
+
+// Types and methods
+pub(all) enum Btn {
+  Primary
+  Secondary
+  Middle
+} derive(Eq, @debug.Debug)
+pub fn Btn::index(Self) -> Int
+
+pub(all) enum Event {
+  PointerMoved(@emath.Vec2)
+  PointerButton(at~ : @emath.Vec2, btn~ : Btn, down~ : Bool, mods~ : Mods)
+  PointerGone
+  Scroll(@emath.Vec2)
+  KeyDown(key~ : Key, mods~ : Mods, repeat~ : Bool)
+  KeyUp(key~ : Key, mods~ : Mods)
+  Text(String)
+  Paste(String)
+  Focus(Bool)
+} derive(Eq, @debug.Debug)
+
+pub(all) enum Key {
+  Enter
+  Tab
+  Backspace
+  Delete
+  Escape
+  Space
+  Left
+  Right
+  Up
+  Down
+  Home
+  End
+  PageUp
+  PageDown
+} derive(Eq, @debug.Debug)
+
+pub(all) struct Mods {
+  ctrl : Bool
+  alt : Bool
+  shift : Bool
+} derive(Eq, @debug.Debug)
+pub fn Mods::is_none(Self) -> Bool
+
+pub(all) struct Raw {
+  screen : @emath.Rect
+  events : Array[Event]
+  time : Double
+  dt : Double
+  focused : Bool
+}
+pub fn Raw::new(@emath.Rect, time? : Double, dt? : Double) -> Self
+
+pub struct State {
+  mut screen : @emath.Rect
+  mut time : Double
+  mut dt : Double
+  mut focused : Bool
+  mut pointer : @emath.Vec2?
+  mut delta : @emath.Vec2
+  mut scroll : @emath.Vec2
+  down : Array[Bool]
+  press_at : Array[@emath.Vec2]
+  press_time : Array[Double]
+  pressed : Array[Bool]
+  released : Array[Bool]
+  clicked : Array[Bool]
+  double_clicked : Array[Bool]
+  mut last_click : Double
+  keys : Array[Key]
+  mut typed : String
+  mut pasted : String?
+  events : Array[Event]
+}
+pub fn State::begin(Self, Raw) -> Unit
+pub fn State::clicked(Self, Btn) -> Bool
+pub fn State::double_clicked(Self, Btn) -> Bool
+pub fn State::dt(Self) -> Double
+pub fn State::has_focus(Self) -> Bool
+pub fn State::is_down(Self, Btn) -> Bool
+pub fn State::key_down(Self, Key) -> Mods?
+pub fn State::key_pressed(Self, Key) -> Bool
+pub fn State::keys(Self) -> Array[Key]
+pub fn State::new() -> Self
+pub fn State::pasted(Self) -> String?
+pub fn State::pointer(Self) -> @emath.Vec2?
+pub fn State::pointer_delta(Self) -> @emath.Vec2
+pub fn State::press_origin(Self, Btn) -> @emath.Vec2
+pub fn State::pressed(Self, Btn) -> Bool
+pub fn State::released(Self, Btn) -> Bool
+pub fn State::screen(Self) -> @emath.Rect
+pub fn State::scroll(Self) -> @emath.Vec2
+pub fn State::time(Self) -> Double
+pub fn State::typed(Self) -> String
+
+// Type aliases
+
+// Traits

@@ -1,0 +1,25 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbitstack/moonegui/id"
+
+import {
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub let nothing : Id
+
+pub fn root(String) -> Id
+
+// Errors
+
+// Types and methods
+pub(all) struct Id(UInt64) derive(Compare, Eq, Hash, @debug.Debug)
+pub fn Id::child(Self, String) -> Self
+pub fn Id::index(Self, Int) -> Self
+pub fn Id::is_nothing(Self) -> Bool
+pub fn Id::short(Self) -> String
+pub fn Id::value(Self) -> UInt64
+
+// Type aliases
+
+// Traits

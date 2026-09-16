@@ -1,0 +1,6 @@
+// Points, sizes and rectangles in logical pixels.
+//
+// A GUI is not laid out in whole pixels the way a terminal is laid out in whole
+// cells, so everything here is a `Double`. Nothing in this package ever reaches
+// a snapshot as a float, though: the paint commands are printed through a fixed
+// point formatter, because four backends must agree character for character.

@@ -1,0 +1,77 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbitstack/moonegui/emath"
+
+import {
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn clamp(Double, Double, Double) -> Double
+
+pub fn inverse_lerp(Double, Double, Double) -> Double
+
+pub fn lerp(Double, Double, Double) -> Double
+
+pub let no_margin : Margin
+
+pub let nothing : Rect
+
+pub let zero : Vec2
+
+// Errors
+
+// Types and methods
+pub(all) enum Align {
+  Min
+  Center
+  Max
+} derive(Eq, @debug.Debug)
+pub fn Align::offset(Self, Double, Double) -> Double
+
+pub(all) struct Margin {
+  top : Double
+  right : Double
+  bottom : Double
+  left : Double
+} derive(Eq, @debug.Debug)
+pub fn Margin::grow_rect(Self, Rect) -> Rect
+pub fn Margin::same(Double) -> Self
+pub fn Margin::shrink_rect(Self, Rect) -> Rect
+pub fn Margin::sum(Self) -> Vec2
+
+pub(all) struct Rect {
+  min : Vec2
+  max : Vec2
+} derive(Eq, @debug.Debug)
+pub fn Rect::around(Vec2, Vec2) -> Self
+pub fn Rect::at(Vec2, Vec2) -> Self
+pub fn Rect::centre(Self) -> Vec2
+pub fn Rect::clamp(Self, Vec2) -> Vec2
+pub fn Rect::contains(Self, Vec2) -> Bool
+pub fn Rect::grow(Self, Double) -> Self
+pub fn Rect::height(Self) -> Double
+pub fn Rect::intersect(Self, Self) -> Self
+pub fn Rect::is_empty(Self) -> Bool
+pub fn Rect::of(Vec2, Vec2) -> Self
+pub fn Rect::shrink(Self, Double) -> Self
+pub fn Rect::size(Self) -> Vec2
+pub fn Rect::translate(Self, Vec2) -> Self
+pub fn Rect::union(Self, Self) -> Self
+pub fn Rect::width(Self) -> Double
+
+pub(all) struct Vec2 {
+  x : Double
+  y : Double
+} derive(Eq, @debug.Debug)
+pub fn Vec2::length(Self) -> Double
+pub fn Vec2::max(Self, Self) -> Self
+pub fn Vec2::min(Self, Self) -> Self
+pub fn Vec2::scale(Self, Double) -> Self
+pub fn Vec2::splat(Double) -> Self
+pub impl Add for Vec2
+pub impl Neg for Vec2
+pub impl Sub for Vec2
+
+// Type aliases
+
+// Traits
