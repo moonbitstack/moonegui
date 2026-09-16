@@ -1,0 +1,13 @@
+// What both browser backends share: the surface, the text metrics, and the
+// input coming the other way.
+//
+// A page drawn on a canvas and the same page drawn as elements have to lay out
+// identically, and they only can if one piece of code answers "how wide is this
+// string" for both of them.
+import {
+  "moonbitstack/moonegui/emath",
+  "moonbitstack/moonegui/input",
+  "moonbitstack/moonegui/paint",
+}
+
+supported_targets = "js"

@@ -1,0 +1,22 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>moonegui in a browser</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #18181b; }
+  #moonegui { display: block; width: 100vw; height: 100vh; outline: none; }
+</style>
+<script type="module">
+  // The build output sits next to the module graph moon produces; serving the
+  // repository root and pointing at it keeps this page free of a bundler.
+  import { start, start_html } from "../../_build/js/debug/build/examples/browser/browser.js";
+
+  // The same interface, either painted on a canvas or built as elements.
+  // Add ?html to the address to see the second one.
+  const asHtml = new URLSearchParams(location.search).has("html");
+  const surface = document.createElement(asHtml ? "div" : "canvas");
+  surface.id = "moonegui";
+  surface.tabIndex = 0;
+  document.body.appendChild(surface);
+  (asHtml ? start_html : start)();
+  surface.focus();
+</script>

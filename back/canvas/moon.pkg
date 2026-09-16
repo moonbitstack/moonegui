@@ -1,0 +1,13 @@
+// The canvas backend: a frame's shapes painted on a 2D context.
+//
+// Every command maps onto a call the browser already has, which is what keeps
+// this the thinnest package in the library.
+import {
+  "moonbitstack/moonegui/back",
+  "moonbitstack/moonegui/back/web",
+  "moonbitstack/moonegui/emath",
+  "moonbitstack/moonegui/input",
+  "moonbitstack/moonegui/paint",
+}
+
+supported_targets = "js"

@@ -1,0 +1,21 @@
+// The demonstration: one page, every widget, drawn on a canvas.
+//
+// The interface is a function of the state, called once a frame. Read it from
+// the top: that order is the order things appear on the screen, and there is no
+// tree, no callbacks and no subscriptions anywhere in it.
+import {
+  "moonbitstack/moonegui/back",
+  "moonbitstack/moonegui/back/canvas",
+  "moonbitstack/moonegui/back/html",
+  "moonbitstack/moonegui/back/web",
+  "moonbitstack/moonegui/ctx",
+  "moonbitstack/moonegui/emath",
+  "moonbitstack/moonegui/paint",
+  "moonbitstack/moonegui/widget",
+}
+
+supported_targets = "js"
+
+options(
+  link: { "js": { "exports": [ "start", "start_html" ], "format": "esm" } },
+)

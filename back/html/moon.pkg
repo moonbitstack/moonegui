@@ -1,0 +1,13 @@
+// The H5 backend: a frame's shapes as elements in the document.
+//
+// The same interface, drawn without a canvas: what the page gets in return is
+// selectable text, zoom, and elements other tools can see.
+import {
+  "moonbitstack/moonegui/back",
+  "moonbitstack/moonegui/back/web",
+  "moonbitstack/moonegui/emath",
+  "moonbitstack/moonegui/input",
+  "moonbitstack/moonegui/paint",
+}
+
+supported_targets = "js"
