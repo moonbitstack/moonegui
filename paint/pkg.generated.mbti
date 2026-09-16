@@ -1,0 +1,105 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbitstack/moonegui/paint"
+
+import {
+  "moonbitlang/core/debug",
+  "moonbitstack/moonegui/emath",
+}
+
+// Values
+pub let body : FontId
+
+pub let clear : Color
+
+pub let no_stroke : Stroke
+
+pub let square : Corner
+
+pub let unclipped : @emath.Rect
+
+// Errors
+
+// Types and methods
+pub(all) struct Clipped {
+  clip : @emath.Rect
+  shape : Shape
+} derive(Eq, @debug.Debug)
+
+pub(all) struct Color {
+  r : Int
+  g : Int
+  b : Int
+  a : Int
+} derive(Eq, @debug.Debug)
+pub fn Color::grey(Int) -> Self
+pub fn Color::is_clear(Self) -> Bool
+pub fn Color::lerp(Self, Self, Double) -> Self
+pub fn Color::rgb(Int, Int, Int) -> Self
+pub fn Color::rgba(Int, Int, Int, Int) -> Self
+pub fn Color::with_alpha(Self, Int) -> Self
+
+pub(all) struct Corner {
+  nw : Double
+  ne : Double
+  se : Double
+  sw : Double
+} derive(Eq, @debug.Debug)
+pub fn Corner::same(Double) -> Self
+
+pub(all) enum Family {
+  Sans
+  Mono
+} derive(Eq, @debug.Debug)
+
+pub(all) struct FontId {
+  size : Double
+  family : Family
+} derive(Eq, @debug.Debug)
+
+pub(all) struct Galley {
+  rows : Array[TextRow]
+  size : @emath.Vec2
+  font : FontId
+} derive(Eq, @debug.Debug)
+
+pub struct Painter {
+  shapes : Array[Clipped]
+  clip : @emath.Rect
+}
+pub fn Painter::add(Self, Shape) -> Unit
+pub fn Painter::circle(Self, @emath.Vec2, Double, fill? : Color, stroke? : Stroke) -> Unit
+pub fn Painter::clear(Self) -> Unit
+pub fn Painter::clip(Self) -> @emath.Rect
+pub fn Painter::count(Self) -> Int
+pub fn Painter::galley(Self, @emath.Vec2, Galley, Color) -> Unit
+pub fn Painter::line(Self, @emath.Vec2, @emath.Vec2, Stroke) -> Unit
+pub fn Painter::new(clip? : @emath.Rect) -> Self
+pub fn Painter::path(Self, Array[@emath.Vec2], closed? : Bool, fill? : Color, stroke? : Stroke) -> Unit
+pub fn Painter::rect(Self, @emath.Rect, fill? : Color, stroke? : Stroke, corner? : Corner) -> Unit
+pub fn Painter::shapes(Self) -> Array[Clipped]
+pub fn Painter::sub(Self, @emath.Rect) -> Self
+
+pub(all) enum Shape {
+  Rect(rect~ : @emath.Rect, corner~ : Corner, fill~ : Color, stroke~ : Stroke)
+  Circle(centre~ : @emath.Vec2, radius~ : Double, fill~ : Color, stroke~ : Stroke)
+  Path(points~ : Array[@emath.Vec2], closed~ : Bool, fill~ : Color, stroke~ : Stroke)
+  Text(at~ : @emath.Vec2, galley~ : Galley, color~ : Color)
+  Image(rect~ : @emath.Rect, name~ : String, tint~ : Color)
+} derive(Eq, @debug.Debug)
+pub fn Shape::bounds(Self) -> @emath.Rect
+
+pub(all) struct Stroke {
+  width : Double
+  color : Color
+} derive(Eq, @debug.Debug)
+pub fn Stroke::is_empty(Self) -> Bool
+pub fn Stroke::new(Double, Color) -> Self
+
+pub(all) struct TextRow {
+  text : String
+  at : @emath.Vec2
+} derive(Eq, @debug.Debug)
+
+// Type aliases
+
+// Traits

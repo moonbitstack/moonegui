@@ -1,0 +1,9 @@
+// The backend contract: three ways to measure text and nine ways to draw.
+//
+// A backend is the only part of a user interface that has to know what a screen
+// is. Keeping the contract this small is what lets the whole library be tested
+// against a backend that draws into a list of strings.
+import {
+  "moonbitstack/moonegui/emath",
+  "moonbitstack/moonegui/paint",
+}

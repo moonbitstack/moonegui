@@ -1,0 +1,44 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbitstack/moonegui/back"
+
+import {
+  "moonbitstack/moonegui/emath",
+  "moonbitstack/moonegui/paint",
+}
+
+// Values
+pub fn number(Double) -> String
+
+pub fn play(Array[@paint.Clipped], &Backend) -> Unit
+
+// Errors
+
+// Types and methods
+pub struct Rec {
+  lines : Array[String]
+  advance : Double
+  height : Double
+}
+pub fn Rec::clear(Self) -> Unit
+pub fn Rec::lines(Self) -> Array[String]
+pub fn Rec::new(advance? : Double, height? : Double) -> Self
+pub fn Rec::text(Self) -> String
+pub impl Backend for Rec
+
+// Type aliases
+
+// Traits
+pub(open) trait Backend {
+  fn measure(Self, String, @paint.FontId) -> @emath.Vec2
+  fn line_height(Self, @paint.FontId) -> Double
+  fn measure_prefix(Self, String, @paint.FontId, Double) -> Int
+  fn push_clip(Self, @emath.Rect) -> Unit
+  fn pop_clip(Self) -> Unit
+  fn fill_rect(Self, @emath.Rect, @paint.Corner, @paint.Color) -> Unit
+  fn stroke_rect(Self, @emath.Rect, @paint.Corner, @paint.Stroke) -> Unit
+  fn fill_circle(Self, @emath.Vec2, Double, @paint.Color) -> Unit
+  fn stroke_circle(Self, @emath.Vec2, Double, @paint.Stroke) -> Unit
+  fn stroke_path(Self, Array[@emath.Vec2], Bool, @paint.Stroke) -> Unit
+  fn fill_path(Self, Array[@emath.Vec2], @paint.Color) -> Unit
+  fn fill_text(Self, @emath.Vec2, String, @paint.FontId, @paint.Color) -> Unit
+}

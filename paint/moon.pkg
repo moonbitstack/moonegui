@@ -1,0 +1,9 @@
+// What a frame asks to be drawn: colours, shapes, and the painter that collects
+// them.
+//
+// Nothing here rasterises anything. A frame produces a list of shapes and the
+// backend decides how to put them on a screen, which is what keeps the library
+// able to run — and be tested — where there is no screen at all.
+import {
+  "moonbitstack/moonegui/emath",
+}
