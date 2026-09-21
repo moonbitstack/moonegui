@@ -74,3 +74,15 @@ fn mix(seed : UInt64, text : String) -> UInt64 {
   }
   hash
 }
+
+///|
+pub extend Id with Debug::{to_repr}
+
+///|
+pub extend Id with Compare::{op_lt, op_le, op_ge, compare, op_gt}
+
+///|
+pub extend Id with Eq::{not_equal, equal}
+
+///|
+pub extend Id with Hash::{hash, hash_combine}

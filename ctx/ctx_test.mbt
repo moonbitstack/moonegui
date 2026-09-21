@@ -258,7 +258,7 @@ test "a region inside another is clipped to it" {
       fn(inside) {
         inside.painter().rect(@emath.Rect::of(at(0, 0), at(500, 20)), fill=ink)
       },
-      size=Some({ x: 50, y: 40, }),
+      size={ x: 50, y: 40, },
     )
     |> ignore
   })
@@ -317,7 +317,7 @@ test "a panel draws behind what is built inside it" {
         let (rect, _) = inside.allocate({ x: 20, y: 10, }, @hit.click, "a")
         inside.painter().rect(rect, fill=ink)
       },
-      size=Some({ x: 60, y: 40, }),
+      size={ x: 60, y: 40, },
     )
     |> ignore
   })
@@ -410,7 +410,7 @@ test "a measurement is the backend's answer, whatever the backend is" {
   ctx.run(frame([]), fn(ui) {
     body = ui.measure("abcd")
     height = ui.line_height()
-    small = ui.measure("abcd", font=Some({ size: 10, family: Mono, })).x
+    small = ui.measure("abcd", font={ size: 10, family: Mono, }).x
   })
   |> ignore
   assert_eq(body, { x: 28, y: 17.5, })

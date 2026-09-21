@@ -191,3 +191,9 @@ pub fn Memory::reset(self : Memory) -> Unit {
   self.dragged = @id.nothing
   self.pressed_on = @id.nothing
 }
+
+///|
+pub extend State with Debug::{to_repr}
+
+///|
+pub extend State with Eq::{not_equal, equal}

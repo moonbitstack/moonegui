@@ -293,3 +293,36 @@ fn smaller(a : Double, b : Double) -> Double {
     b
   }
 }
+
+///|
+pub extend Align with Debug::{to_repr}
+
+///|
+pub extend Align with Eq::{not_equal, equal}
+
+///|
+pub extend Margin with Debug::{to_repr}
+
+///|
+pub extend Margin with Eq::{not_equal, equal}
+
+///|
+pub extend Rect with Debug::{to_repr}
+
+///|
+pub extend Rect with Eq::{not_equal, equal}
+
+///|
+pub extend Vec2 with Debug::{to_repr}
+
+///|
+pub extend Vec2 with Add::{add}
+
+///|
+pub extend Vec2 with Eq::{not_equal, equal}
+
+///|
+pub extend Vec2 with Neg::{neg}
+
+///|
+pub extend Vec2 with Sub::{sub}

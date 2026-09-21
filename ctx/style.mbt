@@ -99,3 +99,9 @@ pub fn Style::outline_for(
     self.outline
   }
 }
+
+///|
+pub extend Style with Debug::{to_repr}
+
+///|
+pub extend Style with Eq::{not_equal, equal}

@@ -92,14 +92,14 @@ pub fn Ui::painter(self : Ui) -> @paint.Painter {
 pub fn Ui::measure(
   self : Ui,
   text : String,
-  font? : @paint.FontId? = None,
+  font? : @paint.FontId,
 ) -> @emath.Vec2 {
   self.ctx.back.measure(text, self.font_of(font))
 }
 
 ///|
 /// The height of one line of text.
-pub fn Ui::line_height(self : Ui, font? : @paint.FontId? = None) -> Double {
+pub fn Ui::line_height(self : Ui, font? : @paint.FontId) -> Double {
   self.ctx.back.line_height(self.font_of(font))
 }
 
@@ -159,10 +159,10 @@ pub fn Ui::child(
   self : Ui,
   layout : @layout.Layout,
   body : (Ui) -> Unit,
-  size? : @emath.Vec2? = None,
+  size? : @emath.Vec2,
   salt? : String = "child",
 ) -> @emath.Rect {
-  let used = self.nested(self.placer.child(layout, size~), salt, body)
+  let used = self.nested(self.placer.child(layout, size?), salt, body)
   // The parent only learns how much room the child took once the child is
   // finished, which is why the parent's cursor moves here rather than when the
   // child was created.
@@ -228,7 +228,7 @@ pub fn Ui::panel(
   self : Ui,
   body : (Ui) -> Unit,
   margin? : Double = 8,
-  size? : @emath.Vec2? = None,
+  size? : @emath.Vec2,
 ) -> @emath.Rect {
   let style = self.ctx.style
   let outer = match size {

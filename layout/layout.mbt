@@ -200,7 +200,7 @@ pub fn Placer::layout(self : Placer) -> Layout {
 pub fn Placer::child(
   self : Placer,
   layout : Layout,
-  size? : @emath.Vec2? = None,
+  size? : @emath.Vec2,
 ) -> Placer {
   let room = self.available()
   let want = match size {
@@ -215,3 +215,15 @@ pub fn Placer::child(
   }
   Placer::new(@emath.Rect::at(at, want), layout~, spacing=self.spacing)
 }
+
+///|
+pub extend Dir with Debug::{to_repr}
+
+///|
+pub extend Dir with Eq::{not_equal, equal}
+
+///|
+pub extend Layout with Debug::{to_repr}
+
+///|
+pub extend Layout with Eq::{not_equal, equal}

@@ -235,3 +235,19 @@ pub impl @back.Backend for Canvas with fn fill_text(
     color.a,
   )
 }
+
+///|
+pub extend Canvas with @back.Backend::{
+  measure,
+  pop_clip,
+  stroke_rect,
+  fill_text,
+  line_height,
+  measure_prefix,
+  fill_rect,
+  stroke_path,
+  push_clip,
+  fill_circle,
+  stroke_circle,
+  fill_path,
+}

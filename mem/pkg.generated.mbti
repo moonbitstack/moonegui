@@ -44,6 +44,9 @@ pub(all) enum State {
   Point(@emath.Vec2)
   Cursor(at~ : Int, other~ : Int)
 } derive(Eq, @debug.Debug)
+pub fn State::equal(Self, Self) -> Bool
+pub fn State::not_equal(Self, Self) -> Bool
+pub fn State::to_repr(Self) -> @debug.Repr
 
 // Type aliases
 

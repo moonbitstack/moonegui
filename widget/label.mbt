@@ -10,7 +10,7 @@
 pub fn label(
   ui : @ctx.Ui,
   string : String,
-  color? : @paint.Color? = None,
+  color? : @paint.Color,
   wrap? : Bool = false,
   sense? : @hit.Sense = @hit.inert,
 ) -> @hit.Response {
@@ -33,7 +33,7 @@ pub fn label(
 /// Draw a string in the weaker of the two text colours, for the things a reader
 /// should be able to ignore.
 pub fn weak(ui : @ctx.Ui, string : String) -> @hit.Response {
-  label(ui, string, color=Some(ui.style().weak_text))
+  label(ui, string, color=ui.style().weak_text)
 }
 
 ///|

@@ -107,7 +107,7 @@ pub fn slider_with_label(
       response = answer
       label(row, string) |> ignore
     },
-    size=Some({ x: ui.available().x, y: height, }),
+    size={ x: ui.available().x, y: height, },
     salt=string,
   )
   |> ignore

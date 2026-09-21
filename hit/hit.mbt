@@ -238,3 +238,21 @@ pub fn interact(
     changed: false,
   }
 }
+
+///|
+pub extend Response with Debug::{to_repr}
+
+///|
+pub extend Response with Eq::{not_equal, equal}
+
+///|
+pub extend Sense with Debug::{to_repr}
+
+///|
+pub extend Sense with Eq::{not_equal, equal}
+
+///|
+pub extend WidgetRect with Debug::{to_repr}
+
+///|
+pub extend WidgetRect with Eq::{not_equal, equal}

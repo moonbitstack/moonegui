@@ -298,3 +298,19 @@ fn step(text : String, at : Int) -> Int {
     1
   }
 }
+
+///|
+pub extend Rec with Backend::{
+  measure,
+  pop_clip,
+  stroke_rect,
+  fill_text,
+  line_height,
+  measure_prefix,
+  fill_rect,
+  stroke_path,
+  push_clip,
+  fill_circle,
+  stroke_circle,
+  fill_path,
+}

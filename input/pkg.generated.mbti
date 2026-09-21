@@ -21,7 +21,10 @@ pub(all) enum Btn {
   Secondary
   Middle
 } derive(Eq, @debug.Debug)
+pub fn Btn::equal(Self, Self) -> Bool
 pub fn Btn::index(Self) -> Int
+pub fn Btn::not_equal(Self, Self) -> Bool
+pub fn Btn::to_repr(Self) -> @debug.Repr
 
 pub(all) enum Event {
   PointerMoved(@emath.Vec2)
@@ -34,6 +37,9 @@ pub(all) enum Event {
   Paste(String)
   Focus(Bool)
 } derive(Eq, @debug.Debug)
+pub fn Event::equal(Self, Self) -> Bool
+pub fn Event::not_equal(Self, Self) -> Bool
+pub fn Event::to_repr(Self) -> @debug.Repr
 
 pub(all) enum Key {
   Enter
@@ -51,13 +57,19 @@ pub(all) enum Key {
   PageUp
   PageDown
 } derive(Eq, @debug.Debug)
+pub fn Key::equal(Self, Self) -> Bool
+pub fn Key::not_equal(Self, Self) -> Bool
+pub fn Key::to_repr(Self) -> @debug.Repr
 
 pub(all) struct Mods {
   ctrl : Bool
   alt : Bool
   shift : Bool
 } derive(Eq, @debug.Debug)
+pub fn Mods::equal(Self, Self) -> Bool
 pub fn Mods::is_none(Self) -> Bool
+pub fn Mods::not_equal(Self, Self) -> Bool
+pub fn Mods::to_repr(Self) -> @debug.Repr
 
 pub(all) struct Raw {
   screen : @emath.Rect

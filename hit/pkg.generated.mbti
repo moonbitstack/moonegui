@@ -51,8 +51,11 @@ pub(all) struct Response {
   focused : Bool
   mut changed : Bool
 } derive(Eq, @debug.Debug)
+pub fn Response::equal(Self, Self) -> Bool
 pub fn Response::mark_changed(Self) -> Unit
 pub fn Response::none(@id.Id, @emath.Rect) -> Self
+pub fn Response::not_equal(Self, Self) -> Bool
+pub fn Response::to_repr(Self) -> @debug.Repr
 pub fn Response::union(Self, Self) -> Self
 
 pub(all) struct Sense {
@@ -61,7 +64,10 @@ pub(all) struct Sense {
   drag : Bool
   focus : Bool
 } derive(Eq, @debug.Debug)
+pub fn Sense::equal(Self, Self) -> Bool
 pub fn Sense::is_inert(Self) -> Bool
+pub fn Sense::not_equal(Self, Self) -> Bool
+pub fn Sense::to_repr(Self) -> @debug.Repr
 
 pub(all) struct WidgetRect {
   id : @id.Id
@@ -70,6 +76,9 @@ pub(all) struct WidgetRect {
   enabled : Bool
   layer : Int
 } derive(Eq, @debug.Debug)
+pub fn WidgetRect::equal(Self, Self) -> Bool
+pub fn WidgetRect::not_equal(Self, Self) -> Bool
+pub fn WidgetRect::to_repr(Self) -> @debug.Repr
 
 // Type aliases
 

@@ -212,3 +212,57 @@ fn byte(value : Int) -> Int {
 fn mix(a : Int, b : Int, t : Double) -> Int {
   byte((a.to_double() + (b - a).to_double() * t).to_int())
 }
+
+///|
+pub extend Clipped with Debug::{to_repr}
+
+///|
+pub extend Clipped with Eq::{not_equal, equal}
+
+///|
+pub extend Color with Debug::{to_repr}
+
+///|
+pub extend Color with Eq::{not_equal, equal}
+
+///|
+pub extend Corner with Debug::{to_repr}
+
+///|
+pub extend Corner with Eq::{not_equal, equal}
+
+///|
+pub extend Family with Debug::{to_repr}
+
+///|
+pub extend Family with Eq::{not_equal, equal}
+
+///|
+pub extend FontId with Debug::{to_repr}
+
+///|
+pub extend FontId with Eq::{not_equal, equal}
+
+///|
+pub extend Galley with Debug::{to_repr}
+
+///|
+pub extend Galley with Eq::{not_equal, equal}
+
+///|
+pub extend Shape with Debug::{to_repr}
+
+///|
+pub extend Shape with Eq::{not_equal, equal}
+
+///|
+pub extend Stroke with Debug::{to_repr}
+
+///|
+pub extend Stroke with Eq::{not_equal, equal}
+
+///|
+pub extend TextRow with Debug::{to_repr}
+
+///|
+pub extend TextRow with Eq::{not_equal, equal}

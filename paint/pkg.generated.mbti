@@ -24,6 +24,9 @@ pub(all) struct Clipped {
   clip : @emath.Rect
   shape : Shape
 } derive(Eq, @debug.Debug)
+pub fn Clipped::equal(Self, Self) -> Bool
+pub fn Clipped::not_equal(Self, Self) -> Bool
+pub fn Clipped::to_repr(Self) -> @debug.Repr
 
 pub(all) struct Color {
   r : Int
@@ -31,11 +34,14 @@ pub(all) struct Color {
   b : Int
   a : Int
 } derive(Eq, @debug.Debug)
+pub fn Color::equal(Self, Self) -> Bool
 pub fn Color::grey(Int) -> Self
 pub fn Color::is_clear(Self) -> Bool
 pub fn Color::lerp(Self, Self, Double) -> Self
+pub fn Color::not_equal(Self, Self) -> Bool
 pub fn Color::rgb(Int, Int, Int) -> Self
 pub fn Color::rgba(Int, Int, Int, Int) -> Self
+pub fn Color::to_repr(Self) -> @debug.Repr
 pub fn Color::with_alpha(Self, Int) -> Self
 
 pub(all) struct Corner {
@@ -44,23 +50,35 @@ pub(all) struct Corner {
   se : Double
   sw : Double
 } derive(Eq, @debug.Debug)
+pub fn Corner::equal(Self, Self) -> Bool
+pub fn Corner::not_equal(Self, Self) -> Bool
 pub fn Corner::same(Double) -> Self
+pub fn Corner::to_repr(Self) -> @debug.Repr
 
 pub(all) enum Family {
   Sans
   Mono
 } derive(Eq, @debug.Debug)
+pub fn Family::equal(Self, Self) -> Bool
+pub fn Family::not_equal(Self, Self) -> Bool
+pub fn Family::to_repr(Self) -> @debug.Repr
 
 pub(all) struct FontId {
   size : Double
   family : Family
 } derive(Eq, @debug.Debug)
+pub fn FontId::equal(Self, Self) -> Bool
+pub fn FontId::not_equal(Self, Self) -> Bool
+pub fn FontId::to_repr(Self) -> @debug.Repr
 
 pub(all) struct Galley {
   rows : Array[TextRow]
   size : @emath.Vec2
   font : FontId
 } derive(Eq, @debug.Debug)
+pub fn Galley::equal(Self, Self) -> Bool
+pub fn Galley::not_equal(Self, Self) -> Bool
+pub fn Galley::to_repr(Self) -> @debug.Repr
 
 pub struct Painter {
   shapes : Array[Clipped]
@@ -87,18 +105,27 @@ pub(all) enum Shape {
   Image(rect~ : @emath.Rect, name~ : String, tint~ : Color)
 } derive(Eq, @debug.Debug)
 pub fn Shape::bounds(Self) -> @emath.Rect
+pub fn Shape::equal(Self, Self) -> Bool
+pub fn Shape::not_equal(Self, Self) -> Bool
+pub fn Shape::to_repr(Self) -> @debug.Repr
 
 pub(all) struct Stroke {
   width : Double
   color : Color
 } derive(Eq, @debug.Debug)
+pub fn Stroke::equal(Self, Self) -> Bool
 pub fn Stroke::is_empty(Self) -> Bool
 pub fn Stroke::new(Double, Color) -> Self
+pub fn Stroke::not_equal(Self, Self) -> Bool
+pub fn Stroke::to_repr(Self) -> @debug.Repr
 
 pub(all) struct TextRow {
   text : String
   at : @emath.Vec2
 } derive(Eq, @debug.Debug)
+pub fn TextRow::equal(Self, Self) -> Bool
+pub fn TextRow::not_equal(Self, Self) -> Bool
+pub fn TextRow::to_repr(Self) -> @debug.Repr
 
 // Type aliases
 

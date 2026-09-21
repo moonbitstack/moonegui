@@ -116,7 +116,7 @@ test "a nested placer starts where its parent has got to" {
 ///|
 test "a nested placer of a given size takes only that much" {
   let parent = @layout.Placer::new(room, layout=@layout.top_down, spacing=gap)
-  let child = parent.child(@layout.top_down, size=Some({ x: 40, y: 30, }))
+  let child = parent.child(@layout.top_down, size={ x: 40, y: 30, })
   assert_eq(child.max(), @emath.Rect::of({ x: 0, y: 0, }, { x: 40, y: 30, }))
 }
 
@@ -127,7 +127,7 @@ test "a nested row that runs backwards starts at the parent's cursor" {
     layout={ dir: RightToLeft, cross: Min, cross_justify: false, },
     spacing=gap,
   )
-  let child = parent.child(@layout.top_down, size=Some({ x: 20, y: 10, }))
+  let child = parent.child(@layout.top_down, size={ x: 20, y: 10, })
   assert_eq(child.max(), @emath.Rect::of({ x: 80, y: 0, }, { x: 100, y: 10, }))
 }
 

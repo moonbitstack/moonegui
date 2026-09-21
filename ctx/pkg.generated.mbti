@@ -53,6 +53,9 @@ pub(all) struct Output {
   shapes : Array[@paint.Clipped]
   repaint : Bool
 } derive(Eq, @debug.Debug)
+pub fn Output::equal(Self, Self) -> Bool
+pub fn Output::not_equal(Self, Self) -> Bool
+pub fn Output::to_repr(Self) -> @debug.Repr
 
 pub(all) struct Style {
   spacing : @emath.Vec2
@@ -69,9 +72,12 @@ pub(all) struct Style {
   outline : @paint.Stroke
   corner : Double
 } derive(Eq, @debug.Debug)
+pub fn Style::equal(Self, Self) -> Bool
 pub fn Style::fill_for(Self, @hit.Response) -> @paint.Color
+pub fn Style::not_equal(Self, Self) -> Bool
 pub fn Style::outline_for(Self, @hit.Response) -> @paint.Stroke
 pub fn Style::text_for(Self, @hit.Response) -> @paint.Color
+pub fn Style::to_repr(Self) -> @debug.Repr
 
 pub struct Ui {
   ctx : Ctx
@@ -84,18 +90,18 @@ pub struct Ui {
 pub fn Ui::allocate(Self, @emath.Vec2, @hit.Sense, String) -> (@emath.Rect, @hit.Response)
 pub fn Ui::allocate_space(Self, @emath.Vec2) -> @emath.Rect
 pub fn Ui::available(Self) -> @emath.Vec2
-pub fn Ui::child(Self, @layout.Layout, (Self) -> Unit, size? : @emath.Vec2?, salt? : String) -> @emath.Rect
+pub fn Ui::child(Self, @layout.Layout, (Self) -> Unit, size? : @emath.Vec2, salt? : String) -> @emath.Rect
 pub fn Ui::ctx(Self) -> Ctx
 pub fn Ui::disable(Self) -> Unit
 pub fn Ui::gap(Self, Double) -> Unit
 pub fn Ui::horizontal(Self, (Self) -> Unit) -> @emath.Rect
 pub fn Ui::id(Self) -> @id.Id
 pub fn Ui::is_enabled(Self) -> Bool
-pub fn Ui::line_height(Self, font? : @paint.FontId?) -> Double
-pub fn Ui::measure(Self, String, font? : @paint.FontId?) -> @emath.Vec2
+pub fn Ui::line_height(Self, font? : @paint.FontId) -> Double
+pub fn Ui::measure(Self, String, font? : @paint.FontId) -> @emath.Vec2
 pub fn Ui::next_id(Self, String) -> @id.Id
 pub fn Ui::painter(Self) -> @paint.Painter
-pub fn Ui::panel(Self, (Self) -> Unit, margin? : Double, size? : @emath.Vec2?) -> @emath.Rect
+pub fn Ui::panel(Self, (Self) -> Unit, margin? : Double, size? : @emath.Vec2) -> @emath.Rect
 pub fn Ui::region(Self, @layout.Layout, @emath.Rect, (Self) -> Unit, salt? : String) -> @emath.Rect
 pub fn Ui::root(Ctx, @emath.Rect) -> Self
 pub fn Ui::style(Self) -> Style

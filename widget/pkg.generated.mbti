@@ -18,7 +18,7 @@ pub fn edit(@ctx.Ui, String, hint? : String, width? : Double, salt? : String) ->
 
 pub fn heading(@ctx.Ui, String) -> @hit.Response
 
-pub fn label(@ctx.Ui, String, color? : @paint.Color?, wrap? : Bool, sense? : @hit.Sense) -> @hit.Response
+pub fn label(@ctx.Ui, String, color? : @paint.Color, wrap? : Bool, sense? : @hit.Sense) -> @hit.Response
 
 pub fn radio(@ctx.Ui, String, Bool) -> (Bool, @hit.Response)
 

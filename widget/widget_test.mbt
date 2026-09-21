@@ -102,7 +102,7 @@ test "a wrapped label becomes one drawing command a row" {
         fn(narrow) {
           @widget.label(narrow, "one two three", wrap=true) |> ignore
         },
-        size=Some({ x: 30, y: 100, }),
+        size={ x: 30, y: 100, },
       )
       |> ignore
     }),

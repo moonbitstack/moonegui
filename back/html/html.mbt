@@ -222,3 +222,19 @@ pub impl @back.Backend for Html with fn fill_text(_self, at, text, font, color) 
     color.a,
   )
 }
+
+///|
+pub extend Html with @back.Backend::{
+  measure,
+  pop_clip,
+  stroke_rect,
+  fill_text,
+  line_height,
+  measure_prefix,
+  fill_rect,
+  stroke_path,
+  push_clip,
+  fill_circle,
+  stroke_circle,
+  fill_path,
+}

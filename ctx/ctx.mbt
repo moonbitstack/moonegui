@@ -254,3 +254,9 @@ fn copy_shapes(shapes : Array[@paint.Clipped]) -> Array[@paint.Clipped] {
   }
   out
 }
+
+///|
+pub extend Output with Debug::{to_repr}
+
+///|
+pub extend Output with Eq::{not_equal, equal}

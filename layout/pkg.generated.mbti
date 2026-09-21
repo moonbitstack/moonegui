@@ -24,13 +24,19 @@ pub(all) enum Dir {
   TopDown
   BottomUp
 } derive(Eq, @debug.Debug)
+pub fn Dir::equal(Self, Self) -> Bool
 pub fn Dir::is_horizontal(Self) -> Bool
+pub fn Dir::not_equal(Self, Self) -> Bool
+pub fn Dir::to_repr(Self) -> @debug.Repr
 
 pub(all) struct Layout {
   dir : Dir
   cross : @emath.Align
   cross_justify : Bool
 } derive(Eq, @debug.Debug)
+pub fn Layout::equal(Self, Self) -> Bool
+pub fn Layout::not_equal(Self, Self) -> Bool
+pub fn Layout::to_repr(Self) -> @debug.Repr
 
 pub struct Placer {
   layout : Layout
@@ -40,7 +46,7 @@ pub struct Placer {
 pub fn Placer::advance(Self, @emath.Rect) -> Unit
 pub fn Placer::allocate(Self, @emath.Vec2) -> @emath.Rect
 pub fn Placer::available(Self) -> @emath.Vec2
-pub fn Placer::child(Self, Layout, size? : @emath.Vec2?) -> Self
+pub fn Placer::child(Self, Layout, size? : @emath.Vec2) -> Self
 pub fn Placer::cursor(Self) -> @emath.Vec2
 pub fn Placer::layout(Self) -> Layout
 pub fn Placer::max(Self) -> @emath.Rect

@@ -20,8 +20,20 @@ pub struct Rec {
   height : Double
 }
 pub fn Rec::clear(Self) -> Unit
+pub fn Rec::fill_circle(Self, @emath.Vec2, Double, @paint.Color) -> Unit
+pub fn Rec::fill_path(Self, Array[@emath.Vec2], @paint.Color) -> Unit
+pub fn Rec::fill_rect(Self, @emath.Rect, @paint.Corner, @paint.Color) -> Unit
+pub fn Rec::fill_text(Self, @emath.Vec2, String, @paint.FontId, @paint.Color) -> Unit
+pub fn Rec::line_height(Self, @paint.FontId) -> Double
 pub fn Rec::lines(Self) -> Array[String]
+pub fn Rec::measure(Self, String, @paint.FontId) -> @emath.Vec2
+pub fn Rec::measure_prefix(Self, String, @paint.FontId, Double) -> Int
 pub fn Rec::new(advance? : Double, height? : Double) -> Self
+pub fn Rec::pop_clip(Self) -> Unit
+pub fn Rec::push_clip(Self, @emath.Rect) -> Unit
+pub fn Rec::stroke_circle(Self, @emath.Vec2, Double, @paint.Stroke) -> Unit
+pub fn Rec::stroke_path(Self, Array[@emath.Vec2], Bool, @paint.Stroke) -> Unit
+pub fn Rec::stroke_rect(Self, @emath.Rect, @paint.Corner, @paint.Stroke) -> Unit
 pub fn Rec::text(Self) -> String
 pub impl Backend for Rec
 

@@ -351,3 +351,27 @@ pub fn State::dt(self : State) -> Double {
 pub fn State::has_focus(self : State) -> Bool {
   self.focused
 }
+
+///|
+pub extend Btn with Debug::{to_repr}
+
+///|
+pub extend Btn with Eq::{not_equal, equal}
+
+///|
+pub extend Event with Debug::{to_repr}
+
+///|
+pub extend Event with Eq::{not_equal, equal}
+
+///|
+pub extend Key with Debug::{to_repr}
+
+///|
+pub extend Key with Eq::{not_equal, equal}
+
+///|
+pub extend Mods with Debug::{to_repr}
+
+///|
+pub extend Mods with Eq::{not_equal, equal}
