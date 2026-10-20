@@ -29,12 +29,12 @@ pub struct Ctx {
   mut over : @id.Id
   mut focus_ring : Array[@id.Id]
   mut repaint : Bool
-  mut frame : Int
+  mut frame : Int32
 }
 
 ///|
 /// A context that draws through this backend.
-pub fn Ctx::new(back : &@back.Backend, style? : Style = dark) -> Ctx {
+pub fn Ctx::new(back : &@back.Backend, style~ : Style = dark) -> Ctx {
   {
     back,
     memory: @mem.Memory::new(),
@@ -170,7 +170,7 @@ pub fn Ctx::focused(self : Ctx) -> @id.Id {
 
 ///|
 /// How many frames have run.
-pub fn Ctx::frame(self : Ctx) -> Int {
+pub fn Ctx::frame(self : Ctx) -> Int32 {
   self.frame
 }
 
@@ -181,7 +181,7 @@ pub fn Ctx::interact(
   id : @id.Id,
   rect : @emath.Rect,
   sense : @hit.Sense,
-  enabled? : Bool = true,
+  enabled~ : Bool = true,
 ) -> @hit.Response {
   let widget : @hit.WidgetRect = { id, rect, sense, enabled, layer: 0, }
   self.current.add(widget)

@@ -29,20 +29,20 @@ pub fn Clipped::not_equal(Self, Self) -> Bool
 pub fn Clipped::to_repr(Self) -> @debug.Repr
 
 pub(all) struct Color {
-  r : Int
-  g : Int
-  b : Int
-  a : Int
+  r : Int32
+  g : Int32
+  b : Int32
+  a : Int32
 } derive(Eq, @debug.Debug)
 pub fn Color::equal(Self, Self) -> Bool
-pub fn Color::grey(Int) -> Self
+pub fn Color::grey(Int32) -> Self
 pub fn Color::is_clear(Self) -> Bool
 pub fn Color::lerp(Self, Self, Double) -> Self
 pub fn Color::not_equal(Self, Self) -> Bool
-pub fn Color::rgb(Int, Int, Int) -> Self
-pub fn Color::rgba(Int, Int, Int, Int) -> Self
+pub fn Color::rgb(Int32, Int32, Int32) -> Self
+pub fn Color::rgba(Int32, Int32, Int32, Int32) -> Self
 pub fn Color::to_repr(Self) -> @debug.Repr
-pub fn Color::with_alpha(Self, Int) -> Self
+pub fn Color::with_alpha(Self, Int32) -> Self
 
 pub(all) struct Corner {
   nw : Double
@@ -88,7 +88,7 @@ pub fn Painter::add(Self, Shape) -> Unit
 pub fn Painter::circle(Self, @emath.Vec2, Double, fill? : Color, stroke? : Stroke) -> Unit
 pub fn Painter::clear(Self) -> Unit
 pub fn Painter::clip(Self) -> @emath.Rect
-pub fn Painter::count(Self) -> Int
+pub fn Painter::count(Self) -> Int32
 pub fn Painter::galley(Self, @emath.Vec2, Galley, Color) -> Unit
 pub fn Painter::line(Self, @emath.Vec2, @emath.Vec2, Stroke) -> Unit
 pub fn Painter::new(clip? : @emath.Rect) -> Self

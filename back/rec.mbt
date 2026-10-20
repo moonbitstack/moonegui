@@ -18,7 +18,7 @@ pub struct Rec {
 ///|
 /// A recorder whose characters are `advance` wide and whose lines are `height`
 /// apart, both as a fraction of the font size.
-pub fn Rec::new(advance? : Double = 0.5, height? : Double = 1.25) -> Rec {
+pub fn Rec::new(advance~ : Double = 0.5, height~ : Double = 1.25) -> Rec {
   { lines: [], advance, height, }
 }
 
@@ -182,7 +182,7 @@ pub fn number(value : Double) -> String {
 }
 
 ///|
-fn round_to_int(value : Double) -> Int {
+fn round_to_int(value : Double) -> Int32 {
   if value >= 0 {
     (value + 0.5).to_int()
   } else {
@@ -258,7 +258,7 @@ fn quote(text : String) -> String {
 }
 
 ///|
-fn hex(value : Int) -> String {
+fn hex(value : Int32) -> String {
   let digits = "0123456789abcdef"
   let hi = value / 16 % 16
   let lo = value % 16
@@ -267,7 +267,7 @@ fn hex(value : Int) -> String {
 
 ///|
 /// How many characters a string has, counting a surrogate pair as one.
-fn chars(text : String) -> Int {
+fn chars(text : String) -> Int32 {
   let mut count = 0
   let mut i = 0
   while i < text.length() {
@@ -279,7 +279,7 @@ fn chars(text : String) -> Int {
 
 ///|
 /// The code unit index of the nth character.
-fn index_of_char(text : String, nth : Int) -> Int {
+fn index_of_char(text : String, nth : Int32) -> Int32 {
   let mut count = 0
   let mut i = 0
   while i < text.length() && count < nth {
@@ -290,7 +290,7 @@ fn index_of_char(text : String, nth : Int) -> Int {
 }
 
 ///|
-fn step(text : String, at : Int) -> Int {
+fn step(text : String, at : Int32) -> Int32 {
   let unit = text[at].to_int()
   if unit >= 0xD800 && unit <= 0xDBFF && at + 1 < text.length() {
     2

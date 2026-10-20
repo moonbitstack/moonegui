@@ -55,7 +55,7 @@ fn hover(x : Double, y : Double) -> Array[@input.Event] {
 }
 
 ///|
-fn key(key : @input.Key, shift? : Bool = false) -> Array[@input.Event] {
+fn key(key : @input.Key, shift~ : Bool = false) -> Array[@input.Event] {
   [KeyDown(key~, mods={ ctrl: false, alt: false, shift, }, repeat=false)]
 }
 

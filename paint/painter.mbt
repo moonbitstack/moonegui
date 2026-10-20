@@ -24,7 +24,7 @@ pub struct Painter {
 
 ///|
 /// A painter that collects into its own list.
-pub fn Painter::new(clip? : @emath.Rect = unclipped) -> Painter {
+pub fn Painter::new(clip~ : @emath.Rect = unclipped) -> Painter {
   { shapes: [], clip, }
 }
 
@@ -42,7 +42,7 @@ pub fn Painter::shapes(self : Painter) -> Array[Clipped] {
 
 ///|
 /// How many shapes have been collected.
-pub fn Painter::count(self : Painter) -> Int {
+pub fn Painter::count(self : Painter) -> Int32 {
   self.shapes.length()
 }
 
@@ -72,9 +72,9 @@ pub fn Painter::add(self : Painter, shape : Shape) -> Unit {
 pub fn Painter::rect(
   self : Painter,
   rect : @emath.Rect,
-  fill? : Color = clear,
-  stroke? : Stroke = no_stroke,
-  corner? : Corner = square,
+  fill~ : Color = clear,
+  stroke~ : Stroke = no_stroke,
+  corner~ : Corner = square,
 ) -> Unit {
   self.add(Rect(rect~, corner~, fill~, stroke~))
 }
@@ -85,8 +85,8 @@ pub fn Painter::circle(
   self : Painter,
   centre : @emath.Vec2,
   radius : Double,
-  fill? : Color = clear,
-  stroke? : Stroke = no_stroke,
+  fill~ : Color = clear,
+  stroke~ : Stroke = no_stroke,
 ) -> Unit {
   self.add(Circle(centre~, radius~, fill~, stroke~))
 }
@@ -107,9 +107,9 @@ pub fn Painter::line(
 pub fn Painter::path(
   self : Painter,
   points : Array[@emath.Vec2],
-  closed? : Bool = false,
-  fill? : Color = clear,
-  stroke? : Stroke = no_stroke,
+  closed~ : Bool = false,
+  fill~ : Color = clear,
+  stroke~ : Stroke = no_stroke,
 ) -> Unit {
   self.add(Path(points~, closed~, fill~, stroke~))
 }

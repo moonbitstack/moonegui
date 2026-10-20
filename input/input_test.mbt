@@ -5,7 +5,7 @@
 let screen : @emath.Rect = @emath.Rect::of({ x: 0, y: 0, }, { x: 100, y: 100, })
 
 ///|
-fn frame(events : Array[@input.Event], time? : Double = 0) -> @input.Raw {
+fn frame(events : Array[@input.Event], time~ : Double = 0) -> @input.Raw {
   { screen, events, time, dt: 0.016, focused: true, }
 }
 

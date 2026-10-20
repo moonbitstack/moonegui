@@ -35,7 +35,7 @@ test "an id prints short enough to read in a snapshot" {
 
 ///|
 test "ids order and hash, which is what a map of them needs" {
-  let table : Map[@id.Id, Int] = Map([])
+  let table : Map[@id.Id, Int32] = Map([])
   let a = @id.root("a")
   let b = @id.root("b")
   table[a] = 1

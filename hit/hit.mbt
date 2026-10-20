@@ -60,7 +60,7 @@ pub(all) struct WidgetRect {
   sense : Sense
   enabled : Bool
   /// Which layer it was drawn in; a higher layer is nearer the viewer.
-  layer : Int
+  layer : Int32
 } derive(Eq, Debug)
 
 ///|
@@ -91,7 +91,7 @@ pub fn Rects::find(self : Rects, id : @id.Id) -> WidgetRect? {
 
 ///|
 /// How many widgets were recorded.
-pub fn Rects::count(self : Rects) -> Int {
+pub fn Rects::count(self : Rects) -> Int32 {
   self.items.length()
 }
 

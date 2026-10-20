@@ -30,7 +30,7 @@ pub fn Id::child(self : Id, salt : String) -> Id {
 ///|
 /// A child of this id identified by a number, which is what a list of widgets
 /// built in a loop needs.
-pub fn Id::index(self : Id, at : Int) -> Id {
+pub fn Id::index(self : Id, at : Int32) -> Id {
   self.child(at.to_string())
 }
 

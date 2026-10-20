@@ -10,23 +10,23 @@ import {
 // Values
 pub fn elide(&@back.Backend, String, @paint.FontId, Double, tail? : String) -> String
 
-pub fn index_at(&@back.Backend, String, @paint.FontId, Double) -> Int
+pub fn index_at(&@back.Backend, String, @paint.FontId, Double) -> Int32
 
-pub fn insert(String, Int, String) -> String
+pub fn insert(String, Int32, String) -> String
 
 pub fn layout(&@back.Backend, String, @paint.FontId, wrap? : Double, align? : @emath.Align) -> @paint.Galley
 
 pub fn line(&@back.Backend, String, @paint.FontId) -> @paint.Galley
 
-pub fn next_index(String, Int) -> Int
+pub fn next_index(String, Int32) -> Int32
 
 pub let no_wrap : Double
 
-pub fn prev_index(String, Int) -> Int
+pub fn prev_index(String, Int32) -> Int32
 
-pub fn remove(String, Int, Int) -> String
+pub fn remove(String, Int32, Int32) -> String
 
-pub fn x_at(&@back.Backend, String, @paint.FontId, Int) -> Double
+pub fn x_at(&@back.Backend, String, @paint.FontId, Int32) -> Double
 
 // Errors
 

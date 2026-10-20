@@ -14,7 +14,7 @@ pub struct Canvas {
 
 ///|
 /// Take over the canvas with this element id.
-pub fn Canvas::new(id? : String = "moonegui") -> Canvas {
+pub fn Canvas::new(id~ : String = "moonegui") -> Canvas {
   @web.attach(id)
   js_canvas_init()
   { id, }

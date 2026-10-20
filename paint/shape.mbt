@@ -4,27 +4,27 @@
 ///|
 /// A colour with an alpha channel, each component from 0 to 255.
 pub(all) struct Color {
-  r : Int
-  g : Int
-  b : Int
-  a : Int
+  r : Int32
+  g : Int32
+  b : Int32
+  a : Int32
 } derive(Eq, Debug)
 
 ///|
 /// An opaque colour.
-pub fn Color::rgb(r : Int, g : Int, b : Int) -> Color {
+pub fn Color::rgb(r : Int32, g : Int32, b : Int32) -> Color {
   { r: byte(r), g: byte(g), b: byte(b), a: 255, }
 }
 
 ///|
 /// A colour with an alpha channel.
-pub fn Color::rgba(r : Int, g : Int, b : Int, a : Int) -> Color {
+pub fn Color::rgba(r : Int32, g : Int32, b : Int32, a : Int32) -> Color {
   { r: byte(r), g: byte(g), b: byte(b), a: byte(a), }
 }
 
 ///|
 /// A grey.
-pub fn Color::grey(level : Int) -> Color {
+pub fn Color::grey(level : Int32) -> Color {
   Color::rgb(level, level, level)
 }
 
@@ -40,7 +40,7 @@ pub fn Color::is_clear(self : Color) -> Bool {
 
 ///|
 /// The same colour at a different opacity.
-pub fn Color::with_alpha(self : Color, a : Int) -> Color {
+pub fn Color::with_alpha(self : Color, a : Int32) -> Color {
   { ..self, a: byte(a), }
 }
 
@@ -198,7 +198,7 @@ pub(all) struct Clipped {
 } derive(Eq, Debug)
 
 ///|
-fn byte(value : Int) -> Int {
+fn byte(value : Int32) -> Int32 {
   if value < 0 {
     0
   } else if value > 255 {
@@ -209,7 +209,7 @@ fn byte(value : Int) -> Int {
 }
 
 ///|
-fn mix(a : Int, b : Int, t : Double) -> Int {
+fn mix(a : Int32, b : Int32, t : Double) -> Int32 {
   byte((a.to_double() + (b - a).to_double() * t).to_int())
 }
 

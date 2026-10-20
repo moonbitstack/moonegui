@@ -19,9 +19,9 @@ fn box(x : Double, y : Double) -> @emath.Rect {
 fn widget(
   id : @id.Id,
   rect : @emath.Rect,
-  sense? : @hit.Sense = @hit.click,
-  enabled? : Bool = true,
-  layer? : Int = 0,
+  sense~ : @hit.Sense = @hit.click,
+  enabled~ : Bool = true,
+  layer~ : Int32 = 0,
 ) -> @hit.WidgetRect {
   { id, rect, sense, enabled, layer, }
 }

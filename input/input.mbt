@@ -30,7 +30,7 @@ pub(all) enum Btn {
 
 ///|
 /// Which button, as a number, for the arrays that track them.
-pub fn Btn::index(self : Btn) -> Int {
+pub fn Btn::index(self : Btn) -> Int32 {
   match self {
     Primary => 0
     Secondary => 1
@@ -91,8 +91,8 @@ pub(all) struct Raw {
 /// A frame's worth of input, with a screen of this size and nothing happening.
 pub fn Raw::new(
   screen : @emath.Rect,
-  time? : Double = 0,
-  dt? : Double = 0.016,
+  time~ : Double = 0,
+  dt~ : Double = 0.016,
 ) -> Raw {
   { screen, events: [], time, dt, focused: true, }
 }

@@ -19,7 +19,7 @@ pub struct Html {
 
 ///|
 /// Take over the element with this id and draw into it.
-pub fn Html::new(id? : String = "moonegui") -> Html {
+pub fn Html::new(id~ : String = "moonegui") -> Html {
   @web.attach(id)
   js_html_init()
   { id, }
@@ -74,7 +74,7 @@ pub fn Html::raw(_self : Html, time : Double, dt : Double) -> @input.Raw {
 
 ///|
 /// How many elements the last frame left in the document.
-pub fn Html::count(_self : Html) -> Int {
+pub fn Html::count(_self : Html) -> Int32 {
   js_count()
 }
 

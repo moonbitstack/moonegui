@@ -11,7 +11,7 @@ priv struct Demo {
   mut wrapped : Bool
   mut size : Double
   mut name : String
-  mut clicks : Int
+  mut clicks : Int32
   mut theme : Bool
 }
 

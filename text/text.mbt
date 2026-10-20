@@ -16,8 +16,8 @@ pub fn layout(
   back : &@back.Backend,
   text : String,
   font : @paint.FontId,
-  wrap? : Double = no_wrap,
-  align? : @emath.Align = Min,
+  wrap~ : Double = no_wrap,
+  align~ : @emath.Align = Min,
 ) -> @paint.Galley {
   let height = back.line_height(font)
   let lines : Array[String] = []
@@ -68,7 +68,7 @@ pub fn elide(
   text : String,
   font : @paint.FontId,
   width : Double,
-  tail? : String = "…",
+  tail~ : String = "…",
 ) -> String {
   if back.measure(text, font).x <= width {
     return text
@@ -92,7 +92,7 @@ pub fn index_at(
   text : String,
   font : @paint.FontId,
   x : Double,
-) -> Int {
+) -> Int32 {
   let n = text.length()
   if n == 0 || x <= 0 {
     return 0
@@ -117,7 +117,7 @@ pub fn x_at(
   back : &@back.Backend,
   text : String,
   font : @paint.FontId,
-  index : Int,
+  index : Int32,
 ) -> Double {
   let at = clamp_index(index, text.length())
   back.measure(text[0:at].to_owned(), font).x
@@ -125,7 +125,7 @@ pub fn x_at(
 
 ///|
 /// The index one character on, never landing inside a surrogate pair.
-pub fn next_index(text : String, index : Int) -> Int {
+pub fn next_index(text : String, index : Int32) -> Int32 {
   let n = text.length()
   let at = clamp_index(index, n)
   if at >= n {
@@ -140,7 +140,7 @@ pub fn next_index(text : String, index : Int) -> Int {
 
 ///|
 /// The index one character back.
-pub fn prev_index(text : String, index : Int) -> Int {
+pub fn prev_index(text : String, index : Int32) -> Int32 {
   let at = clamp_index(index, text.length())
   if at <= 0 {
     return 0
@@ -154,14 +154,14 @@ pub fn prev_index(text : String, index : Int) -> Int {
 
 ///|
 /// Put a string in at an index.
-pub fn insert(text : String, at : Int, what : String) -> String {
+pub fn insert(text : String, at : Int32, what : String) -> String {
   let index = clamp_index(at, text.length())
   text[0:index].to_owned() + what + text[index:].to_owned()
 }
 
 ///|
 /// Take out everything between two indices.
-pub fn remove(text : String, from : Int, to : Int) -> String {
+pub fn remove(text : String, from : Int32, to : Int32) -> String {
   let n = text.length()
   let low = if from < to { from } else { to }
   let high = if from < to { to } else { from }
@@ -230,7 +230,7 @@ fn break_line(
 
 ///|
 /// The last space before `cut`, or zero when there is none to break at.
-fn last_space(text : String, cut : Int) -> Int {
+fn last_space(text : String, cut : Int32) -> Int32 {
   let mut found = 0
   for i in 0..<cut {
     if is_space(text[i]) {
@@ -268,7 +268,7 @@ fn is_low(unit : UInt16) -> Bool {
 
 ///|
 /// The nearest index at or before this one that is not inside a surrogate pair.
-fn down(text : String, index : Int) -> Int {
+fn down(text : String, index : Int32) -> Int32 {
   let at = clamp_index(index, text.length())
   if at > 0 && at < text.length() && is_low(text[at]) {
     at - 1
@@ -278,7 +278,7 @@ fn down(text : String, index : Int) -> Int {
 }
 
 ///|
-fn clamp_index(index : Int, length : Int) -> Int {
+fn clamp_index(index : Int32, length : Int32) -> Int32 {
   if index < 0 {
     0
   } else if index > length {

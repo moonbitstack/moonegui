@@ -38,7 +38,7 @@ extern "js" fn js_html_init() -> Unit =
   #| }
 
 ///|
-extern "js" fn js_begin(r : Int, g : Int, b : Int, a : Int) -> Unit =
+extern "js" fn js_begin(r : Int32, g : Int32, b : Int32, a : Int32) -> Unit =
   #| (r, g, b, a) => {
   #|   const s = globalThis.__moonegui;
   #|   s.at = 0;
@@ -57,7 +57,7 @@ extern "js" fn js_end() -> Unit =
   #| }
 
 ///|
-extern "js" fn js_count() -> Int =
+extern "js" fn js_count() -> Int32 =
   #| () => globalThis.__moonegui.nodes.length
 
 ///|
@@ -87,10 +87,10 @@ extern "js" fn js_rect(
   se : Double,
   sw : Double,
   width : Double,
-  r : Int,
-  g : Int,
-  b : Int,
-  a : Int,
+  r : Int32,
+  g : Int32,
+  b : Int32,
+  a : Int32,
 ) -> Unit =
   #| (x, y, w, h, nw, ne, se, sw, width, r, g, b, a) => {
   #|   const s = globalThis.__moonegui;
@@ -112,10 +112,10 @@ extern "js" fn js_circle(
   y : Double,
   radius : Double,
   width : Double,
-  r : Int,
-  g : Int,
-  b : Int,
-  a : Int,
+  r : Int32,
+  g : Int32,
+  b : Int32,
+  a : Int32,
 ) -> Unit =
   #| (x, y, radius, width, r, g, b, a) => {
   #|   const s = globalThis.__moonegui;
@@ -145,13 +145,13 @@ extern "js" fn js_point(x : Double, y : Double) -> Unit =
 /// bounding box of the points, so the coordinates inside it are relative and
 /// the element can still be clipped like any other.
 extern "js" fn js_end_path(
-  closed : Int,
+  closed : Int32,
   width : Double,
-  r : Int,
-  g : Int,
-  b : Int,
-  a : Int,
-  filled : Int,
+  r : Int32,
+  g : Int32,
+  b : Int32,
+  a : Int32,
+  filled : Int32,
 ) -> Unit =
   #| (closed, width, r, g, b, a, filled) => {
   #|   const s = globalThis.__moonegui;
@@ -196,11 +196,11 @@ extern "js" fn js_text(
   y : Double,
   text : String,
   size : Double,
-  mono : Int,
-  r : Int,
-  g : Int,
-  b : Int,
-  a : Int,
+  mono : Int32,
+  r : Int32,
+  g : Int32,
+  b : Int32,
+  a : Int32,
 ) -> Unit =
   #| (x, y, text, size, mono, r, g, b, a) => {
   #|   const s = globalThis.__moonegui;

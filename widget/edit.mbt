@@ -11,9 +11,9 @@
 pub fn edit(
   ui : @ctx.Ui,
   value : String,
-  hint? : String = "",
-  width? : Double = 200,
-  salt? : String = "edit",
+  hint~ : String = "",
+  width~ : Double = 200,
+  salt~ : String = "edit",
 ) -> (String, @hit.Response) {
   let style = ui.style()
   let back = ui.ctx().backend()
@@ -192,10 +192,10 @@ pub fn edit(
 /// Put a string in where the selection was, and say where the caret ends up.
 fn replace(
   text : String,
-  at : Int,
-  other : Int,
+  at : Int32,
+  other : Int32,
   what : String,
-) -> (String, Int) {
+) -> (String, Int32) {
   let from = smaller(at, other)
   let to = larger(at, other)
   let cut = @text.remove(text, from, to)
@@ -208,7 +208,7 @@ fn scroll_for(
   back : &@back.Backend,
   text : String,
   font : @paint.FontId,
-  at : Int,
+  at : Int32,
   room : Double,
 ) -> Double {
   let full = back.measure(text, font).x
@@ -220,7 +220,7 @@ fn scroll_for(
 }
 
 ///|
-fn clamp_to(index : Int, length : Int) -> Int {
+fn clamp_to(index : Int32, length : Int32) -> Int32 {
   if index < 0 {
     0
   } else if index > length {
@@ -231,7 +231,7 @@ fn clamp_to(index : Int, length : Int) -> Int {
 }
 
 ///|
-fn smaller(a : Int, b : Int) -> Int {
+fn smaller(a : Int32, b : Int32) -> Int32 {
   if a < b {
     a
   } else {
@@ -240,7 +240,7 @@ fn smaller(a : Int, b : Int) -> Int {
 }
 
 ///|
-fn larger(a : Int, b : Int) -> Int {
+fn larger(a : Int32, b : Int32) -> Int32 {
   if a > b {
     a
   } else {

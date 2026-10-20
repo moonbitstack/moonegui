@@ -11,8 +11,8 @@ pub fn label(
   ui : @ctx.Ui,
   string : String,
   color? : @paint.Color,
-  wrap? : Bool = false,
-  sense? : @hit.Sense = @hit.inert,
+  wrap~ : Bool = false,
+  sense~ : @hit.Sense = @hit.inert,
 ) -> @hit.Response {
   let style = ui.style()
   let laid = if wrap {

@@ -32,13 +32,13 @@ pub struct Ctx {
   mut over : @id.Id
   mut focus_ring : Array[@id.Id]
   mut repaint : Bool
-  mut frame : Int
+  mut frame : Int32
 }
 pub fn Ctx::backend(Self) -> &@back.Backend
 pub fn Ctx::begin(Self, @input.Raw) -> Ui
 pub fn Ctx::end(Self) -> Output
 pub fn Ctx::focused(Self) -> @id.Id
-pub fn Ctx::frame(Self) -> Int
+pub fn Ctx::frame(Self) -> Int32
 pub fn Ctx::hovered(Self) -> @id.Id
 pub fn Ctx::input(Self) -> @input.State
 pub fn Ctx::interact(Self, @id.Id, @emath.Rect, @hit.Sense, enabled? : Bool) -> @hit.Response
@@ -85,7 +85,7 @@ pub struct Ui {
   placer : @layout.Placer
   clip : @emath.Rect
   mut enabled : Bool
-  mut counter : Int
+  mut counter : Int32
 }
 pub fn Ui::allocate(Self, @emath.Vec2, @hit.Sense, String) -> (@emath.Rect, @hit.Response)
 pub fn Ui::allocate_space(Self, @emath.Vec2) -> @emath.Rect

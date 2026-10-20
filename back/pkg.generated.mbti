@@ -27,7 +27,7 @@ pub fn Rec::fill_text(Self, @emath.Vec2, String, @paint.FontId, @paint.Color) ->
 pub fn Rec::line_height(Self, @paint.FontId) -> Double
 pub fn Rec::lines(Self) -> Array[String]
 pub fn Rec::measure(Self, String, @paint.FontId) -> @emath.Vec2
-pub fn Rec::measure_prefix(Self, String, @paint.FontId, Double) -> Int
+pub fn Rec::measure_prefix(Self, String, @paint.FontId, Double) -> Int32
 pub fn Rec::new(advance? : Double, height? : Double) -> Self
 pub fn Rec::pop_clip(Self) -> Unit
 pub fn Rec::push_clip(Self, @emath.Rect) -> Unit
@@ -43,7 +43,7 @@ pub impl Backend for Rec
 pub(open) trait Backend {
   fn measure(Self, String, @paint.FontId) -> @emath.Vec2
   fn line_height(Self, @paint.FontId) -> Double
-  fn measure_prefix(Self, String, @paint.FontId, Double) -> Int
+  fn measure_prefix(Self, String, @paint.FontId, Double) -> Int32
   fn push_clip(Self, @emath.Rect) -> Unit
   fn pop_clip(Self) -> Unit
   fn fill_rect(Self, @emath.Rect, @paint.Corner, @paint.Color) -> Unit

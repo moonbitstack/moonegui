@@ -8,7 +8,7 @@ let screen : @emath.Rect = @emath.Rect::of({ x: 0, y: 0, }, { x: 200, y: 100, })
 let ink : @paint.Color = @paint.Color::rgb(200, 30, 30)
 
 ///|
-fn frame(events : Array[@input.Event], time? : Double = 0) -> @input.Raw {
+fn frame(events : Array[@input.Event], time~ : Double = 0) -> @input.Raw {
   { screen, events, time, dt: 0.016, focused: true, }
 }
 
@@ -28,7 +28,7 @@ fn tap(x : Double, y : Double) -> Array[@input.Event] {
 }
 
 ///|
-fn tab(shift? : Bool = false) -> Array[@input.Event] {
+fn tab(shift~ : Bool = false) -> Array[@input.Event] {
   [KeyDown(key=Tab, mods={ ctrl: false, alt: false, shift, }, repeat=false)]
 }
 

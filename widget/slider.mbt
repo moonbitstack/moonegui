@@ -15,10 +15,10 @@ const STEPS : Double = 20
 pub fn slider(
   ui : @ctx.Ui,
   value : Double,
-  low? : Double = 0,
-  high? : Double = 1,
-  width? : Double = 160,
-  salt? : String = "slider",
+  low~ : Double = 0,
+  high~ : Double = 1,
+  width~ : Double = 160,
+  salt~ : String = "slider",
 ) -> (Double, @hit.Response) {
   let style = ui.style()
   let height = most(style.min_height, ui.line_height())
@@ -89,9 +89,9 @@ pub fn slider_with_label(
   ui : @ctx.Ui,
   string : String,
   value : Double,
-  low? : Double = 0,
-  high? : Double = 1,
-  width? : Double = 160,
+  low~ : Double = 0,
+  high~ : Double = 1,
+  width~ : Double = 160,
 ) -> (Double, @hit.Response) {
   let mut out = value
   let mut response = @hit.Response::none(ui.id(), ui.used())

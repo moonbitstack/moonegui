@@ -62,7 +62,7 @@ extern "js" fn js_focused() -> Bool =
   #| () => globalThis.__moonegui.focused
 
 ///|
-extern "js" fn js_measure(text : String, size : Double, mono : Int) -> Double =
+extern "js" fn js_measure(text : String, size : Double, mono : Int32) -> Double =
   #| (text, size, mono) => {
   #|   const s = globalThis.__moonegui;
   #|   s.meter.font = globalThis.__moonegui_face(size, mono);
@@ -81,9 +81,9 @@ extern "js" fn js_line_height(size : Double) -> Double =
 extern "js" fn js_prefix(
   text : String,
   size : Double,
-  mono : Int,
+  mono : Int32,
   room : Double,
-) -> Int =
+) -> Int32 =
   #| (text, size, mono, room) => {
   #|   const s = globalThis.__moonegui;
   #|   s.meter.font = globalThis.__moonegui_face(size, mono);

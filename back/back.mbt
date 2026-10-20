@@ -15,7 +15,7 @@ pub(open) trait Backend {
   /// The longest prefix of the string that fits in this width, as a code unit
   /// index. Line breaking would otherwise ask `measure` once per candidate
   /// break, which is the difference between one call and hundreds.
-  fn measure_prefix(Self, String, @paint.FontId, Double) -> Int
+  fn measure_prefix(Self, String, @paint.FontId, Double) -> Int32
   fn push_clip(Self, @emath.Rect) -> Unit
   fn pop_clip(Self) -> Unit
   fn fill_rect(Self, @emath.Rect, @paint.Corner, @paint.Color) -> Unit

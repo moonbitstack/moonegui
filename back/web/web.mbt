@@ -70,13 +70,13 @@ pub fn line_height(font : @paint.FontId) -> Double {
 
 ///|
 /// The longest prefix of the string that fits in this width.
-pub fn prefix(text : String, font : @paint.FontId, room : Double) -> Int {
+pub fn prefix(text : String, font : @paint.FontId, room : Double) -> Int32 {
   js_prefix(text, font.size, mono(font), room)
 }
 
 ///|
 /// Which of the two families a font asks for, as the browser side spells it.
-pub fn mono(font : @paint.FontId) -> Int {
+pub fn mono(font : @paint.FontId) -> Int32 {
   match font.family {
     Mono => 1
     Sans => 0
@@ -184,17 +184,17 @@ fn button(index : Double) -> @input.Btn {
 }
 
 ///|
-fn mods(bits : Int) -> @input.Mods {
+fn mods(bits : Int32) -> @input.Mods {
   { ctrl: bits % 2 == 1, alt: bits / 2 % 2 == 1, shift: bits / 4 % 2 == 1, }
 }
 
 ///|
-fn point(parts : Array[String], at : Int) -> @emath.Vec2 {
+fn point(parts : Array[String], at : Int32) -> @emath.Vec2 {
   { x: number(parts, at), y: number(parts, at + 1), }
 }
 
 ///|
-fn word(parts : Array[String], at : Int) -> String {
+fn word(parts : Array[String], at : Int32) -> String {
   if at < parts.length() {
     parts[at]
   } else {
@@ -203,7 +203,7 @@ fn word(parts : Array[String], at : Int) -> String {
 }
 
 ///|
-fn number(parts : Array[String], at : Int) -> Double {
+fn number(parts : Array[String], at : Int32) -> Double {
   parse(word(parts, at))
 }
 
@@ -241,7 +241,7 @@ fn parse(text : String) -> Double {
 
 ///|
 /// The first `most` words of a line.
-fn words(line : String, most : Int) -> Array[String] {
+fn words(line : String, most : Int32) -> Array[String] {
   let out : Array[String] = []
   let mut start = 0
   for i in 0..<line.length() {

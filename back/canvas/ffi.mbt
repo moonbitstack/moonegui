@@ -21,7 +21,7 @@ extern "js" fn js_canvas_init() -> Unit =
   #| }
 
 ///|
-extern "js" fn js_clear(r : Int, g : Int, b : Int, a : Int) -> Unit =
+extern "js" fn js_clear(r : Int32, g : Int32, b : Int32, a : Int32) -> Unit =
   #| (r, g, b, a) => {
   #|   const s = globalThis.__moonegui;
   #|   s.ctx.setTransform(s.dpr, 0, 0, s.dpr, 0, 0);
@@ -58,10 +58,10 @@ extern "js" fn js_fill_rect(
   ne : Double,
   se : Double,
   sw : Double,
-  r : Int,
-  g : Int,
-  b : Int,
-  a : Int,
+  r : Int32,
+  g : Int32,
+  b : Int32,
+  a : Int32,
 ) -> Unit =
   #| (x, y, w, h, nw, ne, se, sw, r, g, b, a) => {
   #|   const c = globalThis.__moonegui.ctx;
@@ -81,10 +81,10 @@ extern "js" fn js_stroke_rect(
   se : Double,
   sw : Double,
   width : Double,
-  r : Int,
-  g : Int,
-  b : Int,
-  a : Int,
+  r : Int32,
+  g : Int32,
+  b : Int32,
+  a : Int32,
 ) -> Unit =
   #| (x, y, w, h, nw, ne, se, sw, width, r, g, b, a) => {
   #|   const c = globalThis.__moonegui.ctx;
@@ -103,11 +103,11 @@ extern "js" fn js_circle(
   y : Double,
   radius : Double,
   width : Double,
-  r : Int,
-  g : Int,
-  b : Int,
-  a : Int,
-  filled : Int,
+  r : Int32,
+  g : Int32,
+  b : Int32,
+  a : Int32,
+  filled : Int32,
 ) -> Unit =
   #| (x, y, radius, width, r, g, b, a, filled) => {
   #|   const c = globalThis.__moonegui.ctx;
@@ -141,13 +141,13 @@ extern "js" fn js_point(x : Double, y : Double) -> Unit =
 
 ///|
 extern "js" fn js_end_path(
-  closed : Int,
+  closed : Int32,
   width : Double,
-  r : Int,
-  g : Int,
-  b : Int,
-  a : Int,
-  filled : Int,
+  r : Int32,
+  g : Int32,
+  b : Int32,
+  a : Int32,
+  filled : Int32,
 ) -> Unit =
   #| (closed, width, r, g, b, a, filled) => {
   #|   const c = globalThis.__moonegui.ctx;
@@ -171,11 +171,11 @@ extern "js" fn js_fill_text(
   y : Double,
   text : String,
   size : Double,
-  mono : Int,
-  r : Int,
-  g : Int,
-  b : Int,
-  a : Int,
+  mono : Int32,
+  r : Int32,
+  g : Int32,
+  b : Int32,
+  a : Int32,
 ) -> Unit =
   #| (x, y, text, size, mono, r, g, b, a) => {
   #|   const c = globalThis.__moonegui.ctx;

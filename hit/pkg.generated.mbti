@@ -31,7 +31,7 @@ pub struct Rects {
 pub fn Rects::add(Self, WidgetRect) -> Unit
 pub fn Rects::at(Self, @emath.Vec2) -> WidgetRect?
 pub fn Rects::clear(Self) -> Unit
-pub fn Rects::count(Self) -> Int
+pub fn Rects::count(Self) -> Int32
 pub fn Rects::find(Self, @id.Id) -> WidgetRect?
 pub fn Rects::items(Self) -> Array[WidgetRect]
 pub fn Rects::new() -> Self
@@ -74,7 +74,7 @@ pub(all) struct WidgetRect {
   rect : @emath.Rect
   sense : Sense
   enabled : Bool
-  layer : Int
+  layer : Int32
 } derive(Eq, @debug.Debug)
 pub fn WidgetRect::equal(Self, Self) -> Bool
 pub fn WidgetRect::not_equal(Self, Self) -> Bool

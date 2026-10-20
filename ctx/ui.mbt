@@ -14,7 +14,7 @@ pub struct Ui {
   placer : @layout.Placer
   clip : @emath.Rect
   mut enabled : Bool
-  mut counter : Int
+  mut counter : Int32
 }
 
 ///|
@@ -160,7 +160,7 @@ pub fn Ui::child(
   layout : @layout.Layout,
   body : (Ui) -> Unit,
   size? : @emath.Vec2,
-  salt? : String = "child",
+  salt~ : String = "child",
 ) -> @emath.Rect {
   let used = self.nested(self.placer.child(layout, size?), salt, body)
   // The parent only learns how much room the child took once the child is
@@ -181,7 +181,7 @@ pub fn Ui::region(
   layout : @layout.Layout,
   rect : @emath.Rect,
   body : (Ui) -> Unit,
-  salt? : String = "region",
+  salt~ : String = "region",
 ) -> @emath.Rect {
   self.nested(
     @layout.Placer::new(rect, layout~, spacing=self.placer.spacing()),
@@ -227,7 +227,7 @@ pub fn Ui::vertical(self : Ui, body : (Ui) -> Unit) -> @emath.Rect {
 pub fn Ui::panel(
   self : Ui,
   body : (Ui) -> Unit,
-  margin? : Double = 8,
+  margin~ : Double = 8,
   size? : @emath.Vec2,
 ) -> @emath.Rect {
   let style = self.ctx.style

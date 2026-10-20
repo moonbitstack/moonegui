@@ -82,8 +82,8 @@ pub struct Placer {
 /// A placer that fills this rectangle.
 pub fn Placer::new(
   max : @emath.Rect,
-  layout? : Layout = top_down,
-  spacing? : @emath.Vec2 = { x: 8, y: 6, },
+  layout~ : Layout = top_down,
+  spacing~ : @emath.Vec2 = { x: 8, y: 6, },
 ) -> Placer {
   let cursor : @emath.Vec2 = match layout.dir {
     LeftToRight => max.min

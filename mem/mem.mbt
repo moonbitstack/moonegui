@@ -13,7 +13,7 @@ pub(all) enum State {
   Point(@emath.Vec2)
   /// A text field's cursor and the other end of its selection, as code unit
   /// indices. The text itself belongs to the caller.
-  Cursor(at~ : Int, other~ : Int)
+  Cursor(at~ : Int32, other~ : Int32)
 } derive(Eq, Debug)
 
 ///|
@@ -86,7 +86,11 @@ pub fn Memory::point(
 
 ///|
 /// A remembered cursor, or the default.
-pub fn Memory::cursor(self : Memory, id : @id.Id, default : Int) -> (Int, Int) {
+pub fn Memory::cursor(
+  self : Memory,
+  id : @id.Id,
+  default : Int32,
+) -> (Int32, Int32) {
   match self.get(id) {
     Some(Cursor(at~, other~)) => (at, other)
     _ => (default, default)
@@ -177,7 +181,7 @@ pub fn Memory::end_frame(self : Memory) -> Unit {
 
 ///|
 /// How many widgets are remembering something.
-pub fn Memory::count(self : Memory) -> Int {
+pub fn Memory::count(self : Memory) -> Int32 {
   self.data.length()
 }
 
