@@ -79,7 +79,7 @@ canvas.clear(context.style().background)
 @back.play(out.shapes, canvas)
 ```
 
-`examples/browser` is that program, with every widget in it. To run it:
+`src/examples/browser` is that program, with every widget in it. To run it:
 
 ```bash
 moon build --target js
