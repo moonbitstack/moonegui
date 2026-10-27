@@ -84,7 +84,7 @@ canvas.clear(context.style().background)
 ```bash
 moon build --target js
 python -m http.server 8741
-# then open http://127.0.0.1:8741/examples/browser/index.html
+# then open http://127.0.0.1:8741/src/examples/browser/index.html
 # and the same page as elements: .../index.html?html
 ```
 
