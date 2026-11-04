@@ -3,12 +3,13 @@
 
 ///|
 /// Which way widgets are laid out.
+#derive(Eq, Debug)
 pub(all) enum Dir {
   LeftToRight
   RightToLeft
   TopDown
   BottomUp
-} derive(Eq, Debug)
+}
 
 ///|
 /// True when the direction runs along the horizontal axis.
@@ -22,6 +23,7 @@ pub fn Dir::is_horizontal(self : Dir) -> Bool {
 
 ///|
 /// How a region places what is put in it.
+#derive(Eq, Debug)
 pub(all) struct Layout {
   dir : Dir
   /// Where a widget narrower than the region sits across the direction of flow.
@@ -29,7 +31,7 @@ pub(all) struct Layout {
   /// Whether a widget is stretched to the full width across that direction
   /// instead of being aligned within it.
   cross_justify : Bool
-} derive(Eq, Debug)
+}
 
 ///|
 /// Widgets stacked downwards, each as wide as it asks to be.

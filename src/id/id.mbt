@@ -8,7 +8,8 @@
 /// label, or its index in a list. Two widgets in the same place with the same
 /// salt are the same widget as far as anything that remembers is concerned,
 /// which is exactly the property an immediate-mode interface needs.
-pub(all) struct Id(UInt64) derive(Eq, Hash, Compare, Debug)
+#derive(Eq, Hash, Compare, Debug)
+pub(all) struct Id(UInt64)
 
 ///|
 /// The id nothing has.

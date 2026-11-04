@@ -3,12 +3,13 @@
 
 ///|
 /// A colour with an alpha channel, each component from 0 to 255.
+#derive(Eq, Debug)
 pub(all) struct Color {
   r : Int32
   g : Int32
   b : Int32
   a : Int32
-} derive(Eq, Debug)
+}
 
 ///|
 /// An opaque colour.
@@ -58,10 +59,11 @@ pub fn Color::lerp(self : Color, other : Color, t : Double) -> Color {
 
 ///|
 /// A line: how thick and what colour.
+#derive(Eq, Debug)
 pub(all) struct Stroke {
   width : Double
   color : Color
-} derive(Eq, Debug)
+}
 
 ///|
 /// No line at all.
@@ -81,12 +83,13 @@ pub fn Stroke::is_empty(self : Stroke) -> Bool {
 
 ///|
 /// How round each corner of a rectangle is.
+#derive(Eq, Debug)
 pub(all) struct Corner {
   nw : Double
   ne : Double
   se : Double
   sw : Double
-} derive(Eq, Debug)
+}
 
 ///|
 /// Square corners.
@@ -101,16 +104,18 @@ pub fn Corner::same(radius : Double) -> Corner {
 ///|
 /// Which font to draw text in. The family is a choice between the two a user
 /// interface actually needs; the size is in logical pixels.
+#derive(Eq, Debug)
 pub(all) struct FontId {
   size : Double
   family : Family
-} derive(Eq, Debug)
+}
 
 ///|
+#derive(Eq, Debug)
 pub(all) enum Family {
   Sans
   Mono
-} derive(Eq, Debug)
+}
 
 ///|
 /// The default font.
@@ -118,10 +123,11 @@ pub let body : FontId = { size: 14, family: Sans, }
 
 ///|
 /// One laid-out line of text, positioned relative to the text's own origin.
+#derive(Eq, Debug)
 pub(all) struct TextRow {
   text : String
   at : @emath.Vec2
-} derive(Eq, Debug)
+}
 
 ///|
 /// Text that has already been broken into lines and measured.
@@ -129,11 +135,12 @@ pub(all) struct TextRow {
 /// Laying out text needs the backend, which knows how wide a character is;
 /// drawing it does not. Keeping the laid-out result in its own value is what
 /// lets a widget measure once and draw later.
+#derive(Eq, Debug)
 pub(all) struct Galley {
   rows : Array[TextRow]
   size : @emath.Vec2
   font : FontId
-} derive(Eq, Debug)
+}
 
 ///|
 /// Something to draw.
@@ -141,6 +148,7 @@ pub(all) struct Galley {
 /// Five kinds, not eleven: a rectangle, a circle, a path, text and an image
 /// cover a user interface, and every one of them maps onto what a plain 2D
 /// canvas can already do. Anything needing a triangle mesh is deliberately out.
+#derive(Eq, Debug)
 pub(all) enum Shape {
   Rect(rect~ : @emath.Rect, corner~ : Corner, fill~ : Color, stroke~ : Stroke)
   Circle(
@@ -157,7 +165,7 @@ pub(all) enum Shape {
   )
   Text(at~ : @emath.Vec2, galley~ : Galley, color~ : Color)
   Image(rect~ : @emath.Rect, name~ : String, tint~ : Color)
-} derive(Eq, Debug)
+}
 
 ///|
 /// The rectangle a shape covers, stroke width included.
@@ -192,10 +200,11 @@ pub fn Shape::bounds(self : Shape) -> @emath.Rect {
 
 ///|
 /// A shape and the rectangle it may draw inside.
+#derive(Eq, Debug)
 pub(all) struct Clipped {
   clip : @emath.Rect
   shape : Shape
-} derive(Eq, Debug)
+}
 
 ///|
 fn byte(value : Int32) -> Int32 {

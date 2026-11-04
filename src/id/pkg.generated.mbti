@@ -13,7 +13,8 @@ pub fn root(String) -> Id
 // Errors
 
 // Types and methods
-pub(all) struct Id(UInt64) derive(Compare, Eq, Hash, @debug.Debug)
+#derive(Compare, Eq, Hash, @debug.Debug)
+pub(all) struct Id(UInt64)
 pub fn Id::child(Self, String) -> Self
 pub fn Id::compare(Self, Self) -> Int32
 pub fn Id::equal(Self, Self) -> Bool

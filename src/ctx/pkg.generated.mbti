@@ -49,14 +49,16 @@ pub fn Ctx::run(Self, @input.Raw, (Ui) -> Unit) -> Output
 pub fn Ctx::set_style(Self, Style) -> Unit
 pub fn Ctx::style(Self) -> Style
 
+#derive(Eq, @debug.Debug)
 pub(all) struct Output {
   shapes : Array[@paint.Clipped]
   repaint : Bool
-} derive(Eq, @debug.Debug)
+}
 pub fn Output::equal(Self, Self) -> Bool
 pub fn Output::not_equal(Self, Self) -> Bool
 pub fn Output::to_repr(Self) -> @debug.Repr
 
+#derive(Eq, @debug.Debug)
 pub(all) struct Style {
   spacing : @emath.Vec2
   padding : @emath.Vec2
@@ -71,7 +73,7 @@ pub(all) struct Style {
   accent : @paint.Color
   outline : @paint.Stroke
   corner : Double
-} derive(Eq, @debug.Debug)
+}
 pub fn Style::equal(Self, Self) -> Bool
 pub fn Style::fill_for(Self, @hit.Response) -> @paint.Color
 pub fn Style::not_equal(Self, Self) -> Bool

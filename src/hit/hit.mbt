@@ -3,12 +3,13 @@
 
 ///|
 /// What a widget is willing to notice.
+#derive(Eq, Debug)
 pub(all) struct Sense {
   hover : Bool
   click : Bool
   drag : Bool
   focus : Bool
-} derive(Eq, Debug)
+}
 
 ///|
 /// A widget the pointer passes straight through: a label, a rule, a background.
@@ -54,6 +55,7 @@ pub fn Sense::is_inert(self : Sense) -> Bool {
 
 ///|
 /// Where a widget was, and what it was willing to notice there.
+#derive(Eq, Debug)
 pub(all) struct WidgetRect {
   id : @id.Id
   rect : @emath.Rect
@@ -61,7 +63,7 @@ pub(all) struct WidgetRect {
   enabled : Bool
   /// Which layer it was drawn in; a higher layer is nearer the viewer.
   layer : Int32
-} derive(Eq, Debug)
+}
 
 ///|
 /// Every widget of one frame, in the order they were built.
@@ -136,6 +138,7 @@ pub fn Rects::at(self : Rects, point : @emath.Vec2) -> WidgetRect? {
 /// was I clicked, am I being dragged, did my value change — instead of being
 /// handed a callback, which is what makes an immediate-mode frame readable from
 /// top to bottom.
+#derive(Eq, Debug)
 pub(all) struct Response {
   id : @id.Id
   rect : @emath.Rect
@@ -150,7 +153,7 @@ pub(all) struct Response {
   drag_delta : @emath.Vec2
   focused : Bool
   mut changed : Bool
-} derive(Eq, Debug)
+}
 
 ///|
 /// A response to nothing: the widget was not interacted with.

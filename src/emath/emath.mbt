@@ -5,10 +5,11 @@
 /// A point, or an offset, or a size: two numbers whose meaning comes from where
 /// they are used. egui makes the same choice, and it is what lets a rectangle be
 /// described as a corner plus a size without two nearly identical types.
+#derive(Eq, Debug)
 pub(all) struct Vec2 {
   x : Double
   y : Double
-} derive(Eq, Debug)
+}
 
 ///|
 /// The origin, the zero offset, and the empty size.
@@ -61,11 +62,12 @@ pub fn Vec2::length(self : Vec2) -> Double {
 
 ///|
 /// Where something sits inside the space it was given.
+#derive(Eq, Debug)
 pub(all) enum Align {
   Min
   Center
   Max
-} derive(Eq, Debug)
+}
 
 ///|
 /// The offset that aligns `size` inside `space` on one axis.
@@ -84,10 +86,11 @@ pub fn Align::offset(self : Align, space : Double, size : Double) -> Double {
 /// asked most often — where does it end, and does it contain this point — are
 /// answered without arithmetic, and a rectangle can be empty without being
 /// negative.
+#derive(Eq, Debug)
 pub(all) struct Rect {
   min : Vec2
   max : Vec2
-} derive(Eq, Debug)
+}
 
 ///|
 /// A rectangle with nothing in it, positioned nowhere.
@@ -205,12 +208,13 @@ pub fn Rect::clamp(self : Rect, point : Vec2) -> Vec2 {
 
 ///|
 /// Space around something: the four edges, in the CSS order.
+#derive(Eq, Debug)
 pub(all) struct Margin {
   top : Double
   right : Double
   bottom : Double
   left : Double
-} derive(Eq, Debug)
+}
 
 ///|
 /// The same margin on every edge.

@@ -8,6 +8,7 @@
 /// every time it draws anything, and a lookup that walks a tree of rules would
 /// be the most expensive thing in the frame. Changing an interface's look means
 /// handing it a different `Style`.
+#derive(Eq, Debug)
 pub(all) struct Style {
   /// The gap left between widgets.
   spacing : @emath.Vec2
@@ -26,7 +27,7 @@ pub(all) struct Style {
   accent : @paint.Color
   outline : @paint.Stroke
   corner : Double
-} derive(Eq, Debug)
+}
 
 ///|
 /// The look the library comes with: a dark interface, because a canvas with

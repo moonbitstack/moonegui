@@ -36,6 +36,7 @@ pub fn Rects::find(Self, @id.Id) -> WidgetRect?
 pub fn Rects::items(Self) -> Array[WidgetRect]
 pub fn Rects::new() -> Self
 
+#derive(Eq, @debug.Debug)
 pub(all) struct Response {
   id : @id.Id
   rect : @emath.Rect
@@ -50,7 +51,7 @@ pub(all) struct Response {
   drag_delta : @emath.Vec2
   focused : Bool
   mut changed : Bool
-} derive(Eq, @debug.Debug)
+}
 pub fn Response::equal(Self, Self) -> Bool
 pub fn Response::mark_changed(Self) -> Unit
 pub fn Response::none(@id.Id, @emath.Rect) -> Self
@@ -58,24 +59,26 @@ pub fn Response::not_equal(Self, Self) -> Bool
 pub fn Response::to_repr(Self) -> @debug.Repr
 pub fn Response::union(Self, Self) -> Self
 
+#derive(Eq, @debug.Debug)
 pub(all) struct Sense {
   hover : Bool
   click : Bool
   drag : Bool
   focus : Bool
-} derive(Eq, @debug.Debug)
+}
 pub fn Sense::equal(Self, Self) -> Bool
 pub fn Sense::is_inert(Self) -> Bool
 pub fn Sense::not_equal(Self, Self) -> Bool
 pub fn Sense::to_repr(Self) -> @debug.Repr
 
+#derive(Eq, @debug.Debug)
 pub(all) struct WidgetRect {
   id : @id.Id
   rect : @emath.Rect
   sense : Sense
   enabled : Bool
   layer : Int32
-} derive(Eq, @debug.Debug)
+}
 pub fn WidgetRect::equal(Self, Self) -> Bool
 pub fn WidgetRect::not_equal(Self, Self) -> Bool
 pub fn WidgetRect::to_repr(Self) -> @debug.Repr

@@ -3,11 +3,12 @@
 
 ///|
 /// The modifier keys held down.
+#derive(Eq, Debug)
 pub(all) struct Mods {
   ctrl : Bool
   alt : Bool
   shift : Bool
-} derive(Eq, Debug)
+}
 
 ///|
 /// Nothing held.
@@ -22,11 +23,12 @@ pub fn Mods::is_none(self : Mods) -> Bool {
 ///|
 /// A pointer button. A GUI needs three; a mouse with more is telling the host
 /// something the library has no use for.
+#derive(Eq, Debug)
 pub(all) enum Btn {
   Primary
   Secondary
   Middle
-} derive(Eq, Debug)
+}
 
 ///|
 /// Which button, as a number, for the arrays that track them.
@@ -42,6 +44,7 @@ pub fn Btn::index(self : Btn) -> Int32 {
 /// A key that does something other than produce a character. Characters arrive
 /// as `Text`, because what a key produces depends on the keyboard layout and
 /// the host is the one that knows it.
+#derive(Eq, Debug)
 pub(all) enum Key {
   Enter
   Tab
@@ -57,10 +60,11 @@ pub(all) enum Key {
   End
   PageUp
   PageDown
-} derive(Eq, Debug)
+}
 
 ///|
 /// Something that happened since the last frame.
+#derive(Eq, Debug)
 pub(all) enum Event {
   PointerMoved(@emath.Vec2)
   PointerButton(at~ : @emath.Vec2, btn~ : Btn, down~ : Bool, mods~ : Mods)
@@ -73,7 +77,7 @@ pub(all) enum Event {
   Text(String)
   Paste(String)
   Focus(Bool)
-} derive(Eq, Debug)
+}
 
 ///|
 /// What the host hands over at the start of a frame.

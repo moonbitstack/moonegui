@@ -18,22 +18,24 @@ pub let top_down_justified : Layout
 // Errors
 
 // Types and methods
+#derive(Eq, @debug.Debug)
 pub(all) enum Dir {
   LeftToRight
   RightToLeft
   TopDown
   BottomUp
-} derive(Eq, @debug.Debug)
+}
 pub fn Dir::equal(Self, Self) -> Bool
 pub fn Dir::is_horizontal(Self) -> Bool
 pub fn Dir::not_equal(Self, Self) -> Bool
 pub fn Dir::to_repr(Self) -> @debug.Repr
 
+#derive(Eq, @debug.Debug)
 pub(all) struct Layout {
   dir : Dir
   cross : @emath.Align
   cross_justify : Bool
-} derive(Eq, @debug.Debug)
+}
 pub fn Layout::equal(Self, Self) -> Bool
 pub fn Layout::not_equal(Self, Self) -> Bool
 pub fn Layout::to_repr(Self) -> @debug.Repr

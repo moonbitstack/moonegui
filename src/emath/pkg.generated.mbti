@@ -21,22 +21,24 @@ pub let zero : Vec2
 // Errors
 
 // Types and methods
+#derive(Eq, @debug.Debug)
 pub(all) enum Align {
   Min
   Center
   Max
-} derive(Eq, @debug.Debug)
+}
 pub fn Align::equal(Self, Self) -> Bool
 pub fn Align::not_equal(Self, Self) -> Bool
 pub fn Align::offset(Self, Double, Double) -> Double
 pub fn Align::to_repr(Self) -> @debug.Repr
 
+#derive(Eq, @debug.Debug)
 pub(all) struct Margin {
   top : Double
   right : Double
   bottom : Double
   left : Double
-} derive(Eq, @debug.Debug)
+}
 pub fn Margin::equal(Self, Self) -> Bool
 pub fn Margin::grow_rect(Self, Rect) -> Rect
 pub fn Margin::not_equal(Self, Self) -> Bool
@@ -45,10 +47,11 @@ pub fn Margin::shrink_rect(Self, Rect) -> Rect
 pub fn Margin::sum(Self) -> Vec2
 pub fn Margin::to_repr(Self) -> @debug.Repr
 
+#derive(Eq, @debug.Debug)
 pub(all) struct Rect {
   min : Vec2
   max : Vec2
-} derive(Eq, @debug.Debug)
+}
 pub fn Rect::around(Vec2, Vec2) -> Self
 pub fn Rect::at(Vec2, Vec2) -> Self
 pub fn Rect::centre(Self) -> Vec2
@@ -68,10 +71,11 @@ pub fn Rect::translate(Self, Vec2) -> Self
 pub fn Rect::union(Self, Self) -> Self
 pub fn Rect::width(Self) -> Double
 
+#derive(Eq, @debug.Debug)
 pub(all) struct Vec2 {
   x : Double
   y : Double
-} derive(Eq, @debug.Debug)
+}
 pub fn Vec2::add(Self, Self) -> Self
 pub fn Vec2::equal(Self, Self) -> Bool
 pub fn Vec2::length(Self) -> Double

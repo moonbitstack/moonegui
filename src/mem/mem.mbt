@@ -7,6 +7,7 @@
 /// A closed set rather than anything at all: MoonBit has no downcasting, and a
 /// closed set can be printed, compared and put in a snapshot, which is worth
 /// more here than letting a widget store an arbitrary value.
+#derive(Eq, Debug)
 pub(all) enum State {
   Num(Double)
   Flag(Bool)
@@ -14,7 +15,7 @@ pub(all) enum State {
   /// A text field's cursor and the other end of its selection, as code unit
   /// indices. The text itself belongs to the caller.
   Cursor(at~ : Int32, other~ : Int32)
-} derive(Eq, Debug)
+}
 
 ///|
 /// Everything that survives a frame.

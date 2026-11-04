@@ -16,16 +16,18 @@ pub let none : Mods
 // Errors
 
 // Types and methods
+#derive(Eq, @debug.Debug)
 pub(all) enum Btn {
   Primary
   Secondary
   Middle
-} derive(Eq, @debug.Debug)
+}
 pub fn Btn::equal(Self, Self) -> Bool
 pub fn Btn::index(Self) -> Int32
 pub fn Btn::not_equal(Self, Self) -> Bool
 pub fn Btn::to_repr(Self) -> @debug.Repr
 
+#derive(Eq, @debug.Debug)
 pub(all) enum Event {
   PointerMoved(@emath.Vec2)
   PointerButton(at~ : @emath.Vec2, btn~ : Btn, down~ : Bool, mods~ : Mods)
@@ -36,11 +38,12 @@ pub(all) enum Event {
   Text(String)
   Paste(String)
   Focus(Bool)
-} derive(Eq, @debug.Debug)
+}
 pub fn Event::equal(Self, Self) -> Bool
 pub fn Event::not_equal(Self, Self) -> Bool
 pub fn Event::to_repr(Self) -> @debug.Repr
 
+#derive(Eq, @debug.Debug)
 pub(all) enum Key {
   Enter
   Tab
@@ -56,16 +59,17 @@ pub(all) enum Key {
   End
   PageUp
   PageDown
-} derive(Eq, @debug.Debug)
+}
 pub fn Key::equal(Self, Self) -> Bool
 pub fn Key::not_equal(Self, Self) -> Bool
 pub fn Key::to_repr(Self) -> @debug.Repr
 
+#derive(Eq, @debug.Debug)
 pub(all) struct Mods {
   ctrl : Bool
   alt : Bool
   shift : Bool
-} derive(Eq, @debug.Debug)
+}
 pub fn Mods::equal(Self, Self) -> Bool
 pub fn Mods::is_none(Self) -> Bool
 pub fn Mods::not_equal(Self, Self) -> Bool

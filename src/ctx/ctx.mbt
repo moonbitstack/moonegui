@@ -3,12 +3,13 @@
 
 ///|
 /// What one frame produced.
+#derive(Eq, Debug)
 pub(all) struct Output {
   shapes : Array[@paint.Clipped]
   /// True when something is still moving and the host should come back rather
   /// than waiting for the next input.
   repaint : Bool
-} derive(Eq, Debug)
+}
 
 ///|
 /// What survives between frames.
