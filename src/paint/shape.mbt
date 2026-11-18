@@ -155,13 +155,13 @@ pub(all) enum Shape {
     centre~ : @emath.Vec2,
     radius~ : Double,
     fill~ : Color,
-    stroke~ : Stroke
+    stroke~ : Stroke,
   )
   Path(
     points~ : Array[@emath.Vec2],
     closed~ : Bool,
     fill~ : Color,
-    stroke~ : Stroke
+    stroke~ : Stroke,
   )
   Text(at~ : @emath.Vec2, galley~ : Galley, color~ : Color)
   Image(rect~ : @emath.Rect, name~ : String, tint~ : Color)
