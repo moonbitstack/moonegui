@@ -1,0 +1,22 @@
+// The declarative interface: a tree of values, laid out before it is drawn.
+//
+// Every node here is data — strings, numbers, tags, other nodes — so two trees
+// can be compared, and a subtree whose data did not change does not have to be
+// built again. What a node reports is an `Event`, and what a program does with
+// it is the program's business.
+import {
+  "moonbitstack/moonegui/ctx",
+  "moonbitstack/moonegui/emath",
+  "moonbitstack/moonegui/hit",
+  "moonbitstack/moonegui/id",
+  "moonbitstack/moonegui/layout",
+  "moonbitstack/moonegui/mem",
+  "moonbitstack/moonegui/paint",
+  "moonbitstack/moonegui/text",
+  "moonbitstack/moonegui/widget",
+}
+
+import {
+  "moonbitstack/moonegui/back",
+  "moonbitstack/moonegui/input",
+} for "test"

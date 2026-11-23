@@ -1,0 +1,216 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbitstack/moonegui/view"
+
+import {
+  "moonbitlang/core/debug",
+  "moonbitstack/moonegui/ctx",
+  "moonbitstack/moonegui/emath",
+  "moonbitstack/moonegui/id",
+  "moonbitstack/moonegui/layout",
+}
+
+// Values
+pub fn accent_button(String, Tag) -> View
+
+pub fn badge(String, tone? : @ctx.Tone) -> View
+
+pub fn button(String, Tag) -> View
+
+pub fn caption(String) -> View
+
+pub fn checkbox(String, Tag, Bool) -> View
+
+pub fn child_room(@emath.Vec2, Bool, Double) -> @emath.Vec2
+
+pub fn column(Array[View]) -> View
+
+pub let column_flow : Flow
+
+pub fn column_with(Flow, Array[View]) -> View
+
+pub fn combo(Array[String], Tag, Int32, open? : Bool, width? : Double) -> View
+
+pub fn drag_value(Tag, Double, low? : Double, high? : Double, speed? : Double, width? : Double) -> View
+
+pub fn edit(String, Tag, hint? : String, width? : Double) -> View
+
+pub fn empty() -> View
+
+pub fn grid(Int32, Array[View]) -> View
+
+pub fn grid_with(Int32, Flow, Array[View]) -> View
+
+pub fn group(String, Bool, Tag, View) -> View
+
+pub fn heading(String) -> View
+
+pub fn hyperlink(String, Tag) -> View
+
+pub fn is_finite(@emath.Vec2) -> Bool
+
+pub fn list(Array[String], Tag, Int32, height? : Double) -> View
+
+pub let open_bounds : @emath.Vec2
+
+pub let open_room : Double
+
+pub fn panel(View, title? : String, tone? : @ctx.Tone, padding? : Double) -> View
+
+pub fn paragraph(String) -> View
+
+pub fn progress(Double, width? : Double, label? : String) -> View
+
+pub fn quiet_button(String, Tag) -> View
+
+pub fn radio(String, Tag, Bool) -> View
+
+pub fn row(Array[View]) -> View
+
+pub let row_flow : Flow
+
+pub fn row_with(Flow, Array[View]) -> View
+
+pub fn scroll(Tag, Double, View) -> View
+
+pub fn separator() -> View
+
+pub fn sized(Bounds, View) -> View
+
+pub fn slider(Tag, Double, low? : Double, high? : Double, width? : Double) -> View
+
+pub fn space(Double, width? : Double) -> View
+
+pub fn spinner(Double) -> View
+
+pub fn switch(Tag, Bool) -> View
+
+pub fn table(Array[String], Array[Array[String]], Tag, Int32, width? : Double) -> View
+
+pub fn tabs(Array[String], Tag, Int32) -> View
+
+pub fn text(String) -> View
+
+pub fn text_area(String, Tag, rows? : Int32, width? : Double) -> View
+
+pub let unbounded : Bounds
+
+pub let unlimited : @emath.Vec2
+
+pub fn weak_text(String) -> View
+
+// Errors
+
+// Types and methods
+#derive(Eq, @debug.Debug)
+pub(all) struct Bounds {
+  min : @emath.Vec2
+  max : @emath.Vec2
+}
+pub fn Bounds::at_least(@emath.Vec2) -> Self
+pub fn Bounds::at_most(@emath.Vec2) -> Self
+pub fn Bounds::hold(Self, @emath.Vec2) -> @emath.Vec2
+pub fn Bounds::new(min? : @emath.Vec2, max? : @emath.Vec2) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum ButtonKind {
+  Normal
+  Accent
+  Quiet
+}
+
+#derive(Eq, @debug.Debug)
+pub(all) enum Event {
+  Clicked(Tag)
+  Toggled(tag~ : Tag, value~ : Bool)
+  Edited(tag~ : Tag, text~ : String)
+  Moved(tag~ : Tag, value~ : Double)
+  Chosen(tag~ : Tag, at~ : Int32)
+  Opened(tag~ : Tag, open~ : Bool)
+}
+
+#derive(Eq, @debug.Debug)
+pub(all) struct Flow {
+  dir : @layout.Dir
+  gap : Double?
+  padding : Double
+  cross : @emath.Align
+  justify : Justify
+  stretch : Bool
+}
+pub fn Flow::gap_of(Self, @ctx.Style) -> Double
+pub fn Flow::with_cross(Self, @emath.Align) -> Self
+pub fn Flow::with_gap(Self, Double) -> Self
+pub fn Flow::with_justify(Self, Justify) -> Self
+pub fn Flow::with_padding(Self, Double) -> Self
+pub fn Flow::with_stretch(Self, Bool) -> Self
+
+pub struct Interp {
+  memo : Map[@id.Id, Memo]
+  used : Map[@id.Id, Bool]
+  events : Array[Event]
+  seed : @id.Id
+  mut rebuilt : Int32
+  mut reused : Int32
+}
+pub fn Interp::drain(Self, (Event) -> Unit) -> Unit
+pub fn Interp::events(Self) -> Array[Event]
+pub fn Interp::new() -> Self
+pub fn Interp::rebuilt(Self) -> Int32
+pub fn Interp::reset(Self) -> Unit
+pub fn Interp::reused(Self) -> Int32
+pub fn Interp::show(Self, @ctx.Ui, Array[View]) -> Unit
+pub fn Interp::show_at(Self, @ctx.Ui, @emath.Rect, Array[View]) -> Unit
+pub fn Interp::with_seed(String) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum Justify {
+  Start
+  Center
+  End
+  SpaceBetween
+}
+
+type Memo
+
+#derive(Eq, @debug.Debug)
+pub(all) struct Tag(Int32)
+pub fn Tag::new(Int32) -> Self
+pub fn Tag::value(Self) -> Int32
+
+#derive(Eq, @debug.Debug)
+pub(all) enum View {
+  Empty
+  Text(text~ : String, role~ : @ctx.TextRole, wrap~ : Bool)
+  Button(text~ : String, tag~ : Tag, kind~ : ButtonKind, enabled~ : Bool)
+  Checkbox(text~ : String, tag~ : Tag, value~ : Bool, enabled~ : Bool)
+  Radio(text~ : String, tag~ : Tag, value~ : Bool, enabled~ : Bool)
+  Switch(tag~ : Tag, value~ : Bool, enabled~ : Bool)
+  Slider(tag~ : Tag, value~ : Double, low~ : Double, high~ : Double, width~ : Double, enabled~ : Bool)
+  DragValue(tag~ : Tag, value~ : Double, low~ : Double, high~ : Double, speed~ : Double, width~ : Double, enabled~ : Bool)
+  Edit(text~ : String, tag~ : Tag, hint~ : String, width~ : Double, enabled~ : Bool)
+  TextArea(text~ : String, tag~ : Tag, rows~ : Int32, width~ : Double, enabled~ : Bool)
+  Combo(items~ : Array[String], tag~ : Tag, chosen~ : Int32, open~ : Bool, width~ : Double)
+  Tabs(labels~ : Array[String], tag~ : Tag, chosen~ : Int32)
+  Progress(fraction~ : Double, width~ : Double, label~ : String)
+  Spinner(phase~ : Double)
+  Hyperlink(text~ : String, tag~ : Tag)
+  Badge(text~ : String, tone~ : @ctx.Tone)
+  Separator
+  Space(width~ : Double, height~ : Double)
+  Row(flow~ : Flow, children~ : Array[View])
+  Column(flow~ : Flow, children~ : Array[View])
+  Grid(columns~ : Int32, flow~ : Flow, children~ : Array[View])
+  Panel(title~ : String, tone~ : @ctx.Tone, padding~ : Double, child~ : View)
+  Group(title~ : String, open~ : Bool, tag~ : Tag, child~ : View)
+  Scroll(tag~ : Tag, height~ : Double, child~ : View)
+  List(items~ : Array[String], tag~ : Tag, chosen~ : Int32, height~ : Double)
+  Table(columns~ : Array[String], rows~ : Array[Array[String]], tag~ : Tag, chosen~ : Int32, width~ : Double)
+  Sized(bounds~ : Bounds, child~ : View)
+}
+pub fn View::name(Self, Int32) -> String
+pub fn View::size(Self, @ctx.Ui, room? : @emath.Vec2) -> @emath.Vec2
+pub fn View::tag(Self) -> Tag?
+
+// Type aliases
+
+// Traits

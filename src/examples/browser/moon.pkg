@@ -10,12 +10,19 @@ import {
   "moonbitstack/moonegui/back/web",
   "moonbitstack/moonegui/ctx",
   "moonbitstack/moonegui/emath",
+  "moonbitstack/moonegui/input",
   "moonbitstack/moonegui/paint",
+  "moonbitstack/moonegui/view",
   "moonbitstack/moonegui/widget",
 }
 
 supported_targets = "js"
 
 options(
-  link: { "js": { "exports": [ "start", "start_html" ], "format": "esm" } },
+  link: {
+    "js": {
+      "exports": [ "start", "start_html", "start_view", "start_view_html" ],
+      "format": "esm",
+    },
+  },
 )

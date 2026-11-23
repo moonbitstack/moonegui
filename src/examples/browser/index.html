@@ -8,15 +8,22 @@
 <script type="module">
   // The build output sits next to the module graph moon produces; serving the
   // repository root and pointing at it keeps this page free of a bundler.
-  import { start, start_html } from "../../../_build/js/debug/build/examples/browser/browser.js";
+  import { start, start_html, start_view, start_view_html } from "../../../_build/js/debug/build/examples/browser/browser.js";
 
   // The same interface, either painted on a canvas or built as elements.
-  // Add ?html to the address to see the second one.
-  const asHtml = new URLSearchParams(location.search).has("html");
+  // Add ?html to the address to see it as elements.
+  // Add ?view to see it written as a tree, and ?view&html for the tree as
+  // elements: four entry points, two ways to write a frame.
+  const query = new URLSearchParams(location.search);
+  const asHtml = query.has("html");
+  const asTree = query.has("view");
   const surface = document.createElement(asHtml ? "div" : "canvas");
   surface.id = "moonegui";
   surface.tabIndex = 0;
   document.body.appendChild(surface);
-  (asHtml ? start_html : start)();
+  const begin = asTree
+    ? (asHtml ? start_view_html : start_view)
+    : (asHtml ? start_html : start);
+  begin();
   surface.focus();
 </script>
