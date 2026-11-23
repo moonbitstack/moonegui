@@ -44,6 +44,7 @@ pub fn Ctx::input(Self) -> @input.State
 pub fn Ctx::interact(Self, @id.Id, @emath.Rect, @hit.Sense, enabled? : Bool) -> @hit.Response
 pub fn Ctx::memory(Self) -> @mem.Memory
 pub fn Ctx::new(&@back.Backend, style? : Style) -> Self
+pub fn Ctx::rects(Self) -> @hit.Rects
 pub fn Ctx::request_repaint(Self) -> Unit
 pub fn Ctx::run(Self, @input.Raw, (Ui) -> Unit) -> Output
 pub fn Ctx::set_style(Self, Style) -> Unit
@@ -64,6 +65,8 @@ pub(all) struct Style {
   padding : @emath.Vec2
   min_height : Double
   font : @paint.FontId
+  heading_scale : Double
+  caption_scale : Double
   text : @paint.Color
   weak_text : @paint.Color
   background : @paint.Color
@@ -74,12 +77,37 @@ pub(all) struct Style {
   outline : @paint.Stroke
   corner : Double
 }
+pub fn Style::color_of(Self, TextRole) -> @paint.Color
 pub fn Style::equal(Self, Self) -> Bool
 pub fn Style::fill_for(Self, @hit.Response) -> @paint.Color
+pub fn Style::font_of(Self, TextRole) -> @paint.FontId
+pub fn Style::ground_of(Self, Tone) -> @paint.Color
+pub fn Style::ink_of(Self, Tone) -> @paint.Color
 pub fn Style::not_equal(Self, Self) -> Bool
 pub fn Style::outline_for(Self, @hit.Response) -> @paint.Stroke
 pub fn Style::text_for(Self, @hit.Response) -> @paint.Color
 pub fn Style::to_repr(Self) -> @debug.Repr
+
+#derive(Eq, @debug.Debug)
+pub(all) enum TextRole {
+  Body
+  Weak
+  Heading
+  Caption
+}
+pub fn TextRole::equal(Self, Self) -> Bool
+pub fn TextRole::not_equal(Self, Self) -> Bool
+pub fn TextRole::to_repr(Self) -> @debug.Repr
+
+#derive(Eq, @debug.Debug)
+pub(all) enum Tone {
+  Plain
+  Surface
+  Accent
+}
+pub fn Tone::equal(Self, Self) -> Bool
+pub fn Tone::not_equal(Self, Self) -> Bool
+pub fn Tone::to_repr(Self) -> @debug.Repr
 
 pub struct Ui {
   ctx : Ctx
@@ -92,6 +120,7 @@ pub struct Ui {
 pub fn Ui::allocate(Self, @emath.Vec2, @hit.Sense, String) -> (@emath.Rect, @hit.Response)
 pub fn Ui::allocate_space(Self, @emath.Vec2) -> @emath.Rect
 pub fn Ui::available(Self) -> @emath.Vec2
+pub fn Ui::cell(Self, @id.Id, @emath.Rect, (Self) -> Unit, layout? : @layout.Layout, clip? : @emath.Rect) -> Unit
 pub fn Ui::child(Self, @layout.Layout, (Self) -> Unit, size? : @emath.Vec2, salt? : String) -> @emath.Rect
 pub fn Ui::ctx(Self) -> Ctx
 pub fn Ui::disable(Self) -> Unit
@@ -104,6 +133,7 @@ pub fn Ui::measure(Self, String, font? : @paint.FontId) -> @emath.Vec2
 pub fn Ui::next_id(Self, String) -> @id.Id
 pub fn Ui::painter(Self) -> @paint.Painter
 pub fn Ui::panel(Self, (Self) -> Unit, margin? : Double, size? : @emath.Vec2) -> @emath.Rect
+pub fn Ui::rect(Self) -> @emath.Rect
 pub fn Ui::region(Self, @layout.Layout, @emath.Rect, (Self) -> Unit, salt? : String) -> @emath.Rect
 pub fn Ui::root(Ctx, @emath.Rect) -> Self
 pub fn Ui::style(Self) -> Style

@@ -68,6 +68,12 @@ pub fn Ui::used(self : Ui) -> @emath.Rect {
 }
 
 ///|
+/// The rectangle this region may use.
+pub fn Ui::rect(self : Ui) -> @emath.Rect {
+  self.placer.max()
+}
+
+///|
 /// Whether widgets in this region can be interacted with.
 pub fn Ui::is_enabled(self : Ui) -> Bool {
   self.enabled
@@ -207,6 +213,43 @@ fn Ui::nested(
   }
   body(child)
   child.placer.used()
+}
+
+///|
+/// Build a region at a rectangle and under an id the caller has worked out.
+///
+/// A tree that is laid out before it is drawn knows both of those in advance,
+/// and it must not take its identity from a counter: a subtree that was not
+/// rebuilt this frame would otherwise shift the ids of everything after it
+/// while its own stayed the same.
+pub fn Ui::cell(
+  self : Ui,
+  id : @id.Id,
+  rect : @emath.Rect,
+  body : (Ui) -> Unit,
+  layout? : @layout.Layout,
+  clip? : @emath.Rect,
+) -> Unit {
+  let inside = match layout {
+    Some(value) => value
+    None => @layout.top_down
+  }
+  let visible = match clip {
+    Some(value) => self.clip.intersect(value)
+    None => self.clip
+  }
+  body({
+    ctx: self.ctx,
+    id,
+    placer: @layout.Placer::new(
+      rect,
+      layout=inside,
+      spacing=self.placer.spacing(),
+    ),
+    clip: visible,
+    enabled: self.enabled,
+    counter: 0,
+  })
 }
 
 ///|

@@ -100,7 +100,9 @@ pub fn Painter::line(Self, @emath.Vec2, @emath.Vec2, Stroke) -> Unit
 pub fn Painter::new(clip? : @emath.Rect) -> Self
 pub fn Painter::path(Self, Array[@emath.Vec2], closed? : Bool, fill? : Color, stroke? : Stroke) -> Unit
 pub fn Painter::rect(Self, @emath.Rect, fill? : Color, stroke? : Stroke, corner? : Corner) -> Unit
+pub fn Painter::replay(Self, Array[Clipped]) -> Unit
 pub fn Painter::shapes(Self) -> Array[Clipped]
+pub fn Painter::since(Self, Int32) -> Array[Clipped]
 pub fn Painter::sub(Self, @emath.Rect) -> Self
 
 #derive(Eq, @debug.Debug)

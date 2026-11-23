@@ -40,28 +40,50 @@ pub fn weak(ui : @ctx.Ui, string : String) -> @hit.Response {
 /// Draw a string larger than the body text.
 pub fn heading(ui : @ctx.Ui, string : String) -> @hit.Response {
   let style = ui.style()
-  let font : @paint.FontId = { ..style.font, size: style.font.size * 1.5, }
-  let laid = @text.line(ui.ctx().backend(), string, font)
+  let laid = galley_in(ui, string, style.font_of(Heading))
   let (rect, response) = ui.allocate(laid.size, @hit.inert, string)
   ui.painter().galley(rect.min, laid, style.text)
   response
 }
 
 ///|
+/// Draw a small string in the colour a reader is expected to skim.
+pub fn caption(ui : @ctx.Ui, string : String) -> @hit.Response {
+  let style = ui.style()
+  let laid = galley_in(ui, string, style.font_of(Caption))
+  let (rect, response) = ui.allocate(laid.size, @hit.inert, string)
+  ui.painter().galley(rect.min, laid, style.weak_text)
+  response
+}
+
+///|
+/// How tall a separator is, the gap below it included.
+pub fn separator_height(ui : @ctx.Ui) -> Double {
+  most(1, ui.style().outline.width) + ui.style().spacing.y
+}
+
+///|
 /// Draw a rule across the region.
 pub fn separator(ui : @ctx.Ui) -> @hit.Response {
-  let style = ui.style()
-  let thickness = most(1, style.outline.width)
-  let rect = ui.allocate_space({
-    x: ui.available().x,
-    y: thickness + style.spacing.y,
-  })
+  rule(ui, ui.style().outline.color)
+}
+
+///|
+/// Draw a rule of a given colour, for a separator that has to say something.
+pub fn coloured_rule(ui : @ctx.Ui, color : @paint.Color) -> @hit.Response {
+  rule(ui, color)
+}
+
+///|
+fn rule(ui : @ctx.Ui, color : @paint.Color) -> @hit.Response {
+  let thickness = most(1, ui.style().outline.width)
+  let rect = ui.allocate_space({ x: ui.available().x, y: separator_height(ui), })
   let y = rect.min.y + (rect.height() - thickness) / 2
   ui
   .painter()
   .rect(
     @emath.Rect::of({ x: rect.min.x, y, }, { x: rect.max.x, y: y + thickness, }),
-    fill=style.outline.color,
+    fill=color,
   )
   @hit.Response::none(ui.id(), rect)
 }

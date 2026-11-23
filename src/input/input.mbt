@@ -291,6 +291,12 @@ pub fn State::keys(self : State) -> Array[Key] {
 }
 
 ///|
+/// Everything the host reported this frame, in the order it arrived.
+pub fn State::events(self : State) -> Array[Event] {
+  self.events
+}
+
+///|
 /// The modifiers held the last time this key went down this frame, if it did.
 ///
 /// A key and its modifiers arrive together, so asking for them together is the

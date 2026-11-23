@@ -176,6 +176,12 @@ pub fn Ctx::frame(self : Ctx) -> Int32 {
 }
 
 ///|
+/// Every widget recorded so far this frame, in the order it was built.
+pub fn Ctx::rects(self : Ctx) -> @hit.Rects {
+  self.current
+}
+
+///|
 /// Register a widget and work out what happened to it.
 pub fn Ctx::interact(
   self : Ctx,

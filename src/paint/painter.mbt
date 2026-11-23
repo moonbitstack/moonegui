@@ -132,6 +132,38 @@ pub fn Painter::clear(self : Painter) -> Unit {
 }
 
 ///|
+/// Add shapes that were collected earlier, keeping the rectangle each one was
+/// allowed to draw inside.
+///
+/// A tree that was not rebuilt this frame still has to be drawn, and drawing it
+/// again would mean measuring and laying it out again. The shapes it produced
+/// last time are still good, so they are put back in front of the same clip.
+pub fn Painter::replay(self : Painter, shapes : Array[Clipped]) -> Unit {
+  for item in shapes {
+    if item.clip == unclipped {
+      self.add(item.shape)
+    } else {
+      let clip = item.clip.intersect(self.clip)
+      if !clip.is_empty() {
+        self.shapes.push({ clip, shape: item.shape, })
+      }
+    }
+  }
+}
+
+///|
+/// The shapes collected from a mark onwards, copied out.
+pub fn Painter::since(self : Painter, mark : Int32) -> Array[Clipped] {
+  let out : Array[Clipped] = []
+  let mut at = mark
+  while at < self.shapes.length() {
+    out.push(self.shapes[at])
+    at = at + 1
+  }
+  out
+}
+
+///|
 /// True when the outer rectangle holds all of the inner one.
 fn contains_rect(outer : @emath.Rect, inner : @emath.Rect) -> Bool {
   inner.min.x >= outer.min.x &&

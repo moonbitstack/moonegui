@@ -18,6 +18,10 @@ pub(all) struct Style {
   /// a checkbox with a one-character label is still a target for a pointer.
   min_height : Double
   font : @paint.FontId
+  /// What a heading's font size is multiplied by.
+  heading_scale : Double
+  /// What a caption's font size is multiplied by.
+  caption_scale : Double
   text : @paint.Color
   weak_text : @paint.Color
   background : @paint.Color
@@ -37,6 +41,8 @@ pub let dark : Style = {
   padding: { x: 8, y: 4, },
   min_height: 24,
   font: { size: 14, family: Sans, },
+  heading_scale: 1.5,
+  caption_scale: 0.8,
   text: { r: 222, g: 222, b: 222, a: 255, },
   weak_text: { r: 140, g: 140, b: 140, a: 255, },
   background: { r: 24, g: 24, b: 27, a: 255, },
@@ -102,7 +108,83 @@ pub fn Style::outline_for(
 }
 
 ///|
+/// What a piece of text is for, which decides its size and its colour together:
+/// asking for one without the other is how an interface drifts apart.
+#derive(Eq, Debug)
+pub(all) enum TextRole {
+  Body
+  Weak
+  Heading
+  Caption
+}
+
+///|
+/// The font a role is drawn in.
+pub fn Style::font_of(self : Style, role : TextRole) -> @paint.FontId {
+  match role {
+    Body => self.font
+    Weak => self.font
+    Heading => { ..self.font, size: self.font.size * self.heading_scale, }
+    Caption => { ..self.font, size: self.font.size * self.caption_scale, }
+  }
+}
+
+///|
+/// The colour a role is drawn in.
+pub fn Style::color_of(self : Style, role : TextRole) -> @paint.Color {
+  match role {
+    Body => self.text
+    Weak => self.weak_text
+    Heading => self.text
+    Caption => self.weak_text
+  }
+}
+
+///|
+/// How much a box stands out from what is behind it.
+#derive(Eq, Debug)
+pub(all) enum Tone {
+  /// No ground at all; a frame and nothing else.
+  Plain
+  /// The colour a control sits on.
+  Surface
+  /// The colour that draws the eye.
+  Accent
+}
+
+///|
+/// The ground a tone is drawn on.
+pub fn Style::ground_of(self : Style, tone : Tone) -> @paint.Color {
+  match tone {
+    Plain => @paint.clear
+    Surface => self.surface
+    Accent => self.accent
+  }
+}
+
+///|
+/// The colour text takes on a tone's ground.
+pub fn Style::ink_of(self : Style, tone : Tone) -> @paint.Color {
+  match tone {
+    Accent => self.background
+    _ => self.text
+  }
+}
+
+///|
 pub extend Style with Debug::{to_repr}
 
 ///|
 pub extend Style with Eq::{not_equal, equal}
+
+///|
+pub extend TextRole with Debug::{to_repr}
+
+///|
+pub extend TextRole with Eq::{not_equal, equal}
+
+///|
+pub extend Tone with Debug::{to_repr}
+
+///|
+pub extend Tone with Eq::{not_equal, equal}

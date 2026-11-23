@@ -109,6 +109,7 @@ pub fn State::begin(Self, Raw) -> Unit
 pub fn State::clicked(Self, Btn) -> Bool
 pub fn State::double_clicked(Self, Btn) -> Bool
 pub fn State::dt(Self) -> Double
+pub fn State::events(Self) -> Array[Event]
 pub fn State::has_focus(Self) -> Bool
 pub fn State::is_down(Self, Btn) -> Bool
 pub fn State::key_down(Self, Key) -> Mods?

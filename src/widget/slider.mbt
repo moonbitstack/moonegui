@@ -6,6 +6,12 @@
 const STEPS : Double = 20
 
 ///|
+/// How tall a slider is.
+pub fn slider_size(ui : @ctx.Ui, width : Double) -> @emath.Vec2 {
+  { x: width, y: most(ui.style().min_height, ui.line_height()), }
+}
+
+///|
 /// A handle on a track, dragged to choose a number between two others.
 ///
 /// Dragging is what a slider is for, and a drag is the one interaction that
@@ -21,12 +27,12 @@ pub fn slider(
   salt~ : String = "slider",
 ) -> (Double, @hit.Response) {
   let style = ui.style()
-  let height = most(style.min_height, ui.line_height())
   let (rect, response) = ui.allocate(
-    { x: width, y: height, },
+    slider_size(ui, width),
     @hit.click_and_drag,
     salt,
   )
+  let height = rect.height()
   let radius = height / 3
   let left = rect.min.x + radius
   let right = rect.max.x - radius
@@ -98,18 +104,89 @@ pub fn slider_with_label(
   // The row is given the height of the tallest thing in it: a row filling the
   // whole region would centre its contents against the region rather than
   // against one another.
-  let height = most(ui.style().min_height, ui.line_height())
   ui.child(
     @layout.centred_row,
     fn(row) {
-      let (moved, answer) = slider(row, value, low~, high~, width~, salt=string)
+      let (moved, answered) = slider(
+        row,
+        value,
+        low~,
+        high~,
+        width~,
+        salt=string,
+      )
       out = moved
-      response = answer
+      response = answered
       label(row, string) |> ignore
     },
-    size={ x: ui.available().x, y: height, },
+    size={ x: ui.available().x, y: slider_size(ui, width).y, },
     salt=string,
   )
   |> ignore
+  (out, response)
+}
+
+///|
+/// How wide a number you can drag is.
+pub fn drag_value_size(ui : @ctx.Ui, width : Double) -> @emath.Vec2 {
+  { x: width, y: control_height(ui), }
+}
+
+///|
+/// A number written in a box, changed by dragging the box sideways or with the
+/// arrow keys.
+///
+/// The keyboard steps by one and the drag by `speed` per pixel, so a field can
+/// be given a range where one pixel is a tenth of a unit and the keyboard still
+/// lands on integers.
+pub fn drag_value(
+  ui : @ctx.Ui,
+  value : Double,
+  low~ : Double = -1.0e9,
+  high~ : Double = 1.0e9,
+  speed~ : Double = 1,
+  width~ : Double = 64,
+  digits~ : Int32 = 2,
+  salt~ : String = "drag",
+) -> (Double, @hit.Response) {
+  let style = ui.style()
+  let (rect, hit) = ui.allocate(
+    drag_value_size(ui, width),
+    @hit.click_and_drag,
+    salt,
+  )
+  let response = hit
+  let mut out = value
+  if response.enabled && response.dragged {
+    out = out + ui.ctx().input().pointer_delta().x * speed
+  }
+  if response.enabled && response.focused {
+    let input = ui.ctx().input()
+    if input.key_pressed(@input.Key::Left) {
+      out = out - 1
+    }
+    if input.key_pressed(@input.Key::Right) {
+      out = out + 1
+    }
+    if input.key_pressed(@input.Key::Home) {
+      out = low
+    }
+    if input.key_pressed(@input.Key::End) {
+      out = high
+    }
+  }
+  out = @emath.clamp(out, low, high)
+  if out != value {
+    response.mark_changed()
+  }
+  let painter = ui.painter()
+  painter.rect(
+    rect,
+    fill=style.fill_for(response),
+    stroke=style.outline_for(response),
+    corner=@paint.Corner::same(style.corner),
+  )
+  let laid = galley(ui, fixed(out, digits))
+  painter.galley(centred(rect, laid.size), laid, style.text_for(response))
   (out, response)
 }

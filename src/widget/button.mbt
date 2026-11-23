@@ -2,6 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 ///|
+/// How big a button with this label is.
+pub fn button_size(ui : @ctx.Ui, string : String) -> @emath.Vec2 {
+  control_size(ui, galley(ui, string).size)
+}
+
+///|
 /// A button with a label on it.
 ///
 /// The return is the whole answer: ask it whether it was clicked. Nothing is
@@ -10,7 +16,7 @@
 pub fn button(ui : @ctx.Ui, string : String) -> @hit.Response {
   let style = ui.style()
   let laid = galley(ui, string)
-  let (rect, hit) = ui.allocate(wants(ui, laid.size), @hit.click, string)
+  let (rect, hit) = ui.allocate(button_size(ui, string), @hit.click, string)
   let response = with_click(hit, activated(ui, hit))
   let painter = ui.painter()
   painter.rect(
@@ -28,7 +34,7 @@ pub fn button(ui : @ctx.Ui, string : String) -> @hit.Response {
 pub fn accent_button(ui : @ctx.Ui, string : String) -> @hit.Response {
   let style = ui.style()
   let laid = galley(ui, string)
-  let (rect, hit) = ui.allocate(wants(ui, laid.size), @hit.click, string)
+  let (rect, hit) = ui.allocate(button_size(ui, string), @hit.click, string)
   let response = with_click(hit, activated(ui, hit))
   let fill = if !response.enabled {
     style.surface
@@ -51,6 +57,44 @@ pub fn accent_button(ui : @ctx.Ui, string : String) -> @hit.Response {
 }
 
 ///|
+/// A button with no ground until the pointer is on it, for the actions that
+/// should not compete with the rest of the screen.
+pub fn quiet_button(ui : @ctx.Ui, string : String) -> @hit.Response {
+  let style = ui.style()
+  let laid = galley(ui, string)
+  let (rect, hit) = ui.allocate(button_size(ui, string), @hit.click, string)
+  let response = with_click(hit, activated(ui, hit))
+  let painter = ui.painter()
+  if response.hovered || response.pressed {
+    painter.rect(
+      rect,
+      fill=style.fill_for(response),
+      corner=@paint.Corner::same(style.corner),
+    )
+  }
+  painter.galley(centred(rect, laid.size), laid, style.text_for(response))
+  response
+}
+
+///|
+/// How big a tick box or a radio button with this label is.
+pub fn choice_size(ui : @ctx.Ui, string : String) -> @emath.Vec2 {
+  let style = ui.style()
+  let laid = galley(ui, string)
+  let side = most(12, ui.line_height() * 0.8)
+  control_size(ui, {
+    x: side + style.spacing.x + laid.size.x,
+    y: most(side, laid.size.y),
+  })
+}
+
+///|
+/// The side of the box a tick or a dot goes in.
+fn choice_side(ui : @ctx.Ui) -> Double {
+  most(12, ui.line_height() * 0.8)
+}
+
+///|
 /// A box that is either ticked or not, with a label beside it.
 ///
 /// The value goes in and the new value comes out, so a caller holds its own
@@ -62,12 +106,8 @@ pub fn checkbox(
 ) -> (Bool, @hit.Response) {
   let style = ui.style()
   let laid = galley(ui, string)
-  let side = most(12, ui.line_height() * 0.8)
-  let content : @emath.Vec2 = {
-    x: side + style.spacing.x + laid.size.x,
-    y: most(side, laid.size.y),
-  }
-  let (rect, hit) = ui.allocate(wants(ui, content), @hit.click, string)
+  let side = choice_side(ui)
+  let (rect, hit) = ui.allocate(choice_size(ui, string), @hit.click, string)
   let clicked = hit.clicked || activated(ui, hit)
   let response = with_click(hit, clicked)
   let value = if clicked { !checked } else { checked }
@@ -117,12 +157,8 @@ pub fn radio(
 ) -> (Bool, @hit.Response) {
   let style = ui.style()
   let laid = galley(ui, string)
-  let side = most(12, ui.line_height() * 0.8)
-  let content : @emath.Vec2 = {
-    x: side + style.spacing.x + laid.size.x,
-    y: most(side, laid.size.y),
-  }
-  let (rect, hit) = ui.allocate(wants(ui, content), @hit.click, string)
+  let side = choice_side(ui)
+  let (rect, hit) = ui.allocate(choice_size(ui, string), @hit.click, string)
   let clicked = hit.clicked || activated(ui, hit)
   let response = with_click(hit, clicked)
   let value = chosen || clicked
