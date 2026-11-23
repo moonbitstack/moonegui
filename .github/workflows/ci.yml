@@ -129,7 +129,7 @@ jobs:
         run: moon test --target js -p moonbitstack/moonpane
 
       - name: moon build (the demonstration)
-        run: moon build --target js -p moonbitstack/moonpane/examples/browser
+        run: moon build --target js hosts/pane/src/examples/browser
 
   # Both backends, in a browser, drawing the same frame twice: once as calls and
   # once as a tree. The two screenshots of each pair are compared with each
@@ -156,7 +156,7 @@ jobs:
           moon update
 
       - name: build the demonstration
-        run: moon build --target js -p moonbitstack/moonpane/examples/browser
+        run: moon build --target js hosts/pane/src/examples/browser
 
       - name: open all four entry points and compare the two backends
         run: python3 scripts/check_browser.py --keep screenshots
