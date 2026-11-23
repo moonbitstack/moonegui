@@ -77,7 +77,7 @@ test "a column is its children stacked, with the style's gap between them" {
 ///|
 test "a gap of its own replaces the style's" {
   let size = measured([
-      @view.column_with(@view.column_flow.with_gap(20), [
+      @view.column_with(@layout.column_flow.with_gap(20), [
         @view.text("a"),
         @view.text("b"),
       ]),
@@ -88,7 +88,7 @@ test "a gap of its own replaces the style's" {
 ///|
 test "padding is inside the row, not around the whole screen" {
   let size = measured([
-      @view.row_with(@view.row_flow.with_padding(10), [
+      @view.row_with(@layout.row_flow.with_padding(10), [
         @view.button("a", @view.Tag::new(1)),
         @view.button("b", @view.Tag::new(2)),
       ]),
@@ -100,7 +100,7 @@ test "padding is inside the row, not around the whole screen" {
 ///|
 test "a stretched column fills the room across, and so do its children" {
   let size = measured([
-      @view.column_with(@view.column_flow.with_stretch(true), [
+      @view.column_with(@layout.column_flow.with_stretch(true), [
         @view.button("a", @view.Tag::new(1)),
       ]),
     ])[0]
@@ -123,13 +123,13 @@ test "a grid is its columns across and its rows down" {
 ///|
 test "a box is never smaller than its least size nor bigger than its most" {
   let small = @view.sized(
-    @view.Bounds::at_least({ x: 120, y: 40, }),
+    @layout.Bounds::at_least({ x: 120, y: 40, }),
     @view.text("a"),
   )
   assert_eq(width_of(small), 120)
   assert_eq(height_of(small), 40)
   let big = @view.sized(
-    @view.Bounds::at_most({ x: 5, y: 5, }),
+    @layout.Bounds::at_most({ x: 5, y: 5, }),
     @view.button("long", @view.Tag::new(1)),
   )
   assert_eq(width_of(big), 5)

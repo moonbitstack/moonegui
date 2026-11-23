@@ -73,7 +73,7 @@ pub fn Interp::show_at(
   self.rebuilt = 0
   self.reused = 0
   self.used.clear()
-  self.stack(ui, self.seed, rect, column_flow, views)
+  self.stack(ui, self.seed, rect, @layout.column_flow, views)
   self.forget_unused()
 }
 

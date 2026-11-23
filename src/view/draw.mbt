@@ -365,11 +365,11 @@ fn Interp::stack(
   ui : @ctx.Ui,
   path : @id.Id,
   rect : @emath.Rect,
-  flow : Flow,
+  flow : @layout.Flow,
   children : Array[View],
 ) -> Unit {
   let style = ui.style()
-  let gap = flow.gap_of(style)
+  let gap = flow.gap_of(style.spacing)
   let inner = rect.shrink(flow.padding)
   let horizontal = flow.dir.is_horizontal()
   let room = inner.size()
@@ -380,7 +380,7 @@ fn Interp::stack(
       ui,
       child,
       path.child(child.name(i)),
-      child_room(room, horizontal, along),
+      @layout.child_room(room, horizontal, along),
     )
     sizes.push(size)
     along = along + (if horizontal { size.x } else { size.y }) + gap
@@ -435,11 +435,11 @@ fn Interp::cells(
   path : @id.Id,
   rect : @emath.Rect,
   columns : Int32,
-  flow : Flow,
+  flow : @layout.Flow,
   children : Array[View],
 ) -> Unit {
   let count = if columns < 1 { 1 } else { columns }
-  let gap = flow.gap_of(ui.style())
+  let gap = flow.gap_of(ui.style().spacing)
   let inner = rect.shrink(flow.padding)
   let cell = grid_cell(ui, inner.size(), count, flow, children)
   let rows = (children.length() + count - 1) / count

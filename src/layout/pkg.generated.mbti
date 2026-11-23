@@ -9,15 +9,37 @@ import {
 // Values
 pub let centred_row : Layout
 
+pub fn child_room(@emath.Vec2, Bool, Double) -> @emath.Vec2
+
+pub let column_flow : Flow
+
+pub fn is_finite(@emath.Vec2) -> Bool
+
 pub let left_to_right : Layout
+
+pub let open_bounds : @emath.Vec2
+
+pub let row_flow : Flow
 
 pub let top_down : Layout
 
 pub let top_down_justified : Layout
 
+pub let unbounded : Bounds
+
 // Errors
 
 // Types and methods
+#derive(Eq, @debug.Debug)
+pub(all) struct Bounds {
+  min : @emath.Vec2
+  max : @emath.Vec2
+}
+pub fn Bounds::at_least(@emath.Vec2) -> Self
+pub fn Bounds::at_most(@emath.Vec2) -> Self
+pub fn Bounds::hold(Self, @emath.Vec2) -> @emath.Vec2
+pub fn Bounds::new(min? : @emath.Vec2, max? : @emath.Vec2) -> Self
+
 #derive(Eq, @debug.Debug)
 pub(all) enum Dir {
   LeftToRight
@@ -29,6 +51,30 @@ pub fn Dir::equal(Self, Self) -> Bool
 pub fn Dir::is_horizontal(Self) -> Bool
 pub fn Dir::not_equal(Self, Self) -> Bool
 pub fn Dir::to_repr(Self) -> @debug.Repr
+
+#derive(Eq, @debug.Debug)
+pub(all) struct Flow {
+  dir : Dir
+  gap : Double?
+  padding : Double
+  cross : @emath.Align
+  justify : Justify
+  stretch : Bool
+}
+pub fn Flow::gap_of(Self, @emath.Vec2) -> Double
+pub fn Flow::with_cross(Self, @emath.Align) -> Self
+pub fn Flow::with_gap(Self, Double) -> Self
+pub fn Flow::with_justify(Self, Justify) -> Self
+pub fn Flow::with_padding(Self, Double) -> Self
+pub fn Flow::with_stretch(Self, Bool) -> Self
+
+#derive(Eq, @debug.Debug)
+pub(all) enum Justify {
+  Start
+  Center
+  End
+  SpaceBetween
+}
 
 #derive(Eq, @debug.Debug)
 pub(all) struct Layout {

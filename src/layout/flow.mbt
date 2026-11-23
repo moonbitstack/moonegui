@@ -1,6 +1,15 @@
 // Copyright 2026 Leo Cheng
 // SPDX-License-Identifier: Apache-2.0
 
+// Flows and bounds: the layout a tree needs before it draws anything.
+//
+// A frame allocates space as it goes and never looks back; a tree has to know
+// how big its children are before it can say where the second one starts. What
+// that needs from a layout is a flow — a direction, a gap, padding, where
+// children sit across it and along it — and a pair of bounds to hold a node
+// between. Both live here, next to the placer, because they are the same
+// subject: where things go.
+
 ///|
 /// Where the children of a row or a column sit when they do not fill it.
 #derive(Eq, Debug)
@@ -21,7 +30,7 @@ pub(all) enum Justify {
 /// same grid as the widgets around it without anyone writing the number twice.
 #derive(Eq, Debug)
 pub(all) struct Flow {
-  dir : @layout.Dir
+  dir : Dir
   gap : Double?
   padding : Double
   /// Where a child narrower than the line sits across the direction of flow.
@@ -85,15 +94,10 @@ pub fn Flow::with_stretch(self : Flow, stretch : Bool) -> Flow {
 
 ///|
 /// The gap this flow leaves, which is the style's when it has none of its own.
-pub fn Flow::gap_of(self : Flow, style : @ctx.Style) -> Double {
+pub fn Flow::gap_of(self : Flow, spacing : @emath.Vec2) -> Double {
   match self.gap {
     Some(value) => value
-    None =>
-      if self.dir.is_horizontal() {
-        style.spacing.x
-      } else {
-        style.spacing.y
-      }
+    None => if self.dir.is_horizontal() { spacing.x } else { spacing.y }
   }
 }
 

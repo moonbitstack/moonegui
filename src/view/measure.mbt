@@ -100,18 +100,18 @@ pub fn View::size(
 fn flow_size(
   ui : @ctx.Ui,
   room : @emath.Vec2,
-  flow : Flow,
+  flow : @layout.Flow,
   children : Array[View],
 ) -> @emath.Vec2 {
   let style = ui.style()
-  let gap = flow.gap_of(style)
+  let gap = flow.gap_of(style.spacing)
   let pad = flow.padding * 2
   let inner = inset(room, flow.padding)
   let horizontal = flow.dir.is_horizontal()
   let mut main = 0.0
   let mut cross = 0.0
   for child in children {
-    let size = child.size(ui, room=child_room(inner, horizontal, main))
+    let size = child.size(ui, room=@layout.child_room(inner, horizontal, main))
     if horizontal {
       main = main + size.x + gap
       cross = bigger(cross, size.y)
@@ -141,11 +141,11 @@ fn grid_size(
   ui : @ctx.Ui,
   room : @emath.Vec2,
   columns : Int32,
-  flow : Flow,
+  flow : @layout.Flow,
   children : Array[View],
 ) -> @emath.Vec2 {
   let style = ui.style()
-  let gap = flow.gap_of(style)
+  let gap = flow.gap_of(style.spacing)
   let pad = flow.padding * 2
   let count = if columns < 1 { 1 } else { columns }
   let cell = grid_cell(ui, room, count, flow, children)
@@ -181,10 +181,10 @@ fn grid_cell(
   ui : @ctx.Ui,
   room : @emath.Vec2,
   columns : Int32,
-  flow : Flow,
+  flow : @layout.Flow,
   children : Array[View],
 ) -> Double {
-  let gap = flow.gap_of(ui.style())
+  let gap = flow.gap_of(ui.style().spacing)
   let pad = flow.padding * 2
   if room.x < 1.0e9 {
     let free = room.x - pad - gap * (columns - 1).to_double()

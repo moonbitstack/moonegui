@@ -161,7 +161,7 @@ fn screens() -> Array[Screen] {
           ]),
           @view.column([
             @view.caption("properties"),
-            @view.grid_with(2, @view.row_flow.with_gap(6), [
+            @view.grid_with(2, @layout.row_flow.with_gap(6), [
               @view.text("x"),
               @view.drag_value(@view.Tag::new(24), 12),
               @view.text("y"),
@@ -182,7 +182,7 @@ fn screens() -> Array[Screen] {
           @view.text_area("", @view.Tag::new(27), rows=3, width=360),
         ]),
         @view.space(6),
-        @view.row_with(@view.row_flow.with_justify(SpaceBetween), [
+        @view.row_with(@layout.row_flow.with_justify(SpaceBetween), [
           @view.quiet_button("back", @view.Tag::new(28)),
           @view.accent_button("next", @view.Tag::new(29)),
         ]),

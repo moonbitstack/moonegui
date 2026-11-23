@@ -110,9 +110,9 @@ pub(all) enum View {
   Badge(text~ : String, tone~ : @ctx.Tone)
   Separator
   Space(width~ : Double, height~ : Double)
-  Row(flow~ : Flow, children~ : Array[View])
-  Column(flow~ : Flow, children~ : Array[View])
-  Grid(columns~ : Int32, flow~ : Flow, children~ : Array[View])
+  Row(flow~ : @layout.Flow, children~ : Array[View])
+  Column(flow~ : @layout.Flow, children~ : Array[View])
+  Grid(columns~ : Int32, flow~ : @layout.Flow, children~ : Array[View])
   Panel(title~ : String, tone~ : @ctx.Tone, padding~ : Double, child~ : View)
   Group(title~ : String, open~ : Bool, tag~ : Tag, child~ : View)
   Scroll(tag~ : Tag, height~ : Double, child~ : View)
@@ -124,7 +124,7 @@ pub(all) enum View {
     chosen~ : Int32,
     width~ : Double,
   )
-  Sized(bounds~ : Bounds, child~ : View)
+  Sized(bounds~ : @layout.Bounds, child~ : View)
 }
 
 ///|
@@ -307,36 +307,40 @@ pub fn space(height : Double, width~ : Double = 0) -> View {
 ///|
 /// Children side by side.
 pub fn row(children : Array[View]) -> View {
-  Row(flow=row_flow, children~)
+  Row(flow=@layout.row_flow, children~)
 }
 
 ///|
 /// Children side by side, placed by this flow.
-pub fn row_with(flow : Flow, children : Array[View]) -> View {
+pub fn row_with(flow : @layout.Flow, children : Array[View]) -> View {
   Row(flow~, children~)
 }
 
 ///|
 /// Children stacked downwards.
 pub fn column(children : Array[View]) -> View {
-  Column(flow=column_flow, children~)
+  Column(flow=@layout.column_flow, children~)
 }
 
 ///|
 /// Children stacked downwards, placed by this flow.
-pub fn column_with(flow : Flow, children : Array[View]) -> View {
+pub fn column_with(flow : @layout.Flow, children : Array[View]) -> View {
   Column(flow~, children~)
 }
 
 ///|
 /// Children in equal columns across the region.
 pub fn grid(columns : Int32, children : Array[View]) -> View {
-  Grid(columns~, flow=row_flow, children~)
+  Grid(columns~, flow=@layout.row_flow, children~)
 }
 
 ///|
 /// Children in equal columns, placed by this flow.
-pub fn grid_with(columns : Int32, flow : Flow, children : Array[View]) -> View {
+pub fn grid_with(
+  columns : Int32,
+  flow : @layout.Flow,
+  children : Array[View],
+) -> View {
   Grid(columns~, flow~, children~)
 }
 
@@ -388,7 +392,7 @@ pub fn table(
 
 ///|
 /// Something held to a size.
-pub fn sized(bounds : Bounds, child : View) -> View {
+pub fn sized(bounds : @layout.Bounds, child : View) -> View {
   Sized(bounds~, child~)
 }
 

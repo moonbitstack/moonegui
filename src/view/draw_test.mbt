@@ -236,11 +236,11 @@ test "a scrolling region below something else scrolls where it sits" {
   let s = stage()
   let views = [
     @view.text("above"),
-    @view.scroll(@view.Tag::new(1), 40, @view.column([
-      @view.text("a"),
-      @view.text("b"),
-      @view.text("c"),
-    ])),
+    @view.scroll(
+      @view.Tag::new(1),
+      40,
+      @view.column([@view.text("a"), @view.text("b"), @view.text("c")]),
+    ),
   ]
   let lines = s.lines([], views)
   // The word above is one line tall and the style's gap follows it: the window
