@@ -34,34 +34,54 @@ Write the frame as calls, one line per control, and read what happened to it on
 the line below:
 
 ```moonbit
-let out = ctx.run(raw, fn(ui) {
+fn account(ui : @ctx.Ui, name : String, remember : Bool) -> (String, Bool) {
   @widget.heading(ui, "Account") |> ignore
-  name = @widget.edit(ui, name, hint="your name").0
-  remember = @widget.checkbox(ui, "Remember me", remember).0
+  let name = @widget.edit(ui, name, hint="your name").0
+  let remember = @widget.checkbox(ui, "Remember me", remember).0
   if @widget.button(ui, "Save").clicked {
-    save()
+    println("saved " + name)
   }
-})
+  (name, remember)
+}
 ```
 
 Or describe the interface as data — a tree of nodes, with a tag on every control
 — and let the interpreter hand back what the user did:
 
 ```moonbit
-let tree : Array[@view.View] = [
-  @view.heading("Account"),
-  @view.edit(name, name_tag, hint="your name"),
-  @view.checkbox("Remember me", remember_tag, remember),
-  @view.button("Save", save_tag),
-]
-let out = ctx.run(raw, fn(ui) { interp.show(ui, tree) })
-for event in interp.events() {
-  match event {
-    Edited(tag~, text~) => if tag == name_tag { name = text }
-    Toggled(tag~, value~) => if tag == remember_tag { remember = value }
-    Clicked(tag) => if tag == save_tag { save() }
-    _ => ()
+let name_tag : @view.Tag = @view.Tag::new(1)
+
+let remember_tag : @view.Tag = @view.Tag::new(2)
+
+let save_tag : @view.Tag = @view.Tag::new(3)
+
+fn account_tree(name : String, remember : Bool) -> Array[@view.View] {
+  [
+    @view.heading("Account"),
+    @view.edit(name, name_tag, hint="your name"),
+    @view.checkbox("Remember me", remember_tag, remember),
+    @view.button("Save", save_tag),
+  ]
+}
+
+fn account_step(
+  ui : @ctx.Ui,
+  interp : @view.Interp,
+  name : String,
+  remember : Bool,
+) -> (String, Bool) {
+  interp.show(ui, account_tree(name, remember))
+  let mut name = name
+  let mut remember = remember
+  for event in interp.events() {
+    match event {
+      Edited(tag~, text~) => if tag == name_tag { name = text }
+      Toggled(tag~, value~) => if tag == remember_tag { remember = value }
+      Clicked(tag) => if tag == save_tag { println("saved " + name) }
+      _ => ()
+    }
   }
+  (name, remember)
 }
 ```
 
@@ -129,7 +149,10 @@ moon add moonbitstack/moonegui
 
 A frame, in full:
 
-```moonbit
+The canvas backend is JavaScript only, so this block does not compile on the
+other three targets.
+
+```moonbit nocheck
 let canvas : @canvas.Canvas = @canvas.Canvas::new()
 let context : @ctx.Ctx = @ctx.Ctx::new(canvas)
 canvas.listen()
