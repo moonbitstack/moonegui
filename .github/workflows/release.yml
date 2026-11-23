@@ -127,10 +127,12 @@ jobs:
             -d '{"event_type":"released"}'
 
   # The skill ships with the module, at the module's version: a reader's agent
-  # reads it to decide whether this library is the one it wants.
+  # reads it to decide whether this library is the one it wants. One skill
+  # describes the core, and takes the core's version, so only its tag publishes
+  # it — the host's tag would publish the same words at a different number.
   skills:
     needs: publish
-    if: vars.MOONCAKES_PUBLISH == 'true'
+    if: vars.MOONCAKES_PUBLISH == 'true' && startsWith(github.ref_name, 'v')
     runs-on: ubuntu-26.04
     environment: mooncakes
     steps:
