@@ -110,14 +110,15 @@ losing the keyboard, and pasted text are events of their own.
 
 ## The demo
 
-`src/examples/browser` is every widget on one page, drawn both ways. From the
-repository root:
+`src/examples/browser` is every widget on one page, drawn both ways and written
+both ways: as calls and as a tree. From the repository root:
 
 ```bash
 moon build --target js
 python -m http.server 8741
 # open http://127.0.0.1:8741/hosts/pane/src/examples/browser/index.html
-# and the same page as elements: .../index.html?html
+# ?html for elements instead of a canvas, ?view for the tree,
+# ?view&html for the tree as elements
 ```
 
 ## License

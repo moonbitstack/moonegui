@@ -11,7 +11,13 @@ happened and takes back a list of shapes.
 
 ```bash
 moon add moonbitstack/moonegui
+moon add moonbitstack/moonpane   # the backends that draw into a page
 ```
+
+The core has no foreign function in it and runs on all four targets. Drawing
+into a browser — a canvas or the document's own elements — is the
+`moonbitstack/moonpane` module: `@canvas.Canvas` and `@html.Html` both answer
+`@back.Backend`, so a frame written either way goes to either one.
 
 ## A frame as calls
 

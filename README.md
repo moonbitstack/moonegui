@@ -92,6 +92,11 @@ frame buffer without being written three times.
 
 ## What is here
 
+This module is the core: the maths, the layout, the controls, the tree, and the
+contract a backend answers to. There is no foreign function anywhere in it, so
+it compiles and runs on `wasm`, `wasm-gc`, `js` and `native` with nothing under
+it — a frame can be drawn, recorded, and read back as text without a screen.
+
 | Package | What it does |
 |:--|:--|
 | `emath` | `Vec2`, `Rect`, `Align`, `Margin`, and the interpolation everything else is built from |
@@ -106,9 +111,17 @@ frame buffer without being written three times.
 | `widget` | The controls, from a label to a table |
 | `view` | The tree: what a node is, how big it is, and the interpreter that draws a tree and remembers what it produced |
 | `back` | The backend contract: three ways to measure, nine to draw, and a recorder that writes them down |
-| `back/web` | What both browser backends share: the surface, the text metrics, and the input coming the other way |
-| `back/canvas` | A frame painted on a 2D canvas |
-| `back/html` | The same frame as elements in the document, for pages that want selectable text and the rest of what H5 already has |
+
+The browser is a module of its own, [moonpane](hosts/pane/README.md), because the
+two backends that draw into a page are the only part of the library that cannot
+run anywhere else. It answers the same twelve functions and publishes under its
+own name, with its own release tag.
+
+| Package | What it does |
+|:--|:--|
+| `web` | What both browser backends share: the surface, the text metrics, and the input coming the other way |
+| `canvas` | A frame painted on a 2D canvas |
+| `html` | The same frame as elements in the document, for pages that want selectable text and the rest of what H5 already has |
 
 ## Design
 
@@ -145,12 +158,11 @@ work it out as it goes.
 
 ```bash
 moon add moonbitstack/moonegui
+moon add moonbitstack/moonpane   # only for a program that draws into a page
 ```
 
-A frame, in full:
-
-The canvas backend is JavaScript only, so this block does not compile on the
-other three targets.
+A frame, in full. The canvas backend is JavaScript only and lives in the host
+module, so this block does not compile inside this one.
 
 ```moonbit nocheck
 let canvas : @canvas.Canvas = @canvas.Canvas::new()
@@ -168,13 +180,13 @@ canvas.clear(context.style().background)
 @back.play(out.shapes, canvas)
 ```
 
-`src/examples/browser` is that program with every widget in it, written both
-ways. To run it:
+`hosts/pane/src/examples/browser` is that program with every widget in it,
+written both ways. To run it from the repository root:
 
 ```bash
 moon build --target js
 python -m http.server 8741
-# http://127.0.0.1:8741/src/examples/browser/index.html
+# http://127.0.0.1:8741/hosts/pane/src/examples/browser/index.html
 # ?html for elements instead of a canvas, ?view for the tree, ?view&html for both
 ```
 
