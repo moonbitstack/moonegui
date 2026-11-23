@@ -1,0 +1,14 @@
+// A few frames of input against a tree, and what the tree reports back.
+//
+// The events are made up rather than read from a device, which is what makes a
+// program like this runnable anywhere: a host is anything that can hand over
+// what happened since the last frame.
+import {
+  "moonbitstack/moonegui/back",
+  "moonbitstack/moonegui/ctx",
+  "moonbitstack/moonegui/emath",
+  "moonbitstack/moonegui/input",
+  "moonbitstack/moonegui/view",
+}
+
+pkgtype(kind: "executable")

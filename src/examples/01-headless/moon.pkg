@@ -1,0 +1,13 @@
+// A frame with no screen: the recording backend writes it down instead.
+//
+// What a frame produces is a list of shapes, so drawing one needs nothing that
+// a screen provides. This program is the smallest thing that proves it.
+import {
+  "moonbitstack/moonegui/back",
+  "moonbitstack/moonegui/ctx",
+  "moonbitstack/moonegui/emath",
+  "moonbitstack/moonegui/input",
+  "moonbitstack/moonegui/view",
+}
+
+pkgtype(kind: "executable")
