@@ -46,6 +46,17 @@ test "one changed node is built again and its neighbours are not" {
 }
 
 ///|
+test "a node whose word changed but whose size did not is built again" {
+  let s = stage()
+  let first = s.draw([], [@view.button("abc", @view.Tag::new(1))])
+  let second = s.draw([], [@view.button("abd", @view.Tag::new(1))])
+  // Same length, so the rectangle is the same and only the tree says otherwise.
+  assert_eq(s.interp.rebuilt(), 1)
+  assert_true(second != first)
+  assert_true(second.contains("\"abd\""))
+}
+
+///|
 test "a node that moves is built again even though nothing about it changed" {
   let s = stage()
   let short = [@view.text("a"), @view.button("Press", @view.Tag::new(1))]
