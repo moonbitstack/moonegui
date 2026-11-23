@@ -104,7 +104,7 @@ frame buffer without being written three times.
 | `text` | Breaking, aligning, eliding, and turning a click into a caret position |
 | `ctx` | The frame itself, `Ui` — the value you spend the frame with — and the style everything is drawn in |
 | `widget` | The controls, from a label to a table |
-| `view` | The tree: twenty-six kinds of node, how big each one is, and the interpreter that draws a tree and remembers what it produced |
+| `view` | The tree: what a node is, how big it is, and the interpreter that draws a tree and remembers what it produced |
 | `back` | The backend contract: three ways to measure, nine to draw, and a recorder that writes them down |
 | `back/web` | What both browser backends share: the surface, the text metrics, and the input coming the other way |
 | `back/canvas` | A frame painted on a 2D canvas |
