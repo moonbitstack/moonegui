@@ -99,12 +99,12 @@ frame buffer without being written three times.
 | `input` | The events a host hands over, folded once a frame into the state widgets ask questions of |
 | `mem` | What survives a frame: focus, the widget being dragged, and a value per widget, tidied at the end of every frame |
 | `paint` | Colours, strokes, fonts, and the five shapes a frame is made of |
-| `layout` | Placers: where the next widget goes, in four directions, aligned or stretched across the flow |
+| `layout` | Where things go: placer cursors in four directions, and the flows and bounds a tree is measured against |
 | `hit` | What the pointer is over, and the `Response` a widget answers with |
 | `text` | Breaking, aligning, eliding, and turning a click into a caret position |
 | `ctx` | The frame itself, `Ui` — the value you spend the frame with — and the style everything is drawn in |
 | `widget` | The controls, from a label to a table |
-| `view` | The tree: nodes, flows, bounds, measuring, and the interpreter that draws a tree and remembers what it produced |
+| `view` | The tree: twenty-six kinds of node, how big each one is, and the interpreter that draws a tree and remembers what it produced |
 | `back` | The backend contract: three ways to measure, nine to draw, and a recorder that writes them down |
 | `back/web` | What both browser backends share: the surface, the text metrics, and the input coming the other way |
 | `back/canvas` | A frame painted on a 2D canvas |
