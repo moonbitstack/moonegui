@@ -302,22 +302,30 @@ fn Interp::paint(
       })
       let memory = ui.ctx().memory()
       let offset = memory.num(path, 0)
-      let (now, _) = @widget.scroll_area(
-        ui,
-        offset,
-        height,
-        content.y,
-        fn(inner) {
-          let box = inner.rect()
-          let full = @emath.Rect::at(box.min, { x: box.width(), y: content.y, })
-          self.place(inner, child, path.child("body"), full, {
-            x: box.width(),
-            y: open_room,
-          })
-        },
-        salt=tag.value().to_string(),
-      )
-      memory.set(path, @mem.State::Num(now))
+      // The window is a cell of its own: the scrolling widget asks the region it
+      // is building into for the room left, and that has to be this rectangle
+      // rather than whatever the parent is up to.
+      ui.cell(path, rect, fn(window) {
+        let (now, _) = @widget.scroll_area(
+          window,
+          offset,
+          height,
+          content.y,
+          fn(inner) {
+            let box = inner.rect()
+            let full = @emath.Rect::at(box.min, {
+              x: box.width(),
+              y: content.y,
+            })
+            self.place(inner, child, path.child("body"), full, {
+              x: box.width(),
+              y: open_room,
+            })
+          },
+          salt=tag.value().to_string(),
+        )
+        memory.set(path, @mem.State::Num(now))
+      })
     }
     List(items~, tag~, chosen~, height~) => {
       let mut picked = chosen

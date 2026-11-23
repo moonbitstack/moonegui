@@ -232,6 +232,25 @@ test "a scrolling region clips what does not fit and shifts what does" {
 }
 
 ///|
+test "a scrolling region below something else scrolls where it sits" {
+  let s = stage()
+  let views = [
+    @view.text("above"),
+    @view.scroll(@view.Tag::new(1), 40, @view.column([
+      @view.text("a"),
+      @view.text("b"),
+      @view.text("c"),
+    ])),
+  ]
+  let lines = s.lines([], views)
+  // The word above is one line tall and the style's gap follows it: the window
+  // starts there, not at the top of the screen.
+  assert_eq(lines[0], "text (0,0) sans/14 #dedede \"above\"")
+  assert_true(lines[1] != "text (0,0) sans/14 #dedede \"a\"")
+  assert_true(s.rec.text().contains("(0,23+32/64)"))
+}
+
+///|
 test "the wheel moves a scrolling region" {
   let s = stage()
   let views = [
