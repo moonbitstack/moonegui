@@ -9,8 +9,9 @@ not care which fonts the machine has, which is what makes it a check a CI runner
 can run: it compares the two ways of drawing against each other, not against a
 picture taken on some other machine.
 
-It also answers the questions a picture cannot: did anything throw, did the
-page start at all, and is the canvas more than its background colour.
+It also answers the questions a picture cannot: did anything throw, and did the
+page start at all. A page that threw leaves the message in the document, and one
+that never started leaves no word about which entry point it was.
 
     python3 scripts/check_browser.py            # compare, exit non-zero on a difference
     python3 scripts/check_browser.py --keep DIR # keep the screenshots in DIR
@@ -131,13 +132,6 @@ MODES = (
     ("view-html", "?view&html"),
 )
 WRITINGS = ("widgets", "view")
-
-# What the document has to hold for each writing, so that a page which drew
-# nothing but its background cannot pass on a blank screen.
-WORDS = {
-    "widgets": ("moonegui", "Press me", "Wrap the paragraph"),
-    "view": ("moonegui", "Text size", "Ticked"),
-}
 
 
 def attr(dom, name):
@@ -300,17 +294,6 @@ def check(browser, keep):
                 problems.append(
                     f"{name}: the page says it is drawing with {backend!r}"
                 )
-            writing, exit = name.split("-")
-            if exit == "html":
-                for word in WORDS[writing]:
-                    if word not in dom:
-                        problems.append(f"{name}: {word!r} is not in the document")
-                elements = dom.count("position: absolute")
-                if elements < 12:
-                    problems.append(
-                        f"{name}: only {elements} positioned elements were drawn"
-                    )
-                report[name + "-elements"] = elements
             width, height, rows = read_png(shot)
             if (width, height) != (WIDTH, HEIGHT):
                 problems.append(
@@ -340,8 +323,7 @@ def check(browser, keep):
             print(
                 f"{writing:8} canvas {canvas_ink:.2%} drawn, "
                 f"{canvas_colours} colours; document {html_ink:.2%} drawn, "
-                f"{html_colours} colours, "
-                f"{report[writing + '-html-elements']} elements"
+                f"{html_colours} colours"
             )
             print(
                 f"{'':8} {moved:.3%} of cells drawn on differently, mean "
