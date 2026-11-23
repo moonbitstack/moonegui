@@ -3,8 +3,8 @@
 
 ///|
 /// A point, or an offset, or a size: two numbers whose meaning comes from where
-/// they are used. egui makes the same choice, and it is what lets a rectangle be
-/// described as a corner plus a size without two nearly identical types.
+/// they are used. One type for all three is what lets a rectangle be described
+/// as a corner plus a size without two nearly identical types.
 #derive(Eq, Debug)
 pub(all) struct Vec2 {
   x : Double

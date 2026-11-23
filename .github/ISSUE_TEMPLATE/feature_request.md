@@ -15,9 +15,8 @@ labels: enhancement
 
 **Prior art**
 
-<!-- egui is what this library is written after: naming the file or the type
-     there (for example `widgets/slider.rs`) pins the semantics down. A
-     different toolkit is fine too — say which. -->
+<!-- A tool that already does this, and where: naming the control pins the
+     semantics down. A screenshot or a link is enough. -->
 
 **State**
 

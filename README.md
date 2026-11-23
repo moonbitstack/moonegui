@@ -1,27 +1,79 @@
-<!-- Copyright 2026 Leo Cheng -->
+<p align="center">
+  <svg width="120" height="120" viewBox="0 0 120 120" role="img" aria-label="moonegui">
+    <rect x="8" y="14" width="104" height="92" rx="10" fill="#18181b" stroke="#3a3a44" stroke-width="2"/>
+    <rect x="20" y="26" width="46" height="10" rx="3" fill="#5c8cff"/>
+    <rect x="20" y="46" width="80" height="8" rx="4" fill="#28282e" stroke="#46464e" stroke-width="1.5"/>
+    <rect x="20" y="46" width="44" height="8" rx="4" fill="#5c8cff"/>
+    <circle cx="64" cy="50" r="7" fill="#dedede"/>
+    <rect x="20" y="64" width="34" height="18" rx="4" fill="#28282e" stroke="#46464e" stroke-width="1.5"/>
+    <rect x="60" y="64" width="20" height="18" rx="9" fill="#5c8cff"/>
+    <circle cx="71" cy="73" r="5" fill="#18181b"/>
+    <rect x="20" y="90" width="60" height="6" rx="3" fill="#28282e"/>
+    <rect x="20" y="90" width="22" height="6" rx="3" fill="#5c8cff"/>
+  </svg>
+</p>
 
-# moonegui
+<h1 align="center">moonegui</h1>
 
-[![check and test](https://github.com/moonbitstack/moonegui/actions/workflows/ci.yml/badge.svg)](https://github.com/moonbitstack/moonegui/actions/workflows/ci.yml)
+<p align="center">Immediate-mode interfaces for MoonBit: a frame is a function of your state, and what it produces is a list of shapes any backend can draw.</p>
 
-An immediate mode graphical interface for MoonBit, after [egui](https://github.com/emilk/egui).
+<p align="center">
+  <a href="#two-ways-to-write-one-interface">Two ways</a> ·
+  <a href="#what-is-here">Packages</a> ·
+  <a href="#design">Design</a> ·
+  <a href="#use-it">Use it</a> ·
+  <a href="#widgets">Widgets</a> ·
+  <a href="https://mooncakes.io/docs/moonbitstack/moonegui">mooncakes.io</a>
+</p>
 
-An interface here is a function of your state, called once a frame. There is no
-widget tree to keep in step with anything, no callbacks and no subscriptions:
-you ask for a button and are told whether it was clicked, on the line below.
+---
+
+## Two ways to write one interface
+
+Write the frame as calls, one line per control, and read what happened to it on
+the line below:
 
 ```moonbit
-if @widget.button(ui, "Press me").clicked {
-  clicks = clicks + 1
-}
-clicks_shown = @widget.slider(ui, clicks_shown, low=0, high=10).0
-name = @widget.edit(ui, name, hint="your name").0
+let out = ctx.run(raw, fn(ui) {
+  @widget.heading(ui, "Account") |> ignore
+  name = @widget.edit(ui, name, hint="your name").0
+  remember = @widget.checkbox(ui, "Remember me", remember).0
+  if @widget.button(ui, "Save").clicked {
+    save()
+  }
+})
 ```
+
+Or describe the interface as data — a tree of nodes, with a tag on every control
+— and let the interpreter hand back what the user did:
+
+```moonbit
+let tree : Array[@view.View] = [
+  @view.heading("Account"),
+  @view.edit(name, name_tag, hint="your name"),
+  @view.checkbox("Remember me", remember_tag, remember),
+  @view.button("Save", save_tag),
+]
+let out = ctx.run(raw, fn(ui) { interp.show(ui, tree) })
+for event in interp.events() {
+  match event {
+    Edited(tag~, text~) => if tag == name_tag { name = text }
+    Toggled(tag~, value~) => if tag == remember_tag { remember = value }
+    Clicked(tag) => if tag == save_tag { save() }
+    _ => ()
+  }
+}
+```
+
+Both produce the same shapes for the same interface, down to the byte. The tree
+is not a second renderer: it is a way of saying what a frame says, which is what
+lets one interface be drawn on a canvas, as elements in a document, or into a
+frame buffer without being written three times.
 
 ## What is here
 
 | Package | What it does |
-|:--:|:--|
+|:--|:--|
 | `emath` | `Vec2`, `Rect`, `Align`, `Margin`, and the interpolation everything else is built from |
 | `id` | Ids derived from a parent and a piece of salt, which is what connects a widget to the same widget last frame |
 | `input` | The events a host hands over, folded once a frame into the state widgets ask questions of |
@@ -30,8 +82,9 @@ name = @widget.edit(ui, name, hint="your name").0
 | `layout` | Placers: where the next widget goes, in four directions, aligned or stretched across the flow |
 | `hit` | What the pointer is over, and the `Response` a widget answers with |
 | `text` | Breaking, aligning, eliding, and turning a click into a caret position |
-| `ctx` | The frame itself, and `Ui` — the value you spend the frame with |
-| `widget` | Label, heading, separator, button, checkbox, radio, slider and text field |
+| `ctx` | The frame itself, `Ui` — the value you spend the frame with — and the style everything is drawn in |
+| `widget` | The controls, from a label to a table |
+| `view` | The tree: nodes, flows, bounds, measuring, and the interpreter that draws a tree and remembers what it produced |
 | `back` | The backend contract: three ways to measure, nine to draw, and a recorder that writes them down |
 | `back/web` | What both browser backends share: the surface, the text metrics, and the input coming the other way |
 | `back/canvas` | A frame painted on a 2D canvas |
@@ -39,34 +92,46 @@ name = @widget.edit(ui, name, hint="your name").0
 
 ## Design
 
-Three decisions shape everything else.
+Four decisions shape everything else.
 
 **The core is synchronous.** `wasm-gc` has no async, and a browser cannot be
 blocked, so the frame is a function the host calls — `ctx.run(raw, ui)` — rather
-than a loop the library owns.
+than a loop the library owns. Time, input and repainting are the host's.
 
 **A backend measures and draws, nothing more.** Twelve functions, all of which a
 plain 2D canvas already has. There is no triangulation, no glyph atlas and no
-shader anywhere in the library, and adding a backend is an afternoon — which is
-how the same frame reaches both a canvas and the document itself, measured by
-one piece of code so that the two lay out identically.
+shader in the library, which is why the same frame reaches a canvas, the
+document, and anything else willing to implement twelve functions.
 
-**Hit testing uses the previous frame's rectangles.** This frame's widgets do
-not exist yet when the pointer has to be matched to one. That is where immediate
+**Hit testing uses the previous frame's rectangles.** This frame's widgets do not
+exist yet when the pointer has to be matched to one. That is where immediate
 mode's one frame delay comes from, and it is written down in the tests rather
 than left to be discovered.
 
+**A tree is data, and only what changed is built again.** Every node is a value,
+so this frame's tree can be compared with the last one's. A subtree whose data is
+unchanged, in the same rectangle, with nothing incoming able to touch it, is not
+built again: what it drew is put back where it was. Nothing is stored in the tree
+— no closures, no widget objects, no subscriptions — which is what makes the
+comparison possible at all.
+
+Layout is measured before it is drawn, because a row has to know how wide its
+children are before it can say where the second one starts: rows, columns,
+equal-column grids, alignment across and along the flow, gaps, padding, and
+minimum and maximum sizes. The placer is still there for code that would rather
+work it out as it goes.
+
 ## Use it
 
-```json
-{ "deps": { "moonbitstack/moonegui": "0.1.0" } }
+```bash
+moon add moonbitstack/moonegui
 ```
 
 A frame, in full:
 
 ```moonbit
 let canvas : @canvas.Canvas = @canvas.Canvas::new()
-let context = @ctx.Ctx::new(canvas)
+let context : @ctx.Ctx = @ctx.Ctx::new(canvas)
 canvas.listen()
 // then, once a frame:
 let out = context.run(canvas.raw(now, dt), fn(ui) {
@@ -74,41 +139,44 @@ let out = context.run(canvas.raw(now, dt), fn(ui) {
   if @widget.button(ui, "Press me").clicked {
     clicks = clicks + 1
   }
+  @widget.label(ui, "clicked " + clicks.to_string() + " times") |> ignore
 })
 canvas.clear(context.style().background)
 @back.play(out.shapes, canvas)
 ```
 
-`src/examples/browser` is that program, with every widget in it. To run it:
+`src/examples/browser` is that program with every widget in it, written both
+ways. To run it:
 
 ```bash
 moon build --target js
 python -m http.server 8741
-# then open http://127.0.0.1:8741/src/examples/browser/index.html
-# and the same page as elements: .../index.html?html
+# http://127.0.0.1:8741/src/examples/browser/index.html
+# ?html for elements instead of a canvas, ?view for the tree, ?view&html for both
 ```
 
-## Tests
+## Widgets
 
-177 tests, run on all four backends. The recording backend turns a frame into a
-list of text commands, so a test compares drawing to a string and needs no
-screen, no font file and no browser. Its font is deliberately regular — every
-character the same width — which is what lets a test work out the expected
-numbers by hand.
+| Group | Functions |
+|:--|:--|
+| Text | `label`, `weak`, `heading`, `caption`, `hyperlink`, `badge` |
+| Buttons | `button`, `accent_button`, `quiet_button` |
+| Choices | `checkbox`, `radio`, `switch`, `slider`, `drag_value`, `combo`, `tabs` |
+| Fields | `edit`, `text_area` |
+| Containers | `panel`, `group`, `scroll_area`, `list`, `table`, `separator` |
+| Motion | `progress`, `spinner` |
 
-```bash
-moon check --target all --deny-warn
-moon test --target all
-```
-
-Numbers reaching a snapshot are printed as sixty-fourths, since a floating point
-number does not print the same on every backend.
+Every one of them is a function that takes the value it shows and returns the
+value the user made of it, next to the `Response` that says what happened. A
+widget holds no state of its own: a caret position, a scroll offset or a folded
+section belong to the caller or to the frame's memory, never to the widget.
 
 ## Not in this version
 
 Meshes and triangulation, glyph rasterisation, images, multiple windows and
-viewports, drag and drop, animation, and a colour picker. Text is drawn a row at
-a time by the backend; glyph positions are used only for carets and selections.
+viewports, drag and drop, animation, overlays that float above their neighbours,
+and a colour picker. Text is drawn a row at a time by the backend; glyph
+positions are used only for carets and selections.
 
 ## License
 
