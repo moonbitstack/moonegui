@@ -4,7 +4,7 @@
 // this the thinnest package in the library.
 import {
   "moonbitstack/moonegui/back",
-  "moonbitstack/moonegui/back/web",
+  "moonbitstack/moonpane/web",
   "moonbitstack/moonegui/emath",
   "moonbitstack/moonegui/input",
   "moonbitstack/moonegui/paint",

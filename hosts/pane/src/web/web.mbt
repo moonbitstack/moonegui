@@ -209,9 +209,13 @@ fn number(parts : Array[String], at : Int32) -> Double {
 
 ///|
 /// A decimal number, which is all the protocol ever carries.
+///
+/// The digits are collected into one integer and divided once at the end: a
+/// scale divided down by ten for every place after the point drifts in the last
+/// bit, and a coordinate that arrives as -0.7500000000000001 is a rectangle
+/// that snaps to a different sixty-fourth than the one that was sent.
 fn parse(text : String) -> Double {
-  let mut whole = 0.0
-  let mut fraction = 0.0
+  let mut digits = 0.0
   let mut scale = 1.0
   let mut sign = 1.0
   let mut after = false
@@ -228,15 +232,12 @@ fn parse(text : String) -> Double {
     if unit < 48 || unit > 57 {
       continue
     }
-    let digit = (unit - 48).to_double()
+    digits = digits * 10 + (unit - 48).to_double()
     if after {
-      scale = scale / 10
-      fraction = fraction + digit * scale
-    } else {
-      whole = whole * 10 + digit
+      scale = scale * 10
     }
   }
-  sign * (whole + fraction)
+  sign * digits / scale
 }
 
 ///|

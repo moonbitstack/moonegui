@@ -1,19 +1,59 @@
 name: Release
 
-# A version tag publishes this module to mooncakes under the moonbitstack account. Publishing is
+# A version tag publishes one module to mooncakes under the moonbitstack account. Publishing is
 # opt-in: the publish job runs only while the organization (or repository) variable
 # MOONCAKES_PUBLISH is 'true', so a tag with the switch off only runs the tests.
+#
+# This repository holds two modules, and the tag says which one it publishes: `v*` is the core,
+# `moonpane-v*` is the browser host in hosts/pane.
 on:
   push:
-    tags: ["v*"]
+    tags: ["v*", "moonpane-v*"]
   workflow_dispatch:
+    inputs:
+      module:
+        description: module to publish
+        required: true
+        type: choice
+        options: [moonegui, moonpane]
 
 permissions:
   contents: read
 
 jobs:
-  test:
+  resolve:
     runs-on: ubuntu-26.04
+    outputs:
+      dir: ${{ steps.pick.outputs.dir }}
+      target: ${{ steps.pick.outputs.target }}
+    steps:
+      - id: pick
+        env:
+          MODULE: ${{ inputs.module }}
+        run: |
+          if [ -n "$MODULE" ]; then
+            name="$MODULE"
+          else
+            case "$GITHUB_REF_NAME" in
+              moonpane-v*) name=moonpane ;;
+              v*) name=moonegui ;;
+              *) echo "::error::tag $GITHUB_REF_NAME names no module"; exit 1 ;;
+            esac
+          fi
+          case "$name" in
+            moonegui) dir=.; target=all ;;
+            moonpane) dir=hosts/pane; target=js ;;
+            *) echo "::error::unknown module $name"; exit 1 ;;
+          esac
+          echo "dir=$dir" >> "$GITHUB_OUTPUT"
+          echo "target=$target" >> "$GITHUB_OUTPUT"
+
+  test:
+    needs: resolve
+    runs-on: ubuntu-26.04
+    defaults:
+      run:
+        working-directory: ${{ needs.resolve.outputs.dir }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -27,14 +67,17 @@ jobs:
       - name: test
         run: |
           moon update
-          moon check --target all
-          moon test --target all
+          moon check --target ${{ needs.resolve.outputs.target }} --deny-warn
+          moon test --target ${{ needs.resolve.outputs.target }}
 
   publish:
-    needs: test
+    needs: [resolve, test]
     if: vars.MOONCAKES_PUBLISH == 'true'
     runs-on: ubuntu-26.04
     environment: mooncakes
+    defaults:
+      run:
+        working-directory: ${{ needs.resolve.outputs.dir }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -60,6 +103,12 @@ jobs:
           if [ -z "$CREDENTIALS" ]; then echo "::error::MOONCAKES_CREDENTIALS is not available"; exit 1; fi
           trap 'rm -f ~/.moon/credentials.json' EXIT
           printf '%s' "$CREDENTIALS" > ~/.moon/credentials.json
+          # A module inside a workspace publishes from a copy outside it: the core is then
+          # resolved from mooncakes, as it will be for everyone who installs this one.
+          if [ "$PWD" != "$GITHUB_WORKSPACE" ]; then
+            cp -r . "$RUNNER_TEMP/module"
+            cd "$RUNNER_TEMP/module"
+          fi
           moon update
           moon publish
 

@@ -5,9 +5,9 @@
 // tree, no callbacks and no subscriptions anywhere in it.
 import {
   "moonbitstack/moonegui/back",
-  "moonbitstack/moonegui/back/canvas",
-  "moonbitstack/moonegui/back/html",
-  "moonbitstack/moonegui/back/web",
+  "moonbitstack/moonpane/canvas",
+  "moonbitstack/moonpane/html",
+  "moonbitstack/moonpane/web",
   "moonbitstack/moonegui/ctx",
   "moonbitstack/moonegui/emath",
   "moonbitstack/moonegui/input",

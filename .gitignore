@@ -3,3 +3,5 @@
 !.moonignore
 _*
 target/
+screenshots/
+**/examples/*/pkg.generated.mbti

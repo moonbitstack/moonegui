@@ -7,8 +7,9 @@
 </style>
 <script type="module">
   // The build output sits next to the module graph moon produces; serving the
-  // repository root and pointing at it keeps this page free of a bundler.
-  import { start, start_html, start_view, start_view_html } from "../../../_build/js/debug/build/examples/browser/browser.js";
+  // repository root and pointing at it keeps this page free of a bundler. A
+  // workspace keeps one build directory at the root, under each module's name.
+  import { start, start_html, start_view, start_view_html } from "../../../../../_build/js/debug/build/moonbitstack/moonpane/examples/browser/browser.js";
 
   // The same interface, either painted on a canvas or built as elements.
   // Add ?html to the address to see it as elements.
@@ -17,6 +18,16 @@
   const query = new URLSearchParams(location.search);
   const asHtml = query.has("html");
   const asTree = query.has("view");
+  const which = (asTree ? "view" : "widgets") + "-" + (asHtml ? "html" : "canvas");
+
+  // A check that opens this page has no console to read, so the page leaves two
+  // words in the document instead: which of the four it is, and what threw if
+  // anything did.
+  const mark = (key, value) => { document.documentElement.dataset[key] = value; };
+  addEventListener("error", (event) => mark("error", event.message));
+  addEventListener("unhandledrejection", (event) => mark("error", String(event.reason)));
+  mark("backend", which);
+
   const surface = document.createElement(asHtml ? "div" : "canvas");
   surface.id = "moonegui";
   surface.tabIndex = 0;

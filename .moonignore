@@ -6,5 +6,9 @@
 _build/
 target/
 
+# The browser host is a module of its own and publishes from there.
+hosts/
+moon.work
+
 # Examples are read in the repository and run in CI; they do not ship.
 src/examples/

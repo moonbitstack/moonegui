@@ -1,0 +1,44 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbitstack/moonpane/canvas"
+
+import {
+  "moonbitstack/moonegui/back",
+  "moonbitstack/moonegui/emath",
+  "moonbitstack/moonegui/input",
+  "moonbitstack/moonegui/paint",
+}
+
+// Values
+pub fn now() -> Double
+
+// Errors
+
+// Types and methods
+pub struct Canvas {
+  id : String
+}
+pub fn Canvas::clear(Self, @paint.Color) -> Unit
+pub fn Canvas::fill_circle(Self, @emath.Vec2, Double, @paint.Color) -> Unit
+pub fn Canvas::fill_path(Self, Array[@emath.Vec2], @paint.Color) -> Unit
+pub fn Canvas::fill_rect(Self, @emath.Rect, @paint.Corner, @paint.Color) -> Unit
+pub fn Canvas::fill_text(Self, @emath.Vec2, String, @paint.FontId, @paint.Color) -> Unit
+pub fn Canvas::id(Self) -> String
+pub fn Canvas::line_height(Self, @paint.FontId) -> Double
+pub fn Canvas::listen(Self) -> Unit
+pub fn Canvas::measure(Self, String, @paint.FontId) -> @emath.Vec2
+pub fn Canvas::measure_prefix(Self, String, @paint.FontId, Double) -> Int32
+pub fn Canvas::new(id? : String) -> Self
+pub fn Canvas::pixels(Self) -> Double
+pub fn Canvas::pop_clip(Self) -> Unit
+pub fn Canvas::push_clip(Self, @emath.Rect) -> Unit
+pub fn Canvas::raw(Self, Double, Double) -> @input.Raw
+pub fn Canvas::size(Self) -> @emath.Rect
+pub fn Canvas::stroke_circle(Self, @emath.Vec2, Double, @paint.Stroke) -> Unit
+pub fn Canvas::stroke_path(Self, Array[@emath.Vec2], Bool, @paint.Stroke) -> Unit
+pub fn Canvas::stroke_rect(Self, @emath.Rect, @paint.Corner, @paint.Stroke) -> Unit
+pub fn Canvas::unlisten(Self) -> Unit
+pub impl @back.Backend for Canvas
+
+// Type aliases
+
+// Traits

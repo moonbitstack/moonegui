@@ -1,0 +1,39 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbitstack/moonpane/web"
+
+import {
+  "moonbitstack/moonegui/emath",
+  "moonbitstack/moonegui/input",
+  "moonbitstack/moonegui/paint",
+}
+
+// Values
+pub fn attach(String) -> Unit
+
+pub fn line_height(@paint.FontId) -> Double
+
+pub fn listen() -> Unit
+
+pub fn measure(String, @paint.FontId) -> @emath.Vec2
+
+pub fn mono(@paint.FontId) -> Int32
+
+pub fn now() -> Double
+
+pub fn pixels() -> Double
+
+pub fn prefix(String, @paint.FontId, Double) -> Int32
+
+pub fn raw(Double, Double) -> @input.Raw
+
+pub fn size() -> @emath.Rect
+
+pub fn unlisten() -> Unit
+
+// Errors
+
+// Types and methods
+
+// Type aliases
+
+// Traits

@@ -4,7 +4,7 @@
 // selectable text, zoom, and elements other tools can see.
 import {
   "moonbitstack/moonegui/back",
-  "moonbitstack/moonegui/back/web",
+  "moonbitstack/moonpane/web",
   "moonbitstack/moonegui/emath",
   "moonbitstack/moonegui/input",
   "moonbitstack/moonegui/paint",
