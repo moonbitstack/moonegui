@@ -11,12 +11,16 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  # The core: no foreign function anywhere in it, so it compiles and tests on
+  # every backend, on three systems.
+  moonegui:
     permissions:
       contents: read
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-26.04, macos-26, windows-2025]
+    name: moonegui (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v7
@@ -46,13 +50,15 @@ jobs:
       - name: moon build
         run: moon build --target all
 
+      # `-p` rather than the whole workspace, so that one run of this job is the
+      # core's tests and nothing else.
       - name: moon test (all backends)
-        run: moon test --target all
+        run: moon test --target all -p moonbitstack/moonegui
 
       - name: examples run
         if: runner.os == 'Linux'
         run: |
-          for dir in src/examples/*/; do
+          for dir in src/examples/*/ hosts/pane/src/examples/*/; do
             if grep -q 'kind: "executable"' "$dir/moon.pkg" && ! grep -q 'supported_targets = "js"' "$dir/moon.pkg"; then
               moon run "$dir" --target native > /dev/null
             fi
@@ -77,3 +83,88 @@ jobs:
       - name: the code in the docs compiles
         if: runner.os == 'Linux'
         run: python3 scripts/check_snippets.py
+
+  # The browser host: JavaScript only, and a module of its own.
+  moonpane:
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-26.04, macos-26, windows-2025]
+    name: moonpane (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: hosts/pane
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: install-unix
+        if: ${{ runner.os != 'Windows' }}
+        run: |
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
+          echo "$HOME/.moon/bin" >> $GITHUB_PATH
+
+      - name: install-windows
+        if: ${{ runner.os == 'Windows' }}
+        run: |
+          Set-ExecutionPolicy RemoteSigned -Scope CurrentUser; irm https://cli.moonbitlang.com/install/powershell.ps1 | iex
+          "C:\Users\runneradmin\.moon\bin" | Out-File -FilePath $env:GITHUB_PATH -Append
+
+      - name: post install
+        run: |
+          moon version --all
+          moon update
+
+      - name: moon check
+        run: moon check --target all --deny-warn
+
+      - name: moon build
+        run: moon build --target all
+
+      - name: moon test (the browser side of the event protocol)
+        run: moon test --target js -p moonbitstack/moonpane
+
+      - name: moon build (the demonstration)
+        run: moon build --target js -p moonbitstack/moonpane/examples/browser
+
+  # Both backends, in a browser, drawing the same frame twice: once as calls and
+  # once as a tree. The two screenshots of each pair are compared with each
+  # other rather than with a picture taken on another machine, so the check does
+  # not depend on which fonts the runner has.
+  browser:
+    name: both backends in a browser
+    permissions:
+      contents: read
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: install moon
+        run: |
+          curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
+          echo "$HOME/.moon/bin" >> $GITHUB_PATH
+
+      - name: post install
+        run: |
+          moon version --all
+          moon update
+
+      - name: build the demonstration
+        run: moon build --target js -p moonbitstack/moonpane/examples/browser
+
+      - name: open all four entry points and compare the two backends
+        run: python3 scripts/check_browser.py --keep screenshots
+
+      - name: keep what the browser drew
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: browser-screenshots
+          path: screenshots/
+          if-no-files-found: warn
