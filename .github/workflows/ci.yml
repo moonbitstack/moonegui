@@ -129,7 +129,7 @@ jobs:
         run: moon test --target js -p moonbitstack/moonpane
 
       - name: moon build (the demonstration)
-        run: moon build --target js hosts/pane/src/examples/browser
+        run: moon build --target js src/examples/browser
 
   # Both backends, in a browser, drawing the same frame twice: once as calls and
   # once as a tree. The two screenshots of each pair are compared with each
